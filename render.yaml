@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: inova-api
+    runtime: node
+    rootDir: docs
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: DATABASE_URL
+        sync: false
+      - key: AUTH_SECRET
+        sync: false

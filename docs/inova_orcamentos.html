@@ -1,0 +1,2544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Orcamentos - INOVA</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232f8acb' width='100' height='100'/><text x='50' y='65' font-size='60' font-weight='bold' fill='%23fff' text-anchor='middle' font-family='sans-serif'>I</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-1: #e8f6ff;
+      --bg-2: #c9e9ff;
+      --panel: #fafdff;
+      --ink: #13283b;
+      --muted: #456179;
+      --brand: #2f8acb;
+      --brand-strong: #1f6fa8;
+      --line: #c9deee;
+      --ok: #1f8f45;
+      --danger: #bc2f1b;
+      --radius: 16px;
+      --shadow: 0 14px 34px rgba(31, 87, 130, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(47, 138, 203, 0.22), transparent 34%),
+        radial-gradient(circle at 86% 22%, rgba(125, 191, 236, 0.28), transparent 30%),
+        radial-gradient(circle at 50% 92%, rgba(183, 224, 249, 0.3), transparent 35%),
+        linear-gradient(145deg, var(--bg-1), var(--bg-2));
+      min-height: 100vh;
+      padding: 28px 16px 36px;
+      animation: fade-in 650ms ease;
+    }
+
+    .layout {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--panel);
+      border: 1px solid rgba(31, 111, 168, 0.14);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: white;
+      letter-spacing: -0.02em;
+      box-shadow: 0 4px 12px rgba(31, 111, 168, 0.2);
+    }
+
+    .header-info h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .header-info p {
+      margin: 2px 0 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--line);
+      background: #edf6ff;
+      color: #26455f;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .tab-panel {
+      display: none;
+      gap: 18px;
+    }
+
+    .tab-panel.active {
+      display: grid;
+    }
+
+    .hero,
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(31, 111, 168, 0.14);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 20px;
+      display: grid;
+      gap: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 78ch;
+    }
+
+    .metrics {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      margin-top: 2px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: linear-gradient(180deg, #ffffff 0%, #f1f9ff 100%);
+      padding: 12px;
+      transform: translateY(8px);
+      opacity: 0;
+      animation: rise 500ms ease forwards;
+    }
+
+    .metric:nth-child(2) { animation-delay: 80ms; }
+    .metric:nth-child(3) { animation-delay: 160ms; }
+
+    .metric small {
+      color: var(--muted);
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.82rem;
+    }
+
+    .metric strong {
+      font-size: 1.25rem;
+      font-weight: 800;
+      font-family: "IBM Plex Mono", monospace;
+    }
+
+    .card {
+      padding: 18px;
+    }
+
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+      grid-column: span 12;
+    }
+
+    .field.w6 { grid-column: span 6; }
+    .field.w4 { grid-column: span 4; }
+    .field.w3 { grid-column: span 3; }
+    .field.w2 { grid-column: span 2; }
+
+    label {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 11px 12px;
+      background: #fff;
+      font: inherit;
+      color: var(--ink);
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    textarea {
+      min-height: 84px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 4px rgba(47, 138, 203, 0.2);
+    }
+
+    .actions {
+      grid-column: span 12;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 140ms ease, filter 140ms ease;
+    }
+
+    button:active {
+      transform: translateY(1px) scale(0.997);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #ecf6ff;
+      color: #26455f;
+      border: 1px solid var(--line);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 940px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 11px 12px;
+      border-bottom: 1px solid #d8e8f5;
+      font-size: 0.92rem;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eff7ff;
+      color: #2f4f67;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    tr:hover td {
+      background: #f5fbff;
+    }
+
+    .mono {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.86rem;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border: 1px solid;
+    }
+
+    .status-neutro {
+      color: #2f4f67;
+      background: #edf6ff;
+      border-color: #bddcf4;
+    }
+
+    .status-andamento {
+      color: #7a5000;
+      background: #fff4dc;
+      border-color: #f0cf8b;
+    }
+
+    .status-sucesso {
+      color: #0f6f32;
+      background: #e9faee;
+      border-color: #9ad8ad;
+    }
+
+    .status-alerta {
+      color: #7a5000;
+      background: #fff4dc;
+      border-color: #f0cf8b;
+    }
+
+    .status-erro {
+      color: #952d1d;
+      background: #fcebe7;
+      border-color: #e6aba0;
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .table-actions button {
+      padding: 7px 9px;
+      font-size: 0.79rem;
+    }
+
+    .message {
+      margin: 12px 0 0;
+      min-height: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .message.ok { color: var(--ok); }
+    .message.error { color: var(--danger); }
+
+    .filtros {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .filtro-grupo {
+      display: grid;
+      gap: 6px;
+    }
+
+    .filtro-grupo label {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .filtro-grupo input,
+    .filtro-grupo select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 9px 12px;
+      background: #fff;
+      font: inherit;
+      color: var(--ink);
+      font-size: 0.92rem;
+      transition: border-color 160ms ease;
+    }
+
+    .filtro-grupo input:focus,
+    .filtro-grupo select:focus {
+      outline: none;
+      border-color: var(--brand);
+    }
+
+    .filtro-acoes {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .filtro-acoes button {
+      padding: 9px 12px;
+      font-size: 0.86rem;
+    }
+
+    .proposal-wrap {
+      display: none;
+    }
+
+    .proposal-wrap.active {
+      display: block;
+    }
+
+    .proposal-sheet {
+      background: #fff;
+      border: 1px solid #cdd7e2;
+      border-radius: 10px;
+      padding: 18px;
+      color: #1b232b;
+      font-family: "Arial", sans-serif;
+      line-height: 1.35;
+    }
+
+    .proposal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .proposal-sub {
+      font-size: 0.84rem;
+      margin-bottom: 10px;
+    }
+
+    .proposal-title {
+      margin: 10px 0 8px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      text-decoration: underline;
+      font-weight: 700;
+    }
+
+    .proposal-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+
+    .proposal-table th,
+    .proposal-table td {
+      border: 1px solid #6f7882;
+      padding: 5px 6px;
+      vertical-align: top;
+    }
+
+    .proposal-table th {
+      text-transform: uppercase;
+      font-size: 0.74rem;
+      letter-spacing: 0.02em;
+      background: #f5f7fa;
+    }
+
+    .proposal-hl {
+      background: #ffea4c;
+      padding: 1px 6px;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .proposal-block-title {
+      font-size: 0.83rem;
+      font-weight: 700;
+      margin: 8px 0 6px;
+    }
+
+    .proposal-notes {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.79rem;
+    }
+
+    .proposal-notes li {
+      margin-bottom: 3px;
+    }
+
+    .proposal-sign {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+      font-size: 0.8rem;
+    }
+
+    .proposal-actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .app-locked .layout {
+      filter: blur(3px);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .login-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 25, 40, 0.58);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 9999;
+    }
+
+    .login-card {
+      width: min(100%, 420px);
+      background: #fff;
+      border-radius: 18px;
+      border: 1px solid rgba(31, 111, 168, 0.18);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+      padding: 22px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .login-card h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .login-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .login-card .field {
+      gap: 5px;
+    }
+
+    .login-card .actions {
+      padding-top: 2px;
+    }
+
+    .login-card small {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .login-overlay {
+        display: none !important;
+      }
+
+      .header,
+      .hero,
+      .tabs,
+      #painel-clientes,
+      #painel-cadastro,
+      #titulo-formulario,
+      #orcamento-form,
+      #mensagem,
+      #titulo-listagem,
+      .filtros,
+      .table-wrap,
+      .proposal-actions {
+        display: none !important;
+      }
+
+      .tab-panel {
+        display: block !important;
+      }
+
+      .proposal-wrap,
+      .proposal-wrap.active {
+        display: block !important;
+      }
+
+      .proposal-sheet {
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+      }
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes rise {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .field.w6,
+      .field.w4,
+      .field.w3,
+      .field.w2 {
+        grid-column: span 12;
+      }
+
+      body {
+        padding: 14px 10px 28px;
+      }
+
+      .layout {
+        gap: 12px;
+      }
+
+      .card,
+      .hero {
+        padding: 14px;
+      }
+
+      .hero,
+      .card {
+        border-radius: 12px;
+      }
+
+      .header {
+        gap: 12px;
+        padding: 12px 14px;
+      }
+
+      .logo {
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
+      }
+
+      .header-info h3 {
+        font-size: 0.95rem;
+      }
+
+      .header-info p {
+        font-size: 0.75rem;
+      }
+
+      .actions,
+      .filtro-acoes {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .actions button,
+      .filtro-acoes button {
+        width: 100%;
+      }
+
+      .filtros {
+        grid-template-columns: 1fr;
+      }
+
+      .proposal-sign {
+        grid-template-columns: 1fr;
+      }
+
+      .tabs {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .tab-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .table-wrap {
+        border: 0;
+        background: transparent;
+        overflow: visible;
+      }
+
+      .table-wrap table {
+        min-width: 0;
+      }
+
+      .table-wrap thead {
+        display: none;
+      }
+
+      .table-wrap tbody {
+        display: grid;
+        gap: 10px;
+      }
+
+      .table-wrap tbody tr {
+        display: block;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #ffffff;
+        padding: 10px;
+        box-shadow: 0 6px 18px rgba(31, 87, 130, 0.08);
+      }
+
+      .table-wrap tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 10px;
+        border-bottom: 1px dashed #d8e8f5;
+        padding: 8px 0;
+        font-size: 0.9rem;
+      }
+
+      .table-wrap tbody td::before {
+        content: attr(data-label);
+        font-size: 0.76rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        font-weight: 700;
+        min-width: 95px;
+      }
+
+      .table-wrap tbody td:last-child {
+        border-bottom: 0;
+      }
+
+      .table-wrap tbody td[colspan] {
+        display: block;
+        text-align: center;
+        padding: 10px 0;
+        border: 0;
+      }
+
+      .table-wrap tbody td[colspan]::before {
+        content: "";
+        display: none;
+      }
+
+      .table-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-overlay" id="login-overlay">
+    <section class="login-card" aria-labelledby="login-title">
+      <h2 id="login-title">Acesso restrito INOVA</h2>
+      <p>Informe seu responsavel e a senha para liberar o uso da pagina.</p>
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="loginResponsavel">Responsavel</label>
+          <select id="loginResponsavel" name="loginResponsavel" required>
+            <option value="">Selecione</option>
+            <option value="PEDRO">PEDRO</option>
+            <option value="ANDERSON">ANDERSON</option>
+            <option value="MARIA">MARIA</option>
+            <option value="BIANCA">BIANCA</option>
+            <option value="GIOVANNA">GIOVANNA</option>
+            <option value="FABIOLA">FABIOLA</option>
+            <option value="ALLANA">ALLANA</option>
+            <option value="ALLAN">ALLAN</option>
+            <option value="INOVA">INOVA (ADMIN)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="loginSenha">Senha</label>
+          <input id="loginSenha" name="loginSenha" type="password" required autocomplete="current-password" placeholder="Digite a senha">
+        </div>
+
+        <div class="actions">
+          <button class="btn-primary" type="submit">Entrar</button>
+          <button class="btn-secondary" type="button" id="login-fechar">Fechar</button>
+        </div>
+      </form>
+      <small id="login-message"></small>
+    </section>
+  </div>
+
+  <main class="layout">
+    <header class="header">
+      <div class="logo">I</div>
+      <div class="header-info">
+        <h3>INOVA Mudanças</h3>
+        <p>Transportadora especializada em mudanças e fretes</p>
+      </div>
+    </header>
+
+    <section class="hero" aria-labelledby="titulo-principal">
+      <h1 id="titulo-principal">Registro de Orcamentos - Transportadora INOVA</h1>
+      <p>Use esta pagina da INOVA para cadastrar, acompanhar e atualizar os orcamentos enviados aos clientes. Os dados ficam salvos localmente no navegador deste computador.</p>
+      <div class="metrics">
+        <div class="metric">
+          <small>Total de orcamentos</small>
+          <strong id="total-orcamentos">0</strong>
+        </div>
+        <div class="metric">
+          <small>Valor total cotado</small>
+          <strong id="valor-total">R$ 0,00</strong>
+        </div>
+        <div class="metric">
+          <small>Ticket medio</small>
+          <strong id="ticket-medio">R$ 0,00</strong>
+        </div>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="Navegacao principal">
+      <button class="tab-btn active" type="button" id="tab-orcamentos" aria-selected="true">Orcamentos</button>
+      <button class="tab-btn" type="button" id="tab-clientes" aria-selected="false">Clientes</button>
+      <button class="tab-btn" type="button" id="tab-cadastro" aria-selected="false">Cadastro</button>
+    </nav>
+
+    <div class="tab-panel active" id="painel-orcamentos">
+
+    <section class="card" aria-labelledby="titulo-formulario">
+      <h2 id="titulo-formulario">Novo Orcamento</h2>
+      <form id="orcamento-form" novalidate>
+        <div class="field w6">
+          <label for="cliente">Cliente</label>
+          <input id="cliente" name="cliente" list="lista-clientes-orcamento" required maxlength="100" placeholder="Nome do cliente ou empresa">
+          <datalist id="lista-clientes-orcamento"></datalist>
+          <datalist id="lista-estados-br">
+            <option value="AC"></option>
+            <option value="AL"></option>
+            <option value="AP"></option>
+            <option value="AM"></option>
+            <option value="BA"></option>
+            <option value="CE"></option>
+            <option value="DF"></option>
+            <option value="ES"></option>
+            <option value="GO"></option>
+            <option value="MA"></option>
+            <option value="MT"></option>
+            <option value="MS"></option>
+            <option value="MG"></option>
+            <option value="PA"></option>
+            <option value="PB"></option>
+            <option value="PR"></option>
+            <option value="PE"></option>
+            <option value="PI"></option>
+            <option value="RJ"></option>
+            <option value="RN"></option>
+            <option value="RS"></option>
+            <option value="RO"></option>
+            <option value="RR"></option>
+            <option value="SC"></option>
+            <option value="SP"></option>
+            <option value="SE"></option>
+            <option value="TO"></option>
+          </datalist>
+        </div>
+
+        <div class="field w3">
+          <label for="aC">A/C</label>
+          <input id="aC" name="aC" maxlength="100" placeholder="Pessoa de contato">
+        </div>
+
+        <div class="field w3">
+          <label for="contato">Tel./E-mail</label>
+          <input id="contato" name="contato" maxlength="80" placeholder="Telefone ou e-mail">
+        </div>
+
+        <div class="field w4">
+          <label for="origem">Origem</label>
+          <input id="origem" name="origem" required maxlength="80" placeholder="Cidade de coleta">
+        </div>
+
+        <div class="field w2">
+          <label for="origemUF">UF</label>
+          <input id="origemUF" name="origemUF" list="lista-estados-br" required maxlength="2" placeholder="UF">
+        </div>
+
+        <div class="field w4">
+          <label for="destino">Destino</label>
+          <input id="destino" name="destino" required maxlength="80" placeholder="Cidade de entrega">
+        </div>
+
+        <div class="field w2">
+          <label for="destinoUF">UF</label>
+          <input id="destinoUF" name="destinoUF" list="lista-estados-br" required maxlength="2" placeholder="UF">
+        </div>
+
+        <div class="field w4">
+          <label for="tipoCarga">Tipo de carga</label>
+          <select id="tipoCarga" name="tipoCarga" required>
+            <option value="">Selecione</option>
+            <option value="Fracionada">Fracionada</option>
+            <option value="Fechada">Fechada</option>
+            <option value="Refrigerada">Refrigerada</option>
+            <option value="Perigosa">Perigosa</option>
+            <option value="Outros">Outros</option>
+          </select>
+        </div>
+
+        <div class="field w3">
+          <label for="peso">Peso (kg)</label>
+          <input id="peso" name="peso" type="number" min="0" step="0.01" placeholder="0,00">
+        </div>
+
+        <div class="field w3">
+          <label for="volume">Volume (m3)</label>
+          <input id="volume" name="volume" type="number" min="0" step="0.01" placeholder="0,00">
+        </div>
+
+        <div class="field w3">
+          <label for="prazo">Prazo (dias)</label>
+          <input id="prazo" name="prazo" type="number" min="0" step="1" placeholder="Ex.: 5">
+        </div>
+
+        <div class="field w3">
+          <label for="valor">Valor cotado (R$)</label>
+          <input id="valor" name="valor" type="number" min="0" step="0.01" required placeholder="0,00">
+        </div>
+
+        <div class="field w3">
+          <label for="validade">Validade do orcamento</label>
+          <input id="validade" name="validade" type="date">
+        </div>
+
+        <div class="field w3">
+          <label for="statusOrcamento">Status Orcamento</label>
+          <select id="statusOrcamento" name="statusOrcamento" required>
+            <option value="Solicitado" selected>Solicitado</option>
+            <option value="Em Elaboracao">Em Elaboracao</option>
+            <option value="Enviado">Enviado</option>
+            <option value="Em Negociacao">Em Negociacao</option>
+            <option value="Aguardando Retorno">Aguardando Retorno</option>
+            <option value="Aprovado">Aprovado</option>
+            <option value="Contratado">Contratado</option>
+            <option value="Reprovado">Reprovado</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
+        </div>
+
+        <div class="field w3">
+          <label for="statusEntrega">Status de Entrega</label>
+          <select id="statusEntrega" name="statusEntrega" required>
+            <option value="Pedido Recebido" selected>Pedido Recebido</option>
+            <option value="Programado">Programado</option>
+            <option value="Coletado">Coletado</option>
+            <option value="Em Transporte">Em Transporte</option>
+            <option value="Em Rota">Em Rota</option>
+            <option value="Entregue">Entregue</option>
+            <option value="Reagendado">Reagendado</option>
+            <option value="Ocorrencia">Ocorrencia</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
+        </div>
+
+        <div class="field w3">
+          <label for="responsavel">Responsavel</label>
+          <select id="responsavel" name="responsavel">
+            <option value="">Selecione</option>
+            <option value="PEDRO">PEDRO</option>
+            <option value="ANDERSON">ANDERSON</option>
+            <option value="MARIA">MARIA</option>
+            <option value="BIANCA">BIANCA</option>
+            <option value="GIOVANNA">GIOVANNA</option>
+            <option value="FABIOLA">FABIOLA</option>
+            <option value="ALLANA">ALLANA</option>
+            <option value="ALLAN">ALLAN</option>
+            <option value="INOVA">INOVA</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="observacoes">Observacoes</label>
+          <textarea id="observacoes" name="observacoes" maxlength="400" placeholder="Detalhes importantes da negociacao, restricoes ou observacoes gerais"></textarea>
+        </div>
+
+        <div class="actions">
+          <button class="btn-primary" type="submit">Salvar orcamento</button>
+          <button class="btn-secondary" type="button" id="visualizar-proposta">Visualizar proposta comercial</button>
+          <button class="btn-secondary" type="button" id="limpar-formulario">Limpar formulario</button>
+          <button class="btn-secondary" type="button" id="exportar-json">Exportar JSON</button>
+        </div>
+      </form>
+      <p id="mensagem" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="card" aria-labelledby="titulo-listagem">
+      <h2 id="titulo-listagem">Orcamentos cadastrados</h2>
+      
+      <div class="filtros">
+        <div class="filtro-grupo">
+          <label for="filtro-cliente">Buscar por cliente</label>
+          <input id="filtro-cliente" type="text" placeholder="Nome ou parte do nome">
+        </div>
+
+        <div class="filtro-grupo">
+          <label for="filtro-status-orcamento">Status Orcamento</label>
+          <select id="filtro-status-orcamento">
+            <option value="">Todos</option>
+            <option value="Solicitado">Solicitado</option>
+            <option value="Em Elaboracao">Em Elaboracao</option>
+            <option value="Enviado">Enviado</option>
+            <option value="Em Negociacao">Em Negociacao</option>
+            <option value="Aguardando Retorno">Aguardando Retorno</option>
+            <option value="Aprovado">Aprovado</option>
+            <option value="Contratado">Contratado</option>
+            <option value="Reprovado">Reprovado</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
+        </div>
+
+        <div class="filtro-grupo">
+          <label for="filtro-status-entrega">Status de Entrega</label>
+          <select id="filtro-status-entrega">
+            <option value="">Todos</option>
+            <option value="Pedido Recebido">Pedido Recebido</option>
+            <option value="Programado">Programado</option>
+            <option value="Coletado">Coletado</option>
+            <option value="Em Transporte">Em Transporte</option>
+            <option value="Em Rota">Em Rota</option>
+            <option value="Entregue">Entregue</option>
+            <option value="Reagendado">Reagendado</option>
+            <option value="Ocorrencia">Ocorrencia</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
+        </div>
+
+        <div class="filtro-grupo">
+          <label for="filtro-data-inicio">Data inicial</label>
+          <input id="filtro-data-inicio" type="date">
+        </div>
+
+        <div class="filtro-grupo">
+          <label for="filtro-data-fim">Data final</label>
+          <input id="filtro-data-fim" type="date">
+        </div>
+
+        <div class="filtro-acoes">
+          <button class="btn-primary" type="button" id="aplicar-filtros">Aplicar filtros</button>
+          <button class="btn-secondary" type="button" id="limpar-filtros">Limpar filtros</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Codigo</th>
+              <th>Data</th>
+              <th>Cliente</th>
+              <th>Rota</th>
+              <th>Tipo</th>
+              <th>Valor</th>
+              <th>Status Orcamento</th>
+              <th>Status Entrega</th>
+              <th>Responsavel</th>
+              <th>Acoes</th>
+            </tr>
+          </thead>
+          <tbody id="orcamentos-body">
+            <tr>
+              <td colspan="10">Nenhum orcamento registrado.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card proposal-wrap" id="bloco-proposta" aria-labelledby="titulo-proposta-preview">
+      <h2 id="titulo-proposta-preview">Pre-visualizacao da Proposta Comercial</h2>
+      <div class="proposal-actions">
+        <button class="btn-primary" type="button" id="imprimir-proposta">Imprimir proposta</button>
+        <button class="btn-secondary" type="button" id="ocultar-proposta">Ocultar pre-visualizacao</button>
+      </div>
+      <article class="proposal-sheet" id="proposta-comercial">
+        <div class="proposal-head">
+          <span>À</span>
+          <span>PROPOSTA COMERCIAL - <span id="prop-codigo">ORC-000000-000</span></span>
+        </div>
+        <div class="proposal-sub"><strong id="prop-cliente">Cliente nao informado</strong></div>
+        <div class="proposal-sub">
+          A/C: <strong id="prop-ac">Nao informado</strong><br>
+          Tel.: <strong id="prop-contato">-</strong><br>
+          Data: <strong id="prop-data">-</strong>
+        </div>
+
+        <div class="proposal-title">REF: Transporte Rodoviario: Entrega de Carga / Container Nacionalizado</div>
+
+        <table class="proposal-table">
+          <thead>
+            <tr>
+              <th>Origem</th>
+              <th>UF</th>
+              <th>Destino de entrega</th>
+              <th>UF</th>
+              <th>Frete viagem</th>
+              <th>Veiculo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="prop-origem">-</td>
+              <td id="prop-origem-uf">-</td>
+              <td id="prop-destino">-</td>
+              <td id="prop-destino-uf">-</td>
+              <td><span class="proposal-hl" id="prop-valor">R$ 0,00</span></td>
+              <td id="prop-veiculo">Carreta / Bau</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="proposal-block-title">Condicoes Comerciais:</div>
+        <table class="proposal-table">
+          <tbody>
+            <tr>
+              <th style="width:22%">Ad-valorem</th>
+              <td style="width:28%">0,03% sobre o valor da N.F. - <strong>nao incluso</strong>.</td>
+              <th style="width:22%">GRIS</th>
+              <td style="width:28%">0,02% sobre o valor da N.F. - <strong>nao incluso</strong>.</td>
+            </tr>
+            <tr>
+              <th>ICMS</th>
+              <td>Conforme legislacao, <strong>nao incluso</strong>.</td>
+              <th>Escolta</th>
+              <td>-----------x-----------</td>
+            </tr>
+            <tr>
+              <th>Pedagio</th>
+              <td>Conforme tabela da Concessionaria, <strong>nao incluso</strong>.</td>
+              <th>Licenca carg. exced.</th>
+              <td>-----------x-----------</td>
+            </tr>
+            <tr>
+              <th>Diaria</th>
+              <td>R$800,00.</td>
+              <th>Prazo de aceite</th>
+              <td>30 dias da data da apresentacao.</td>
+            </tr>
+            <tr>
+              <th>Prazo de pagamento</th>
+              <td>15 dias apos a data do faturamento.</td>
+              <th>Vigencia da proposta</th>
+              <td>30 dias da data da apresentacao.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="proposal-block-title">Observacoes:</div>
+        <ul class="proposal-notes">
+          <li>O aceite desta proposta deve ser confirmado via e-mail para o remetente.</li>
+          <li>Custos com escolta, taxas e despesas extras nao descritas serao cobrados a parte.</li>
+          <li>Programar coleta (carregamento) com 48h de antecedencia.</li>
+          <li>Em caso de desistencia apos o aceite, sera cobrado 55% do valor do frete.</li>
+        </ul>
+
+        <div class="proposal-sign">
+          <div>
+            <strong>Atenciosamente,</strong><br><br>
+            Equipe Comercial INOVA<br>
+            E-mail: comercial@inova.local
+          </div>
+          <div>
+            <strong>Responsavel:</strong> <span id="prop-responsavel">-</span><br>
+            <strong>Status Orcamento:</strong> <span id="prop-status-orc">-</span><br>
+            <strong>Status Entrega:</strong> <span id="prop-status-ent">-</span>
+          </div>
+        </div>
+      </article>
+    </section>
+    </div>
+
+    <div class="tab-panel" id="painel-clientes">
+      <section class="card" aria-labelledby="titulo-cliente-formulario">
+        <h2 id="titulo-cliente-formulario">Cadastro de Cliente</h2>
+        <form id="cliente-form" novalidate>
+          <div class="field w6">
+            <label for="clienteNome">Nome</label>
+            <input id="clienteNome" name="clienteNome" maxlength="120" required placeholder="Nome completo do cliente">
+          </div>
+
+          <div class="field w6">
+            <label for="clienteRg">RG</label>
+            <input id="clienteRg" name="clienteRg" maxlength="20" required placeholder="RG do cliente">
+          </div>
+
+          <div class="field w4">
+            <label for="clienteTelefone">Telefone</label>
+            <input id="clienteTelefone" name="clienteTelefone" maxlength="20" required placeholder="(00) 00000-0000">
+          </div>
+
+          <div class="field w4">
+            <label for="clienteEstado">Estado</label>
+            <input id="clienteEstado" name="clienteEstado" list="lista-estados-br" maxlength="2" required placeholder="UF">
+          </div>
+
+          <div class="field w4">
+            <label for="clienteCep">CEP</label>
+            <input id="clienteCep" name="clienteCep" maxlength="9" required placeholder="00000-000">
+          </div>
+
+          <div class="field w8">
+            <label for="clienteEndereco">Endereco</label>
+            <input id="clienteEndereco" name="clienteEndereco" maxlength="180" required placeholder="Rua, numero e complemento">
+          </div>
+
+          <div class="field w4">
+            <label for="clienteBairro">Bairro</label>
+            <input id="clienteBairro" name="clienteBairro" maxlength="80" required placeholder="Bairro">
+          </div>
+
+          <div class="actions">
+            <button class="btn-primary" type="submit">Salvar cliente</button>
+            <button class="btn-secondary" type="button" id="limpar-cliente-formulario">Limpar formulario</button>
+          </div>
+        </form>
+        <p id="mensagem-cliente" class="message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="card" aria-labelledby="titulo-clientes-listagem">
+        <h2 id="titulo-clientes-listagem">Clientes cadastrados</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>RG</th>
+                <th>Telefone</th>
+                <th>Endereco</th>
+                <th>Estado</th>
+                <th>Bairro</th>
+                <th>CEP</th>
+                <th>Acoes</th>
+              </tr>
+            </thead>
+            <tbody id="clientes-body">
+              <tr>
+                <td colspan="8">Nenhum cliente cadastrado.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <div class="tab-panel" id="painel-cadastro">
+      <section class="card" aria-labelledby="titulo-responsavel-formulario">
+        <h2 id="titulo-responsavel-formulario">Cadastro de Responsaveis</h2>
+        <form id="responsavel-form" novalidate>
+          <div class="field w3">
+            <label for="responsavelId">ID</label>
+            <input id="responsavelId" name="responsavelId" type="number" readonly>
+          </div>
+
+          <div class="field w4">
+            <label for="responsavelNome">Nome</label>
+            <input id="responsavelNome" name="responsavelNome" maxlength="100" required placeholder="Nome do responsavel">
+          </div>
+
+          <div class="field w3">
+            <label for="responsavelRg">RG</label>
+            <input id="responsavelRg" name="responsavelRg" maxlength="20" required placeholder="RG">
+          </div>
+
+          <div class="field w2">
+            <label for="responsavelTelefone">Telefone</label>
+            <input id="responsavelTelefone" name="responsavelTelefone" maxlength="20" required placeholder="(00) 00000-0000">
+          </div>
+
+          <div class="actions">
+            <button class="btn-primary" type="submit">Salvar responsavel</button>
+            <button class="btn-secondary" type="button" id="limpar-responsavel-formulario">Limpar formulario</button>
+          </div>
+        </form>
+        <p id="mensagem-responsavel" class="message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="card" aria-labelledby="titulo-responsaveis-listagem">
+        <h2 id="titulo-responsaveis-listagem">Responsaveis cadastrados</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>RG</th>
+                <th>Telefone</th>
+                <th>Acoes</th>
+              </tr>
+            </thead>
+            <tbody id="responsaveis-body">
+              <tr>
+                <td colspan="5">Nenhum responsavel cadastrado.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "inova_orcamentos_transportadora";
+    const CLIENT_STORAGE_KEY = "inova_clientes_transportadora";
+    const RESPONSAVEL_STORAGE_KEY = "inova_responsaveis_transportadora";
+    const API_BASE_URL = (() => {
+      const normalizar = (url) => String(url || "").trim().replace(/\/+$/, "");
+
+      const apiQuery = new URLSearchParams(window.location.search).get("api");
+      if (apiQuery) {
+        const base = normalizar(apiQuery);
+        if (base) {
+          localStorage.setItem("inova_api_base_url", base);
+          return base.endsWith("/api") ? base : `${base}/api`;
+        }
+      }
+
+      const apiSalva = normalizar(localStorage.getItem("inova_api_base_url"));
+      if (apiSalva) {
+        return apiSalva.endsWith("/api") ? apiSalva : `${apiSalva}/api`;
+      }
+
+      const localHost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+      if (localHost) {
+        return "http://localhost:3001/api";
+      }
+
+      // Em hospedagem publica, assume API no mesmo dominio em /api.
+      return `${window.location.origin}/api`;
+    })();
+    const AUTH_TOKEN_KEY = "inova_auth_token";
+    const AUTH_USER_KEY = "inova_usuario_logado";
+
+    const tabOrcamentos = document.getElementById("tab-orcamentos");
+    const tabClientes = document.getElementById("tab-clientes");
+    const tabCadastro = document.getElementById("tab-cadastro");
+    const painelOrcamentos = document.getElementById("painel-orcamentos");
+    const painelClientes = document.getElementById("painel-clientes");
+    const painelCadastro = document.getElementById("painel-cadastro");
+    const loginOverlay = document.getElementById("login-overlay");
+    const loginForm = document.getElementById("login-form");
+    const loginResponsavel = document.getElementById("loginResponsavel");
+    const loginSenha = document.getElementById("loginSenha");
+    const loginMessage = document.getElementById("login-message");
+    const loginFecharButton = document.getElementById("login-fechar");
+
+    const form = document.getElementById("orcamento-form");
+    const tbody = document.getElementById("orcamentos-body");
+    const message = document.getElementById("mensagem");
+    const totalEl = document.getElementById("total-orcamentos");
+    const totalValorEl = document.getElementById("valor-total");
+    const ticketMedioEl = document.getElementById("ticket-medio");
+    const clearButton = document.getElementById("limpar-formulario");
+    const exportButton = document.getElementById("exportar-json");
+    const listaClientesOrcamento = document.getElementById("lista-clientes-orcamento");
+    const visualizarPropostaButton = document.getElementById("visualizar-proposta");
+    const imprimirPropostaButton = document.getElementById("imprimir-proposta");
+    const ocultarPropostaButton = document.getElementById("ocultar-proposta");
+    const blocoProposta = document.getElementById("bloco-proposta");
+
+    const clienteForm = document.getElementById("cliente-form");
+    const clienteMessage = document.getElementById("mensagem-cliente");
+    const clientesTbody = document.getElementById("clientes-body");
+    const clearClienteButton = document.getElementById("limpar-cliente-formulario");
+
+    const responsavelForm = document.getElementById("responsavel-form");
+    const responsavelMessage = document.getElementById("mensagem-responsavel");
+    const responsaveisTbody = document.getElementById("responsaveis-body");
+    const clearResponsavelButton = document.getElementById("limpar-responsavel-formulario");
+    
+    const filtroCliente = document.getElementById("filtro-cliente");
+    const filtroStatusOrcamento = document.getElementById("filtro-status-orcamento");
+    const filtroStatusEntrega = document.getElementById("filtro-status-entrega");
+    const filtroDataInicio = document.getElementById("filtro-data-inicio");
+    const filtroDataFim = document.getElementById("filtro-data-fim");
+    const aplicarFiltrosButton = document.getElementById("aplicar-filtros");
+    const limparFiltrosButton = document.getElementById("limpar-filtros");
+
+    let orcamentosCache = [];
+    let clientesCache = [];
+    let responsaveisCache = [];
+    let apiDisponivel = false;
+    let usuarioLogado = null;
+    let authToken = sessionStorage.getItem(AUTH_TOKEN_KEY) || "";
+
+    const RESPONSAVEIS_PADRAO = [
+      { id: 1, nome: "PEDRO", rg: "", telefone: "" },
+      { id: 2, nome: "ANDERSON", rg: "", telefone: "" },
+      { id: 3, nome: "MARIA", rg: "", telefone: "" },
+      { id: 4, nome: "BIANCA", rg: "", telefone: "" },
+      { id: 5, nome: "GIOVANNA", rg: "", telefone: "" },
+      { id: 6, nome: "FABIOLA", rg: "", telefone: "" },
+      { id: 7, nome: "ALLANA", rg: "", telefone: "" },
+      { id: 8, nome: "ALLAN", rg: "", telefone: "" },
+      { id: 9, nome: "INOVA", rg: "", telefone: "" }
+    ];
+
+    let filtrosAtivos = {
+      cliente: "",
+      statusOrcamento: "",
+      statusEntrega: "",
+      dataInicio: null,
+      dataFim: null
+    };
+
+    function alternarAba(aba) {
+      const mostrarOrcamentos = aba === "orcamentos";
+      const mostrarClientes = aba === "clientes";
+      const mostrarCadastro = aba === "cadastro";
+      painelOrcamentos.classList.toggle("active", mostrarOrcamentos);
+      painelClientes.classList.toggle("active", mostrarClientes);
+      painelCadastro.classList.toggle("active", mostrarCadastro);
+      tabOrcamentos.classList.toggle("active", mostrarOrcamentos);
+      tabClientes.classList.toggle("active", mostrarClientes);
+      tabCadastro.classList.toggle("active", mostrarCadastro);
+      tabOrcamentos.setAttribute("aria-selected", String(mostrarOrcamentos));
+      tabClientes.setAttribute("aria-selected", String(mostrarClientes));
+      tabCadastro.setAttribute("aria-selected", String(mostrarCadastro));
+    }
+
+    function mostrarLoginMensagem(texto, tipo = "error") {
+      loginMessage.textContent = texto;
+      loginMessage.style.color = tipo === "error" ? "#b42318" : "#1f6fa8";
+    }
+
+    function bloquearInterface() {
+      document.body.classList.add("app-locked");
+      loginOverlay.hidden = false;
+      loginOverlay.style.display = "flex";
+      loginSenha.value = "";
+      loginSenha.focus();
+    }
+
+    function liberarInterface() {
+      document.body.classList.remove("app-locked");
+      loginOverlay.hidden = true;
+      loginOverlay.style.display = "none";
+    }
+
+    function concluirLogin(nomeUsuario, token) {
+      authToken = token;
+      usuarioLogado = nomeUsuario;
+      sessionStorage.setItem(AUTH_TOKEN_KEY, token);
+      sessionStorage.setItem(AUTH_USER_KEY, nomeUsuario);
+      mostrarLoginMensagem("Acesso liberado.", "ok");
+      liberarInterface();
+      alternarAba("orcamentos");
+      carregarDadosIniciais().then(() => {
+        renderizarTabela();
+        renderizarClientes();
+      }).catch(() => {});
+    }
+
+    function autenticarUsuario() {
+      const responsavel = loginResponsavel.value.trim().toUpperCase();
+      const senha = loginSenha.value.trim();
+
+      if (!responsavel || !senha) {
+        mostrarLoginMensagem("Selecione o responsavel e informe a senha.");
+        return Promise.resolve(false);
+      }
+
+      return apiRequest("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ username: responsavel, password: senha }),
+        skipAuth: true
+      })
+        .then((response) => {
+          concluirLogin(response.user.username, response.token);
+          return true;
+        })
+        .catch((error) => {
+          const textoErro = String(error && error.message ? error.message : "");
+          const ehErro401 = textoErro.includes("401") || textoErro.toLowerCase().includes("invalidos");
+
+          if (ehErro401) {
+            mostrarLoginMensagem("Responsavel ou senha invalidos.");
+            return false;
+          }
+
+          mostrarLoginMensagem("Nao foi possivel autenticar. Verifique se a API esta ativa.");
+          return false;
+        });
+    }
+
+    function mostrarMensagemCliente(texto, tipo = "ok") {
+      clienteMessage.textContent = texto;
+      clienteMessage.className = `message ${tipo}`;
+    }
+
+    function mostrarMensagemResponsavel(texto, tipo = "ok") {
+      responsavelMessage.textContent = texto;
+      responsavelMessage.className = `message ${tipo}`;
+    }
+
+    function limparMensagemCliente() {
+      clienteMessage.textContent = "";
+      clienteMessage.className = "message";
+    }
+
+    function limparMensagemResponsavel() {
+      responsavelMessage.textContent = "";
+      responsavelMessage.className = "message";
+    }
+
+    function gerarCodigo() {
+      const agora = new Date();
+      const y = agora.getFullYear().toString().slice(-2);
+      const m = String(agora.getMonth() + 1).padStart(2, "0");
+      const d = String(agora.getDate()).padStart(2, "0");
+      const rand = Math.floor(Math.random() * 900 + 100);
+      return `ORC-${y}${m}${d}-${rand}`;
+    }
+
+    function formatarMoeda(valor) {
+      return new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      }).format(Number(valor || 0));
+    }
+
+    function somenteDigitos(texto) {
+      return String(texto || "").replace(/\D/g, "");
+    }
+
+    function formatarTelefoneBR(texto) {
+      const digitos = somenteDigitos(texto).slice(0, 11);
+      if (!digitos) return "";
+      if (digitos.length <= 2) return `(${digitos}`;
+      if (digitos.length <= 6) return `(${digitos.slice(0, 2)}) ${digitos.slice(2)}`;
+      if (digitos.length <= 10) return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 6)}-${digitos.slice(6)}`;
+      return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 7)}-${digitos.slice(7)}`;
+    }
+
+    function formatarCepBR(texto) {
+      const digitos = somenteDigitos(texto).slice(0, 8);
+      if (digitos.length <= 5) return digitos;
+      return `${digitos.slice(0, 5)}-${digitos.slice(5)}`;
+    }
+
+    function mascaraTelefoneOuEmail(valor) {
+      const texto = String(valor || "").trim();
+      if (!texto) return "";
+      if (/[a-zA-Z@]/.test(texto)) return texto;
+      return formatarTelefoneBR(texto);
+    }
+
+    function extrairUF(localTexto) {
+      const texto = (localTexto || "").trim();
+      const partes = texto.split("/");
+      if (partes.length < 2) {
+        return "-";
+      }
+      const uf = partes[partes.length - 1].trim().toUpperCase();
+      return uf.length <= 2 ? uf : "-";
+    }
+
+    function formatarDataIso(isoString) {
+      if (!isoString) {
+        return "-";
+      }
+      const data = new Date(isoString);
+      if (Number.isNaN(data.getTime())) {
+        return "-";
+      }
+      const dia = String(data.getDate()).padStart(2, "0");
+      const mes = String(data.getMonth() + 1).padStart(2, "0");
+      const ano = data.getFullYear();
+      return `${dia}/${mes}/${ano}`;
+    }
+
+    function converterDataBRparaISO(dataBR) {
+      if (!dataBR || dataBR.length !== 10) return null;
+      const [dia, mes, ano] = dataBR.split("/");
+      return `${ano}-${mes}-${dia}`;
+    }
+
+    function obterDataISO(inputDate) {
+      if (!inputDate) return null;
+      const data = new Date(inputDate + "T00:00:00");
+      return data.toISOString();
+    }
+
+    async function apiRequest(path, options = {}) {
+      const headers = {
+        "Content-Type": "application/json",
+        ...(options.headers || {})
+      };
+
+      if (!options.skipAuth && authToken) {
+        headers.Authorization = `Bearer ${authToken}`;
+      }
+
+      const response = await fetch(`${API_BASE_URL}${path}`, {
+        ...options,
+        headers
+      });
+
+      if (!response.ok) {
+        const body = await response.text();
+        throw new Error(body || `Erro HTTP ${response.status}`);
+      }
+
+      if (response.status === 204) {
+        return null;
+      }
+
+      return response.json();
+    }
+
+    async function carregarDadosIniciais() {
+      if (!authToken) {
+        throw new Error("Sem autenticacao");
+      }
+
+      try {
+        await apiRequest("/auth/me");
+        const [orcamentos, clientes] = await Promise.all([
+          apiRequest("/orcamentos"),
+          apiRequest("/clientes")
+        ]);
+
+        orcamentosCache = Array.isArray(orcamentos) ? orcamentos : [];
+        clientesCache = Array.isArray(clientes) ? clientes : [];
+        apiDisponivel = true;
+      } catch (_error) {
+        apiDisponivel = false;
+        sessionStorage.removeItem(AUTH_TOKEN_KEY);
+        sessionStorage.removeItem(AUTH_USER_KEY);
+        authToken = "";
+        usuarioLogado = null;
+        bloquearInterface();
+        throw _error;
+      }
+    }
+
+    function filtrarOrcamentos(orcamentos) {
+      return orcamentos.filter((orcamento) => {
+        // Filtro cliente
+        if (filtrosAtivos.cliente) {
+          if (!orcamento.cliente.toLowerCase().includes(filtrosAtivos.cliente.toLowerCase())) {
+            return false;
+          }
+        }
+
+        // Filtro status do orcamento
+        if (filtrosAtivos.statusOrcamento) {
+          if (orcamento.statusOrcamento !== filtrosAtivos.statusOrcamento) {
+            return false;
+          }
+        }
+
+        // Filtro status da entrega
+        if (filtrosAtivos.statusEntrega) {
+          if (orcamento.statusEntrega !== filtrosAtivos.statusEntrega) {
+            return false;
+          }
+        }
+
+        // Filtro data início
+        if (filtrosAtivos.dataInicio) {
+          const dataCriacao = new Date(orcamento.criadoEm).getTime();
+          const dataInicio = new Date(filtrosAtivos.dataInicio).getTime();
+          if (dataCriacao < dataInicio) {
+            return false;
+          }
+        }
+
+        // Filtro data fim
+        if (filtrosAtivos.dataFim) {
+          const dataCriacao = new Date(orcamento.criadoEm).getTime();
+          const dataFim = new Date(filtrosAtivos.dataFim);
+          dataFim.setHours(23, 59, 59, 999);
+          if (dataCriacao > dataFim.getTime()) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+    }
+
+    function obterOrcamentos() {
+      return Array.isArray(orcamentosCache) ? [...orcamentosCache] : [];
+    }
+
+    async function salvarOrcamentos(lista) {
+      orcamentosCache = [...lista];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
+
+      if (!apiDisponivel) {
+        return;
+      }
+
+      await apiRequest("/orcamentos/bulk", {
+        method: "PUT",
+        body: JSON.stringify({ items: orcamentosCache })
+      });
+    }
+
+    function obterClientes() {
+      return Array.isArray(clientesCache) ? [...clientesCache] : [];
+    }
+
+    function obterResponsaveis() {
+      return Array.isArray(responsaveisCache) ? [...responsaveisCache] : [];
+    }
+
+    async function salvarClientes(lista) {
+      clientesCache = [...lista];
+      localStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(lista));
+
+      if (!apiDisponivel) {
+        return;
+      }
+
+      await apiRequest("/clientes/bulk", {
+        method: "PUT",
+        body: JSON.stringify({ items: clientesCache })
+      });
+    }
+
+    function salvarResponsaveis(lista) {
+      responsaveisCache = [...lista];
+      localStorage.setItem(RESPONSAVEL_STORAGE_KEY, JSON.stringify(lista));
+    }
+
+    function carregarResponsaveisIniciais() {
+      try {
+        const dados = JSON.parse(localStorage.getItem(RESPONSAVEL_STORAGE_KEY) || "[]");
+        if (Array.isArray(dados) && dados.length > 0) {
+          responsaveisCache = dados
+            .map((item) => ({
+              id: Number(item.id),
+              nome: String(item.nome || "").trim().toUpperCase(),
+              rg: String(item.rg || "").trim(),
+              telefone: String(item.telefone || "").trim()
+            }))
+            .filter((item) => Number.isFinite(item.id) && item.id > 0 && item.nome);
+
+          if (responsaveisCache.length > 0) {
+            return;
+          }
+        }
+      } catch (_error) {
+        responsaveisCache = [];
+      }
+
+      responsaveisCache = RESPONSAVEIS_PADRAO.map((item) => ({ ...item }));
+      salvarResponsaveis(responsaveisCache);
+    }
+
+    function proximoIdResponsavel() {
+      const lista = obterResponsaveis();
+      if (lista.length === 0) return 1;
+      return Math.max(...lista.map((item) => Number(item.id) || 0)) + 1;
+    }
+
+    function atualizarSelectResponsaveis() {
+      const atual = form.responsavel.value;
+      const opcoes = obterResponsaveis()
+        .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"))
+        .map((item) => `<option value="${item.nome}">${item.nome}</option>`)
+        .join("");
+
+      form.responsavel.innerHTML = `<option value="">Selecione</option>${opcoes}`;
+
+      if (atual && obterResponsaveis().some((item) => item.nome === atual)) {
+        form.responsavel.value = atual;
+      } else {
+        form.responsavel.value = "";
+      }
+    }
+
+    function atualizarListaClientesOrcamento() {
+      const clientes = obterClientes();
+      const opcoes = clientes
+        .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"))
+        .map((cliente) => `<option value="${cliente.nome}"></option>`)
+        .join("");
+      listaClientesOrcamento.innerHTML = opcoes;
+    }
+
+    function preencherContatoPorCliente(nomeCliente) {
+      const nome = (nomeCliente || "").trim().toLowerCase();
+      if (!nome) {
+        return;
+      }
+
+      const clienteEncontrado = obterClientes().find(
+        (cliente) => (cliente.nome || "").trim().toLowerCase() === nome
+      );
+
+      if (clienteEncontrado && !form.contato.value.trim()) {
+        form.contato.value = mascaraTelefoneOuEmail(clienteEncontrado.telefone || "");
+      }
+
+      if (clienteEncontrado && !form.aC.value.trim()) {
+        form.aC.value = clienteEncontrado.nome || "";
+      }
+    }
+
+    function renderizarClientes() {
+      const clientes = obterClientes();
+      clientesTbody.innerHTML = "";
+      atualizarListaClientesOrcamento();
+
+      if (clientes.length === 0) {
+        clientesTbody.innerHTML = "<tr><td colspan='8'>Nenhum cliente cadastrado.</td></tr>";
+        return;
+      }
+
+      const html = clientes
+        .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"))
+        .map((cliente) => `
+          <tr>
+            <td data-label="Nome">${cliente.nome}</td>
+            <td data-label="RG">${cliente.rg}</td>
+            <td data-label="Telefone">${cliente.telefone}</td>
+            <td data-label="Endereco">${cliente.endereco}</td>
+            <td data-label="Estado">${cliente.estado}</td>
+            <td data-label="Bairro">${cliente.bairro}</td>
+            <td data-label="CEP">${cliente.cep}</td>
+            <td data-label="Acoes">
+              <div class="table-actions">
+                <button type="button" class="btn-secondary" data-edit-cliente="${cliente.id}">Editar</button>
+                <button type="button" class="btn-secondary" data-delete-cliente="${cliente.id}">Excluir</button>
+              </div>
+            </td>
+          </tr>
+        `)
+        .join("");
+
+      clientesTbody.innerHTML = html;
+    }
+
+    function preencherFormularioCliente(item) {
+      clienteForm.codigoEdicaoCliente.value = item.id;
+      clienteForm.clienteNome.value = item.nome || "";
+      clienteForm.clienteRg.value = item.rg || "";
+      clienteForm.clienteTelefone.value = item.telefone || "";
+      clienteForm.clienteEndereco.value = item.endereco || "";
+      clienteForm.clienteEstado.value = item.estado || "";
+      clienteForm.clienteBairro.value = item.bairro || "";
+      clienteForm.clienteCep.value = item.cep || "";
+      clienteForm.clienteNome.focus();
+    }
+
+    function renderizarResponsaveis() {
+      const lista = obterResponsaveis();
+      responsaveisTbody.innerHTML = "";
+
+      if (lista.length === 0) {
+        responsaveisTbody.innerHTML = "<tr><td colspan='5'>Nenhum responsavel cadastrado.</td></tr>";
+        atualizarSelectResponsaveis();
+        return;
+      }
+
+      const html = lista
+        .sort((a, b) => a.id - b.id)
+        .map((item) => `
+          <tr>
+            <td data-label="ID" class="mono">${item.id}</td>
+            <td data-label="Nome">${item.nome}</td>
+            <td data-label="RG">${item.rg || "-"}</td>
+            <td data-label="Telefone">${item.telefone || "-"}</td>
+            <td data-label="Acoes">
+              <div class="table-actions">
+                <button type="button" class="btn-secondary" data-edit-responsavel="${item.id}">Editar</button>
+                <button type="button" class="btn-secondary" data-delete-responsavel="${item.id}">Excluir</button>
+              </div>
+            </td>
+          </tr>
+        `)
+        .join("");
+
+      responsaveisTbody.innerHTML = html;
+      atualizarSelectResponsaveis();
+    }
+
+    function preencherFormularioResponsavel(item) {
+      responsavelForm.codigoEdicaoResponsavel.value = String(item.id);
+      responsavelForm.responsavelId.value = String(item.id);
+      responsavelForm.responsavelNome.value = item.nome || "";
+      responsavelForm.responsavelRg.value = item.rg || "";
+      responsavelForm.responsavelTelefone.value = item.telefone || "";
+      responsavelForm.responsavelNome.focus();
+    }
+
+    function coletarDadosResponsavelFormulario() {
+      const nome = responsavelForm.responsavelNome.value.trim().toUpperCase();
+      const rg = responsavelForm.responsavelRg.value.trim();
+      const telefone = responsavelForm.responsavelTelefone.value.trim();
+
+      if (!nome || !rg || !telefone) {
+        return null;
+      }
+
+      return { nome, rg, telefone };
+    }
+
+    function prepararNovoResponsavel() {
+      responsavelForm.codigoEdicaoResponsavel.value = "";
+      responsavelForm.responsavelId.value = String(proximoIdResponsavel());
+    }
+
+    function criarCampoOcultoEdicaoResponsavel() {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "codigoEdicaoResponsavel";
+      hidden.value = "";
+      responsavelForm.appendChild(hidden);
+    }
+
+    function coletarDadosClienteFormulario() {
+      const nome = clienteForm.clienteNome.value.trim();
+      const rg = clienteForm.clienteRg.value.trim();
+      const telefone = clienteForm.clienteTelefone.value.trim();
+      const endereco = clienteForm.clienteEndereco.value.trim();
+      const estado = clienteForm.clienteEstado.value.trim().toUpperCase();
+      const bairro = clienteForm.clienteBairro.value.trim();
+      const cep = clienteForm.clienteCep.value.trim();
+
+      if (!nome || !rg || !telefone || !endereco || !estado || !bairro || !cep) {
+        return null;
+      }
+
+      return { nome, rg, telefone, endereco, estado, bairro, cep };
+    }
+
+    function criarCampoOcultoEdicaoCliente() {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "codigoEdicaoCliente";
+      hidden.value = "";
+      clienteForm.appendChild(hidden);
+    }
+
+    function classeStatusOrcamento(status) {
+      if (["Solicitado", "Enviado", "Aguardando Retorno"].includes(status)) return "status-neutro";
+      if (["Em Elaboracao", "Em Negociacao"].includes(status)) return "status-andamento";
+      if (["Aprovado", "Contratado"].includes(status)) return "status-sucesso";
+      if (["Reprovado", "Cancelado"].includes(status)) return "status-erro";
+      return "status-neutro";
+    }
+
+    function classeStatusEntrega(status) {
+      if (["Pedido Recebido", "Programado", "Reagendado"].includes(status)) return "status-neutro";
+      if (["Coletado", "Em Transporte", "Em Rota"].includes(status)) return "status-andamento";
+      if (["Entregue"].includes(status)) return "status-sucesso";
+      if (["Ocorrencia", "Cancelado"].includes(status)) return "status-alerta";
+      return "status-neutro";
+    }
+
+    function mostrarMensagem(texto, tipo = "ok") {
+      message.textContent = texto;
+      message.className = `message ${tipo}`;
+    }
+
+    function limparMensagem() {
+      message.textContent = "";
+      message.className = "message";
+    }
+
+    function preencherPropostaComDados(dados) {
+      const codigo = form.codigoEdicao.value || gerarCodigo();
+      const hoje = formatarDataIso(new Date().toISOString());
+
+      document.getElementById("prop-codigo").textContent = codigo;
+      document.getElementById("prop-cliente").textContent = dados.cliente || "Cliente nao informado";
+      document.getElementById("prop-ac").textContent = dados.aC || "Nao informado";
+      document.getElementById("prop-contato").textContent = dados.contato || "-";
+      document.getElementById("prop-data").textContent = hoje;
+      document.getElementById("prop-origem").textContent = dados.origem || "-";
+      document.getElementById("prop-origem-uf").textContent = dados.origemUF || extrairUF(dados.origem);
+      document.getElementById("prop-destino").textContent = dados.destino || "-";
+      document.getElementById("prop-destino-uf").textContent = dados.destinoUF || extrairUF(dados.destino);
+      document.getElementById("prop-valor").textContent = formatarMoeda(dados.valor || 0);
+      document.getElementById("prop-responsavel").textContent = dados.responsavel || "-";
+      document.getElementById("prop-status-orc").textContent = dados.statusOrcamento || "-";
+      document.getElementById("prop-status-ent").textContent = dados.statusEntrega || "-";
+    }
+
+    function abrirProposta() {
+      const dados = coletarDadosFormulario() || {
+        cliente: form.cliente.value.trim(),
+        aC: form.aC.value.trim(),
+        contato: form.contato.value.trim(),
+        origem: form.origem.value.trim(),
+        origemUF: form.origemUF.value.trim().toUpperCase(),
+        destino: form.destino.value.trim(),
+        destinoUF: form.destinoUF.value.trim().toUpperCase(),
+        valor: Number(form.valor.value || 0),
+        responsavel: form.responsavel.value.trim(),
+        statusOrcamento: form.statusOrcamento.value,
+        statusEntrega: form.statusEntrega.value
+      };
+
+      preencherPropostaComDados(dados);
+      blocoProposta.classList.add("active");
+      blocoProposta.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderizarTabela() {
+      const orcamentos = obterOrcamentos();
+      const orcamentosFiltrados = filtrarOrcamentos(orcamentos);
+      tbody.innerHTML = "";
+
+      if (orcamentosFiltrados.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='10'>Nenhum orcamento encontrado com os filtros aplicados.</td></tr>";
+      } else {
+        const html = orcamentosFiltrados
+          .sort((a, b) => new Date(b.criadoEm) - new Date(a.criadoEm))
+          .map((orcamento) => {
+            const origemCompleta = `${orcamento.origem || "-"}/${(orcamento.origemUF || extrairUF(orcamento.origem)) || "-"}`;
+            const destinoCompleta = `${orcamento.destino || "-"}/${(orcamento.destinoUF || extrairUF(orcamento.destino)) || "-"}`;
+            const rota = `${origemCompleta} -> ${destinoCompleta}`;
+            const statusOrcamentoClass = classeStatusOrcamento(orcamento.statusOrcamento);
+            const statusEntregaClass = classeStatusEntrega(orcamento.statusEntrega);
+            const data = formatarDataIso(orcamento.criadoEm);
+
+            return `
+              <tr>
+                <td data-label="Codigo" class="mono">${orcamento.codigo}</td>
+                <td data-label="Data">${data}</td>
+                <td data-label="Cliente">${orcamento.cliente}</td>
+                <td data-label="Rota">${rota}</td>
+                <td data-label="Tipo">${orcamento.tipoCarga || "-"}</td>
+                <td data-label="Valor" class="mono">${formatarMoeda(orcamento.valor)}</td>
+                <td data-label="Status Orcamento"><span class="status ${statusOrcamentoClass}">${orcamento.statusOrcamento || "-"}</span></td>
+                <td data-label="Status Entrega"><span class="status ${statusEntregaClass}">${orcamento.statusEntrega || "-"}</span></td>
+                <td data-label="Responsavel">${orcamento.responsavel || "-"}</td>
+                <td data-label="Acoes">
+                  <div class="table-actions">
+                    <button type="button" class="btn-secondary" data-edit="${orcamento.codigo}">Editar</button>
+                    <button type="button" class="btn-secondary" data-delete="${orcamento.codigo}">Excluir</button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          })
+          .join("");
+
+        tbody.innerHTML = html;
+      }
+
+      atualizarMetricas(orcamentos);
+    }
+
+    function atualizarMetricas(orcamentos) {
+      const total = orcamentos.length;
+      const soma = orcamentos.reduce((acc, item) => acc + Number(item.valor || 0), 0);
+      const media = total > 0 ? soma / total : 0;
+
+      totalEl.textContent = String(total);
+      totalValorEl.textContent = formatarMoeda(soma);
+      ticketMedioEl.textContent = formatarMoeda(media);
+    }
+
+    function preencherFormulario(item) {
+      form.codigoEdicao.value = item.codigo;
+      form.cliente.value = item.cliente || "";
+      form.aC.value = item.aC || "";
+      form.contato.value = item.contato || "";
+      form.origem.value = item.origem || "";
+      form.origemUF.value = (item.origemUF || extrairUF(item.origem) || "").toUpperCase();
+      form.destino.value = item.destino || "";
+      form.destinoUF.value = (item.destinoUF || extrairUF(item.destino) || "").toUpperCase();
+      form.tipoCarga.value = item.tipoCarga || "";
+      form.peso.value = item.peso || "";
+      form.volume.value = item.volume || "";
+      form.prazo.value = item.prazo || "";
+      form.valor.value = item.valor || "";
+      form.validade.value = item.validade || "";
+      form.statusOrcamento.value = item.statusOrcamento || "Solicitado";
+      form.statusEntrega.value = item.statusEntrega || "Pedido Recebido";
+      form.responsavel.value = item.responsavel || "";
+      form.observacoes.value = item.observacoes || "";
+      form.cliente.focus();
+    }
+
+    function coletarDadosFormulario() {
+      const cliente = form.cliente.value.trim();
+      const aC = form.aC.value.trim();
+      const origem = form.origem.value.trim();
+      const origemUF = form.origemUF.value.trim().toUpperCase();
+      const destino = form.destino.value.trim();
+      const destinoUF = form.destinoUF.value.trim().toUpperCase();
+      const valor = Number(form.valor.value);
+
+      if (!cliente || !origem || !origemUF || !destino || !destinoUF || !Number.isFinite(valor) || valor <= 0) {
+        return null;
+      }
+
+      return {
+        cliente,
+        aC,
+        contato: form.contato.value.trim(),
+        origem,
+        origemUF,
+        destino,
+        destinoUF,
+        tipoCarga: form.tipoCarga.value,
+        peso: form.peso.value,
+        volume: form.volume.value,
+        prazo: form.prazo.value,
+        valor,
+        validade: form.validade.value,
+        statusOrcamento: form.statusOrcamento.value,
+        statusEntrega: form.statusEntrega.value,
+        responsavel: form.responsavel.value.trim(),
+        observacoes: form.observacoes.value.trim()
+      };
+    }
+
+    function criarCampoOcultoEdicao() {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "codigoEdicao";
+      hidden.value = "";
+      form.appendChild(hidden);
+    }
+
+    tabOrcamentos.addEventListener("click", () => alternarAba("orcamentos"));
+    tabClientes.addEventListener("click", () => alternarAba("clientes"));
+    tabCadastro.addEventListener("click", () => alternarAba("cadastro"));
+
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      await autenticarUsuario();
+    });
+
+    loginFecharButton.addEventListener("click", () => {
+      mostrarLoginMensagem("Acesso bloqueado ate realizar login.");
+    });
+
+    form.contato.addEventListener("input", () => {
+      form.contato.value = mascaraTelefoneOuEmail(form.contato.value);
+    });
+
+    clienteForm.clienteTelefone.addEventListener("input", () => {
+      clienteForm.clienteTelefone.value = formatarTelefoneBR(clienteForm.clienteTelefone.value);
+    });
+
+    responsavelForm.responsavelTelefone.addEventListener("input", () => {
+      responsavelForm.responsavelTelefone.value = formatarTelefoneBR(responsavelForm.responsavelTelefone.value);
+    });
+
+    clienteForm.clienteCep.addEventListener("input", () => {
+      clienteForm.clienteCep.value = formatarCepBR(clienteForm.clienteCep.value);
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      limparMensagem();
+
+      const dados = coletarDadosFormulario();
+      if (!dados) {
+        mostrarMensagem("Preencha os campos obrigatorios e informe um valor valido.", "error");
+        return;
+      }
+
+      const lista = obterOrcamentos();
+      const codigoEdicao = form.codigoEdicao.value;
+
+      if (codigoEdicao) {
+        const indice = lista.findIndex((item) => item.codigo === codigoEdicao);
+        if (indice >= 0) {
+          lista[indice] = {
+            ...lista[indice],
+            ...dados,
+            atualizadoEm: new Date().toISOString()
+          };
+          mostrarMensagem("Orcamento atualizado com sucesso.");
+        }
+      } else {
+        lista.push({
+          codigo: gerarCodigo(),
+          criadoEm: new Date().toISOString(),
+          ...dados
+        });
+        mostrarMensagem("Orcamento salvo com sucesso.");
+      }
+
+      try {
+        await salvarOrcamentos(lista);
+      } catch (_error) {
+        mostrarMensagem("Falha ao salvar no Neon. Dados ficaram salvos localmente.", "error");
+      }
+      form.reset();
+      form.codigoEdicao.value = "";
+      form.statusOrcamento.value = "Solicitado";
+      form.statusEntrega.value = "Pedido Recebido";
+      renderizarTabela();
+    });
+
+    form.cliente.addEventListener("change", () => {
+      preencherContatoPorCliente(form.cliente.value);
+    });
+
+    form.cliente.addEventListener("blur", () => {
+      preencherContatoPorCliente(form.cliente.value);
+    });
+
+    tbody.addEventListener("click", async (event) => {
+      const botao = event.target;
+      if (!(botao instanceof HTMLButtonElement)) {
+        return;
+      }
+
+      const codigoEditar = botao.getAttribute("data-edit");
+      const codigoExcluir = botao.getAttribute("data-delete");
+      const lista = obterOrcamentos();
+
+      if (codigoEditar) {
+        const item = lista.find((orcamento) => orcamento.codigo === codigoEditar);
+        if (!item) {
+          mostrarMensagem("Orcamento nao encontrado para edicao.", "error");
+          return;
+        }
+        preencherFormulario(item);
+        mostrarMensagem(`Editando o orcamento ${item.codigo}.`);
+        return;
+      }
+
+      if (codigoExcluir) {
+        const restante = lista.filter((orcamento) => orcamento.codigo !== codigoExcluir);
+        if (restante.length === lista.length) {
+          mostrarMensagem("Orcamento nao encontrado para exclusao.", "error");
+          return;
+        }
+        try {
+          await salvarOrcamentos(restante);
+        } catch (_error) {
+          mostrarMensagem("Falha ao excluir no Neon. Alteracao mantida localmente.", "error");
+        }
+        renderizarTabela();
+        mostrarMensagem("Orcamento excluido com sucesso.");
+      }
+    });
+
+    clearButton.addEventListener("click", () => {
+      form.reset();
+      form.codigoEdicao.value = "";
+      form.statusOrcamento.value = "Solicitado";
+      form.statusEntrega.value = "Pedido Recebido";
+      limparMensagem();
+    });
+
+    clienteForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      limparMensagemCliente();
+
+      const dados = coletarDadosClienteFormulario();
+      if (!dados) {
+        mostrarMensagemCliente("Preencha todos os campos obrigatorios do cliente.", "error");
+        return;
+      }
+
+      const lista = obterClientes();
+      const codigoEdicao = clienteForm.codigoEdicaoCliente.value;
+
+      if (codigoEdicao) {
+        const indice = lista.findIndex((item) => item.id === codigoEdicao);
+        if (indice >= 0) {
+          lista[indice] = {
+            ...lista[indice],
+            ...dados,
+            atualizadoEm: new Date().toISOString()
+          };
+          mostrarMensagemCliente("Cliente atualizado com sucesso.");
+        }
+      } else {
+        lista.push({
+          id: crypto.randomUUID(),
+          criadoEm: new Date().toISOString(),
+          ...dados
+        });
+        mostrarMensagemCliente("Cliente cadastrado com sucesso.");
+      }
+
+      try {
+        await salvarClientes(lista);
+      } catch (_error) {
+        mostrarMensagemCliente("Falha ao salvar no Neon. Dados ficaram salvos localmente.", "error");
+      }
+      clienteForm.reset();
+      clienteForm.codigoEdicaoCliente.value = "";
+      renderizarClientes();
+    });
+
+    clientesTbody.addEventListener("click", async (event) => {
+      const botao = event.target;
+      if (!(botao instanceof HTMLButtonElement)) {
+        return;
+      }
+
+      const idEditar = botao.getAttribute("data-edit-cliente");
+      const idExcluir = botao.getAttribute("data-delete-cliente");
+      const lista = obterClientes();
+
+      if (idEditar) {
+        const item = lista.find((cliente) => cliente.id === idEditar);
+        if (!item) {
+          mostrarMensagemCliente("Cliente nao encontrado para edicao.", "error");
+          return;
+        }
+        preencherFormularioCliente(item);
+        mostrarMensagemCliente(`Editando cliente ${item.nome}.`);
+        return;
+      }
+
+      if (idExcluir) {
+        const restante = lista.filter((cliente) => cliente.id !== idExcluir);
+        if (restante.length === lista.length) {
+          mostrarMensagemCliente("Cliente nao encontrado para exclusao.", "error");
+          return;
+        }
+        try {
+          await salvarClientes(restante);
+        } catch (_error) {
+          mostrarMensagemCliente("Falha ao excluir no Neon. Alteracao mantida localmente.", "error");
+        }
+        renderizarClientes();
+        mostrarMensagemCliente("Cliente excluido com sucesso.");
+      }
+    });
+
+    clearClienteButton.addEventListener("click", () => {
+      clienteForm.reset();
+      clienteForm.codigoEdicaoCliente.value = "";
+      limparMensagemCliente();
+    });
+
+    responsavelForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      limparMensagemResponsavel();
+
+      const dados = coletarDadosResponsavelFormulario();
+      if (!dados) {
+        mostrarMensagemResponsavel("Preencha todos os campos obrigatorios do responsavel.", "error");
+        return;
+      }
+
+      const lista = obterResponsaveis();
+      const codigoEdicao = responsavelForm.codigoEdicaoResponsavel.value;
+
+      if (codigoEdicao) {
+        const idEdicao = Number(codigoEdicao);
+        const indice = lista.findIndex((item) => Number(item.id) === idEdicao);
+        if (indice >= 0) {
+          lista[indice] = {
+            ...lista[indice],
+            ...dados,
+            atualizadoEm: new Date().toISOString()
+          };
+          mostrarMensagemResponsavel("Responsavel atualizado com sucesso.");
+        }
+      } else {
+        const novoId = proximoIdResponsavel();
+        lista.push({
+          id: novoId,
+          criadoEm: new Date().toISOString(),
+          ...dados
+        });
+        mostrarMensagemResponsavel("Responsavel cadastrado com sucesso.");
+      }
+
+      salvarResponsaveis(lista);
+      responsavelForm.reset();
+      prepararNovoResponsavel();
+      renderizarResponsaveis();
+    });
+
+    responsaveisTbody.addEventListener("click", (event) => {
+      const botao = event.target;
+      if (!(botao instanceof HTMLButtonElement)) {
+        return;
+      }
+
+      const idEditar = Number(botao.getAttribute("data-edit-responsavel") || 0);
+      const idExcluir = Number(botao.getAttribute("data-delete-responsavel") || 0);
+      const lista = obterResponsaveis();
+
+      if (idEditar) {
+        const item = lista.find((responsavel) => Number(responsavel.id) === idEditar);
+        if (!item) {
+          mostrarMensagemResponsavel("Responsavel nao encontrado para edicao.", "error");
+          return;
+        }
+        preencherFormularioResponsavel(item);
+        mostrarMensagemResponsavel(`Editando responsavel ID ${item.id}.`);
+        return;
+      }
+
+      if (idExcluir) {
+        const restante = lista.filter((responsavel) => Number(responsavel.id) !== idExcluir);
+        if (restante.length === lista.length) {
+          mostrarMensagemResponsavel("Responsavel nao encontrado para exclusao.", "error");
+          return;
+        }
+
+        salvarResponsaveis(restante);
+        responsavelForm.reset();
+        prepararNovoResponsavel();
+        renderizarResponsaveis();
+        mostrarMensagemResponsavel("Responsavel excluido com sucesso.");
+      }
+    });
+
+    clearResponsavelButton.addEventListener("click", () => {
+      responsavelForm.reset();
+      prepararNovoResponsavel();
+      limparMensagemResponsavel();
+    });
+
+    visualizarPropostaButton.addEventListener("click", () => {
+      abrirProposta();
+    });
+
+    imprimirPropostaButton.addEventListener("click", () => {
+      window.print();
+    });
+
+    ocultarPropostaButton.addEventListener("click", () => {
+      blocoProposta.classList.remove("active");
+    });
+
+    exportButton.addEventListener("click", () => {
+      const lista = obterOrcamentos();
+      if (lista.length === 0) {
+        mostrarMensagem("Nao ha orcamentos para exportar.", "error");
+        return;
+      }
+
+      const blob = new Blob([JSON.stringify(lista, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `orcamentos-inova-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      mostrarMensagem("Arquivo JSON exportado com sucesso.");
+    });
+
+    aplicarFiltrosButton.addEventListener("click", () => {
+      filtrosAtivos.cliente = filtroCliente.value.trim();
+      filtrosAtivos.statusOrcamento = filtroStatusOrcamento.value;
+      filtrosAtivos.statusEntrega = filtroStatusEntrega.value;
+      filtrosAtivos.dataInicio = filtroDataInicio.value ? obterDataISO(filtroDataInicio.value) : null;
+      filtrosAtivos.dataFim = filtroDataFim.value ? obterDataISO(filtroDataFim.value) : null;
+
+      if (filtrosAtivos.cliente || filtrosAtivos.statusOrcamento || filtrosAtivos.statusEntrega || filtrosAtivos.dataInicio || filtrosAtivos.dataFim) {
+        mostrarMensagem("Filtros aplicados com sucesso.");
+      }
+      renderizarTabela();
+    });
+
+    limparFiltrosButton.addEventListener("click", () => {
+      filtroCliente.value = "";
+      filtroStatusOrcamento.value = "";
+      filtroStatusEntrega.value = "";
+      filtroDataInicio.value = "";
+      filtroDataFim.value = "";
+      
+      filtrosAtivos = {
+        cliente: "",
+        statusOrcamento: "",
+        statusEntrega: "",
+        dataInicio: null,
+        dataFim: null
+      };
+
+      limparMensagem();
+      renderizarTabela();
+    });
+
+    // Aplicar filtros ao pressionar Enter nos campos de entrada
+    filtroCliente.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        aplicarFiltrosButton.click();
+      }
+    });
+
+    async function initApp() {
+      criarCampoOcultoEdicao();
+      criarCampoOcultoEdicaoCliente();
+      criarCampoOcultoEdicaoResponsavel();
+      carregarResponsaveisIniciais();
+      prepararNovoResponsavel();
+      renderizarResponsaveis();
+      const sessao = sessionStorage.getItem(AUTH_USER_KEY);
+      if (sessao) {
+        usuarioLogado = sessao;
+      }
+
+      if (!authToken || !usuarioLogado) {
+        bloquearInterface();
+        return;
+      }
+
+      try {
+        await carregarDadosIniciais();
+        renderizarTabela();
+        renderizarClientes();
+        liberarInterface();
+        alternarAba("orcamentos");
+      } catch (_error) {
+        bloquearInterface();
+      }
+    }
+
+    initApp();
+  </script>
+</body>
+</html>
