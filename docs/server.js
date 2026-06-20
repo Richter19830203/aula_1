@@ -6,6 +6,10 @@ const crypto = require("crypto");
 const { Pool } = require("pg");
 require("dotenv").config();
 
+console.log("PORT =", process.env.PORT);
+console.log("DATABASE_URL =", process.env.DATABASE_URL ? "ENCONTRADA" : "VAZIA");
+console.log("AUTH_SECRET =", process.env.AUTH_SECRET ? "ENCONTRADA" : "VAZIA");
+
 const app = express();
 const port = Number(process.env.PORT || 3001);
 
