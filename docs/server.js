@@ -165,6 +165,40 @@ async function syncUsersFromFile() {
   }
 }
 
+async function syncResponsaveisSeedFromFile() {
+  const content = await readCredentialsFile();
+  const credentials = parseCredentialsContent(content);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS responsaveis (
+      id INTEGER PRIMARY KEY,
+      nome TEXT NOT NULL UNIQUE,
+      rg TEXT,
+      telefone TEXT,
+      criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      atualizado_em TIMESTAMPTZ
+    );
+  `);
+
+  const countResult = await pool.query("SELECT COUNT(*)::int AS total FROM responsaveis");
+  const total = Number(countResult.rows[0] && countResult.rows[0].total ? countResult.rows[0].total : 0);
+  if (total > 0) {
+    return;
+  }
+
+  for (let i = 0; i < credentials.length; i += 1) {
+    const credential = credentials[i];
+    await pool.query(
+      `
+      INSERT INTO responsaveis (id, nome, rg, telefone, atualizado_em)
+      VALUES ($1, $2, $3, $4, NOW())
+      ON CONFLICT (id) DO NOTHING;
+      `,
+      [i + 1, credential.username, "", ""]
+    );
+  }
+}
+
 async function initSchema() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS clientes (
@@ -209,6 +243,17 @@ async function initSchema() {
   await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS a_c TEXT");
   await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS origem_uf TEXT");
   await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS destino_uf TEXT");
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS responsaveis (
+      id INTEGER PRIMARY KEY,
+      nome TEXT NOT NULL UNIQUE,
+      rg TEXT,
+      telefone TEXT,
+      criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      atualizado_em TIMESTAMPTZ
+    );
+  `);
 }
 
 function ensureArray(input) {
@@ -349,6 +394,61 @@ app.put("/api/clientes/bulk", async (req, res) => {
   }
 });
 
+app.get("/api/responsaveis", async (_req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        id,
+        nome,
+        COALESCE(rg, '') AS rg,
+        COALESCE(telefone, '') AS telefone,
+        criado_em AS "criadoEm",
+        atualizado_em AS "atualizadoEm"
+      FROM responsaveis
+      ORDER BY id ASC;
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put("/api/responsaveis/bulk", async (req, res) => {
+  const items = ensureArray(req.body && req.body.items);
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    await client.query("DELETE FROM responsaveis");
+
+    for (const item of items) {
+      await client.query(
+        `
+        INSERT INTO responsaveis (
+          id, nome, rg, telefone, criado_em, atualizado_em
+        ) VALUES ($1,$2,$3,$4,$5,$6)
+        `,
+        [
+          Number(item.id),
+          normalizeUserName(item.nome),
+          item.rg || "",
+          item.telefone || "",
+          item.criadoEm || new Date().toISOString(),
+          item.atualizadoEm || null
+        ]
+      );
+    }
+
+    await client.query("COMMIT");
+    res.json({ ok: true, count: items.length });
+  } catch (error) {
+    await client.query("ROLLBACK");
+    res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
+  }
+});
+
 app.get("/api/orcamentos", async (_req, res) => {
   try {
     const result = await pool.query(`
@@ -442,6 +542,7 @@ app.get("/", (_req, res) => {
 
 initSchema()
   .then(syncUsersFromFile)
+  .then(syncResponsaveisSeedFromFile)
   .then(() => {
     app.listen(port, () => {
       console.log(`API INOVA/Neon ativa em http://localhost:${port}`);

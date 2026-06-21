@@ -1476,6 +1476,7 @@
       carregarDadosIniciais().then(() => {
         renderizarTabela();
         renderizarClientes();
+        renderizarResponsaveis();
       }).catch(() => {});
     }
 
@@ -1643,13 +1644,15 @@
 
       try {
         await apiRequest("/auth/me");
-        const [orcamentos, clientes] = await Promise.all([
+        const [orcamentos, clientes, responsaveis] = await Promise.all([
           apiRequest("/orcamentos"),
-          apiRequest("/clientes")
+          apiRequest("/clientes"),
+          apiRequest("/responsaveis")
         ]);
 
         orcamentosCache = Array.isArray(orcamentos) ? orcamentos : [];
         clientesCache = Array.isArray(clientes) ? clientes : [];
+        responsaveisCache = Array.isArray(responsaveis) ? responsaveis : [];
         apiDisponivel = true;
       } catch (_error) {
         apiDisponivel = false;
@@ -1748,9 +1751,18 @@
       });
     }
 
-    function salvarResponsaveis(lista) {
+    async function salvarResponsaveis(lista) {
       responsaveisCache = [...lista];
       localStorage.setItem(RESPONSAVEL_STORAGE_KEY, JSON.stringify(lista));
+
+      if (!apiDisponivel) {
+        return;
+      }
+
+      await apiRequest("/responsaveis/bulk", {
+        method: "PUT",
+        body: JSON.stringify({ items: responsaveisCache })
+      });
     }
 
     function carregarResponsaveisIniciais() {
@@ -1775,7 +1787,7 @@
       }
 
       responsaveisCache = RESPONSAVEIS_PADRAO.map((item) => ({ ...item }));
-      salvarResponsaveis(responsaveisCache);
+      localStorage.setItem(RESPONSAVEL_STORAGE_KEY, JSON.stringify(responsaveisCache));
     }
 
     function proximoIdResponsavel() {
@@ -2360,7 +2372,7 @@
       limparMensagemCliente();
     });
 
-    responsavelForm.addEventListener("submit", (event) => {
+    responsavelForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       limparMensagemResponsavel();
 
@@ -2394,13 +2406,17 @@
         mostrarMensagemResponsavel("Responsavel cadastrado com sucesso.");
       }
 
-      salvarResponsaveis(lista);
+      try {
+        await salvarResponsaveis(lista);
+      } catch (_error) {
+        mostrarMensagemResponsavel("Falha ao salvar no Neon. Dados ficaram salvos localmente.", "error");
+      }
       responsavelForm.reset();
       prepararNovoResponsavel();
       renderizarResponsaveis();
     });
 
-    responsaveisTbody.addEventListener("click", (event) => {
+    responsaveisTbody.addEventListener("click", async (event) => {
       const botao = event.target;
       if (!(botao instanceof HTMLButtonElement)) {
         return;
@@ -2428,7 +2444,11 @@
           return;
         }
 
-        salvarResponsaveis(restante);
+        try {
+          await salvarResponsaveis(restante);
+        } catch (_error) {
+          mostrarMensagemResponsavel("Falha ao excluir no Neon. Alteracao mantida localmente.", "error");
+        }
         responsavelForm.reset();
         prepararNovoResponsavel();
         renderizarResponsaveis();
@@ -2531,6 +2551,7 @@
         await carregarDadosIniciais();
         renderizarTabela();
         renderizarClientes();
+        renderizarResponsaveis();
         liberarInterface();
         alternarAba("orcamentos");
       } catch (_error) {
