@@ -63,6 +63,19 @@ function verifyPassword(password, salt, expectedHash) {
   return left.length === right.length && crypto.timingSafeEqual(left, right);
 }
 
+async function ensureUsersTable(target = pool) {
+  await target.query(`
+    CREATE TABLE IF NOT EXISTS usuarios (
+      username TEXT PRIMARY KEY,
+      password_salt TEXT NOT NULL,
+      password_hash TEXT NOT NULL,
+      role_name TEXT NOT NULL,
+      criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      atualizado_em TIMESTAMPTZ
+    );
+  `);
+}
+
 function signAuthToken(username) {
   const payload = JSON.stringify({
     username,
@@ -136,16 +149,7 @@ async function syncUsersFromFile() {
   const content = await readCredentialsFile();
   const credentials = parseCredentialsContent(content);
 
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS usuarios (
-      username TEXT PRIMARY KEY,
-      password_salt TEXT NOT NULL,
-      password_hash TEXT NOT NULL,
-      role_name TEXT NOT NULL,
-      criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      atualizado_em TIMESTAMPTZ
-    );
-  `);
+  await ensureUsersTable();
 
   for (const credential of credentials) {
     const roleName = credential.username === "INOVA" ? "ADMIN" : "RESPONSAVEL";
@@ -227,6 +231,7 @@ async function initSchema() {
       origem_uf TEXT,
       destino TEXT NOT NULL,
       destino_uf TEXT,
+      itens_produto JSONB,
       tipo_carga TEXT,
       peso NUMERIC,
       volume NUMERIC,
@@ -243,6 +248,10 @@ async function initSchema() {
   await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS a_c TEXT");
   await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS origem_uf TEXT");
   await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS destino_uf TEXT");
+  await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS quantidade INTEGER");
+  await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS descricao TEXT");
+  await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS tipo_veiculo TEXT");
+  await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS itens_produto JSONB");
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS responsaveis (
@@ -320,6 +329,8 @@ app.post("/api/auth/login", async (req, res) => {
 });
 
 // Middleware de autenticacao aplicado a todas as rotas protegidas abaixo
+
+
 app.use("/api", authenticateRequest);
 
 app.get("/api/auth/me", async (req, res) => {
@@ -418,10 +429,43 @@ app.put("/api/responsaveis/bulk", async (req, res) => {
   const client = await pool.connect();
 
   try {
+    await ensureUsersTable(client);
+
+    const normalizedItems = items.map((item) => ({
+      id: Number(item.id),
+      nome: normalizeUserName(item.nome),
+      nomeAnterior: normalizeUserName(item.nomeAnterior || item.nome),
+      rg: item.rg || "",
+      telefone: item.telefone || "",
+      senha: String(item.senha || "").trim(),
+      criadoEm: item.criadoEm || new Date().toISOString(),
+      atualizadoEm: item.atualizadoEm || null
+    }));
+
+    const usernames = Array.from(new Set(normalizedItems.flatMap((item) => [item.nome, item.nomeAnterior]).filter(Boolean)));
     await client.query("BEGIN");
+
+    const existingUsersResult = usernames.length > 0
+      ? await client.query(
+          `
+          SELECT username, password_salt, password_hash
+          FROM usuarios
+          WHERE username = ANY($1::text[])
+          `,
+          [usernames]
+        )
+      : { rows: [] };
+    const existingUsersMap = new Map(
+      existingUsersResult.rows.map((row) => [normalizeUserName(row.username), row])
+    );
+
     await client.query("DELETE FROM responsaveis");
 
-    for (const item of items) {
+    for (const item of normalizedItems) {
+      if (!Number.isFinite(item.id) || item.id <= 0 || !item.nome) {
+        throw new Error("Responsavel invalido no payload.");
+      }
+
       await client.query(
         `
         INSERT INTO responsaveis (
@@ -429,15 +473,59 @@ app.put("/api/responsaveis/bulk", async (req, res) => {
         ) VALUES ($1,$2,$3,$4,$5,$6)
         `,
         [
-          Number(item.id),
-          normalizeUserName(item.nome),
-          item.rg || "",
-          item.telefone || "",
-          item.criadoEm || new Date().toISOString(),
-          item.atualizadoEm || null
+          item.id,
+          item.nome,
+          item.rg,
+          item.telefone,
+          item.criadoEm,
+          item.atualizadoEm
         ]
       );
+
+      const existingUser = existingUsersMap.get(item.nome) || existingUsersMap.get(item.nomeAnterior);
+      let passwordSalt = existingUser ? existingUser.password_salt : "";
+      let passwordHash = existingUser ? existingUser.password_hash : "";
+
+      if (item.senha) {
+        const passwordRecord = createPasswordRecord(item.senha);
+        passwordSalt = passwordRecord.salt;
+        passwordHash = passwordRecord.hash;
+      }
+
+      if (!passwordSalt || !passwordHash) {
+        throw new Error(`O responsavel ${item.nome} precisa de uma senha para acessar.`);
+      }
+
+      await client.query(
+        `
+        INSERT INTO usuarios (username, password_salt, password_hash, role_name, atualizado_em)
+        VALUES ($1, $2, $3, 'RESPONSAVEL', NOW())
+        ON CONFLICT (username) DO UPDATE SET
+          password_salt = EXCLUDED.password_salt,
+          password_hash = EXCLUDED.password_hash,
+          role_name = EXCLUDED.role_name,
+          atualizado_em = NOW();
+        `,
+        [item.nome, passwordSalt, passwordHash]
+      );
+
+      if (item.nomeAnterior && item.nomeAnterior !== item.nome) {
+        await client.query(
+          "DELETE FROM usuarios WHERE username = $1 AND role_name = 'RESPONSAVEL'",
+          [item.nomeAnterior]
+        );
+      }
     }
+
+    const activeUsernames = normalizedItems.map((item) => item.nome);
+    await client.query(
+      `
+      DELETE FROM usuarios
+      WHERE role_name = 'RESPONSAVEL'
+        AND NOT (username = ANY($1::text[]))
+      `,
+      [activeUsernames]
+    );
 
     await client.query("COMMIT");
     res.json({ ok: true, count: items.length });
@@ -463,6 +551,10 @@ app.get("/api/orcamentos", async (_req, res) => {
         origem_uf AS "origemUF",
         destino,
         destino_uf AS "destinoUF",
+        itens_produto AS "itensProduto",
+        quantidade,
+        descricao,
+        tipo_veiculo AS "tipoVeiculo",
         tipo_carga AS "tipoCarga",
         peso,
         volume,
@@ -495,8 +587,8 @@ app.put("/api/orcamentos/bulk", async (req, res) => {
         `
         INSERT INTO orcamentos (
           codigo, criado_em, atualizado_em, cliente, a_c, contato, origem, origem_uf, destino, destino_uf,
-          tipo_carga, peso, volume, prazo, valor, validade, status_orcamento, status_entrega, responsavel, observacoes
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)
+          itens_produto, quantidade, descricao, tipo_veiculo, tipo_carga, peso, volume, prazo, valor, validade, status_orcamento, status_entrega, responsavel, observacoes
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)
         `,
         [
           item.codigo,
@@ -509,6 +601,10 @@ app.put("/api/orcamentos/bulk", async (req, res) => {
           item.origemUF || null,
           item.destino,
           item.destinoUF || null,
+          Array.isArray(item.itensProduto) && item.itensProduto.length > 0 ? JSON.stringify(item.itensProduto) : null,
+          item.quantidade !== "" && item.quantidade != null ? Number(item.quantidade) : null,
+          item.descricao || null,
+          item.tipoVeiculo || null,
           item.tipoCarga || null,
           item.peso !== "" && item.peso != null ? Number(item.peso) : null,
           item.volume !== "" && item.volume != null ? Number(item.volume) : null,

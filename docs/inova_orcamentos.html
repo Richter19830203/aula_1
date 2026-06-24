@@ -50,43 +50,29 @@
     }
 
     .header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 16px;
-      background: var(--panel);
-      border: 1px solid rgba(31, 111, 168, 0.14);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      display: block;
+      min-height: auto;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      overflow: hidden;
     }
 
     .logo {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, var(--brand), var(--brand-strong));
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-weight: 800;
-      font-size: 1.4rem;
-      color: white;
-      letter-spacing: -0.02em;
-      box-shadow: 0 4px 12px rgba(31, 111, 168, 0.2);
+      width: 100%;
+      min-height: auto;
+      background: transparent;
+      border: 0;
+      display: block;
+      padding: 0;
     }
 
-    .header-info h3 {
-      margin: 0;
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-    }
-
-    .header-info p {
-      margin: 2px 0 0;
-      font-size: 0.82rem;
-      color: var(--muted);
+    .logo img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     .tabs {
@@ -239,6 +225,63 @@
       outline: none;
       border-color: var(--brand);
       box-shadow: 0 0 0 4px rgba(47, 138, 203, 0.2);
+    }
+
+    .produtos-box {
+      display: grid;
+      gap: 8px;
+    }
+
+    .produtos-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .produtos-lista {
+      display: grid;
+      gap: 8px;
+    }
+
+    .produto-item {
+      display: grid;
+      grid-template-columns: minmax(120px, 160px) minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: end;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px;
+      background: #f7fbff;
+    }
+
+    .produto-campo {
+      display: grid;
+      gap: 5px;
+    }
+
+    .produto-campo label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .produto-remover {
+      padding: 9px 10px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    .produtos-hint {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .produtos-hint.alerta {
+      color: var(--danger);
+      font-weight: 700;
     }
 
     .actions {
@@ -442,6 +485,19 @@
       line-height: 1.35;
     }
 
+    .proposal-logo {
+      display: block;
+      width: 100%;
+      max-width: none;
+      margin: 0 0 12px;
+    }
+
+    .proposal-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
     .proposal-head {
       display: flex;
       justify-content: space-between;
@@ -498,6 +554,15 @@
       margin: 8px 0 6px;
     }
 
+    .proposal-product-box {
+      margin-bottom: 1rem;
+    }
+
+    .proposal-product-box .proposal-table {
+      margin-top: 8px;
+      margin-bottom: 0;
+    }
+
     .proposal-notes {
       margin: 0;
       padding-left: 18px;
@@ -506,6 +571,11 @@
 
     .proposal-notes li {
       margin-bottom: 3px;
+    }
+
+    .proposal-paragraph {
+      margin: 0 0 8px;
+      font-size: 0.8rem;
     }
 
     .proposal-sign {
@@ -582,6 +652,12 @@
         padding: 0;
       }
 
+      .layout {
+        display: block;
+        max-width: none;
+        gap: 0;
+      }
+
       .login-overlay {
         display: none !important;
       }
@@ -608,12 +684,31 @@
       .proposal-wrap,
       .proposal-wrap.active {
         display: block !important;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      #painel-orcamentos > .card:not(.proposal-wrap),
+      #titulo-proposta-preview {
+        display: none !important;
       }
 
       .proposal-sheet {
         border: 0;
         border-radius: 0;
         padding: 0;
+      }
+
+      .proposal-logo {
+        max-width: none;
+        margin: 0 0 10px;
+      }
+
+      .proposal-logo img {
+        width: 100%;
+        max-width: none;
       }
     }
 
@@ -656,28 +751,22 @@
       }
 
       .header {
-        gap: 12px;
-        padding: 12px 14px;
+        border-radius: 12px;
       }
 
       .logo {
-        width: 42px;
-        height: 42px;
-        font-size: 1.2rem;
-      }
-
-      .header-info h3 {
-        font-size: 0.95rem;
-      }
-
-      .header-info p {
-        font-size: 0.75rem;
+        width: 100%;
+        min-height: auto;
       }
 
       .actions,
       .filtro-acoes {
         flex-direction: column;
         align-items: stretch;
+      }
+
+      .produto-item {
+        grid-template-columns: 1fr;
       }
 
       .actions button,
@@ -813,16 +902,14 @@
 
   <main class="layout">
     <header class="header">
-      <div class="logo">I</div>
-      <div class="header-info">
-        <h3>INOVA Mudanças</h3>
-        <p>Transportadora especializada em mudanças e fretes</p>
+      <div class="logo">
+        <img src="inovalogo2.png" alt="INOVA Mudancas">
       </div>
     </header>
 
     <section class="hero" aria-labelledby="titulo-principal">
       <h1 id="titulo-principal">Registro de Orcamentos - Transportadora INOVA</h1>
-      <p>Use esta pagina da INOVA para cadastrar, acompanhar e atualizar os orcamentos enviados aos clientes. Os dados ficam salvos localmente no navegador deste computador.</p>
+      <p>Use esta pagina da INOVA para cadastrar, acompanhar e atualizar os orcamentos enviados aos clientes.</p>
       <div class="metrics">
         <div class="metric">
           <small>Total de orcamentos</small>
@@ -913,6 +1000,48 @@
         <div class="field w2">
           <label for="destinoUF">UF</label>
           <input id="destinoUF" name="destinoUF" list="lista-estados-br" required maxlength="2" placeholder="UF">
+        </div>
+
+        <div class="field w8">
+          <label>Produtos a transportar</label>
+          <div class="produtos-box">
+            <div class="produtos-head">
+              <strong>Cadastre um ou mais produtos</strong>
+              <button class="btn-secondary" type="button" id="adicionar-produto">Adicionar produto</button>
+            </div>
+            <div id="produtos-lista" class="produtos-lista"></div>
+            <p class="produtos-hint alerta">**Preencha quantidade e descricao em cada linha. Voce pode adicionar quantos produtos precisar.</p>
+          </div>
+        </div>
+
+        <div class="field w4">
+          <label for="tipoVeiculo">Tipo de Veiculo</label>
+          <select id="tipoVeiculo" name="tipoVeiculo">
+            <option value="">Selecione</option>
+            <option value="001">Moto</option>
+            <option value="002">Utilitario Pequeno</option>
+            <option value="003">Fiorino</option>
+            <option value="004">Van</option>
+            <option value="005">VUC (Veiculo Urbano de Carga)</option>
+            <option value="006">3/4</option>
+            <option value="007">Toco</option>
+            <option value="008">Truck</option>
+            <option value="009">Carreta Simples</option>
+            <option value="010">Carreta LS</option>
+            <option value="011">Bitrem</option>
+            <option value="012">Rodotrem</option>
+            <option value="013">Bau</option>
+            <option value="014">Bau Refrigerado</option>
+            <option value="015">Sider</option>
+            <option value="016">Graneleiro</option>
+            <option value="017">Tanque</option>
+            <option value="018">Plataforma</option>
+            <option value="019">Prancha</option>
+            <option value="020">Munck</option>
+            <option value="021">Cegonha</option>
+            <option value="022">Container 20 pes</option>
+            <option value="023">Container 40 pes</option>
+          </select>
         </div>
 
         <div class="field w4">
@@ -1102,6 +1231,10 @@
         <button class="btn-secondary" type="button" id="ocultar-proposta">Ocultar pre-visualizacao</button>
       </div>
       <article class="proposal-sheet" id="proposta-comercial">
+        <div class="proposal-logo">
+          <img src="inovalogo2.png" alt="INOVA Mudancas">
+        </div>
+
         <div class="proposal-head">
           <span>À</span>
           <span>PROPOSTA COMERCIAL - <span id="prop-codigo">ORC-000000-000</span></span>
@@ -1113,7 +1246,23 @@
           Data: <strong id="prop-data">-</strong>
         </div>
 
-        <div class="proposal-title">REF: Transporte Rodoviario: Entrega de Carga / Container Nacionalizado</div>
+
+               <div class="proposal-product-box">
+          <div><strong>Tipo de Veiculo:</strong> <span id="prop-tipo-veiculo">-</span></div>
+          <table class="proposal-table">
+            <thead>
+              <tr>
+                <th style="width: 20%;">Qtde</th>
+                <th>Descricao do Produto</th>
+              </tr>
+            </thead>
+            <tbody id="prop-produtos-lista">
+              <tr>
+                <td colspan="2">Nenhum produto informado.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <table class="proposal-table">
           <thead>
@@ -1123,7 +1272,6 @@
               <th>Destino de entrega</th>
               <th>UF</th>
               <th>Frete viagem</th>
-              <th>Veiculo</th>
             </tr>
           </thead>
           <tbody>
@@ -1133,54 +1281,25 @@
               <td id="prop-destino">-</td>
               <td id="prop-destino-uf">-</td>
               <td><span class="proposal-hl" id="prop-valor">R$ 0,00</span></td>
-              <td id="prop-veiculo">Carreta / Bau</td>
             </tr>
           </tbody>
         </table>
 
-        <div class="proposal-block-title">Condicoes Comerciais:</div>
-        <table class="proposal-table">
-          <tbody>
-            <tr>
-              <th style="width:22%">Ad-valorem</th>
-              <td style="width:28%">0,03% sobre o valor da N.F. - <strong>nao incluso</strong>.</td>
-              <th style="width:22%">GRIS</th>
-              <td style="width:28%">0,02% sobre o valor da N.F. - <strong>nao incluso</strong>.</td>
-            </tr>
-            <tr>
-              <th>ICMS</th>
-              <td>Conforme legislacao, <strong>nao incluso</strong>.</td>
-              <th>Escolta</th>
-              <td>-----------x-----------</td>
-            </tr>
-            <tr>
-              <th>Pedagio</th>
-              <td>Conforme tabela da Concessionaria, <strong>nao incluso</strong>.</td>
-              <th>Licenca carg. exced.</th>
-              <td>-----------x-----------</td>
-            </tr>
-            <tr>
-              <th>Diaria</th>
-              <td>R$800,00.</td>
-              <th>Prazo de aceite</th>
-              <td>30 dias da data da apresentacao.</td>
-            </tr>
-            <tr>
-              <th>Prazo de pagamento</th>
-              <td>15 dias apos a data do faturamento.</td>
-              <th>Vigencia da proposta</th>
-              <td>30 dias da data da apresentacao.</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="proposal-block-title">Notas gerais:</div>
+        <ol class="proposal-notes">
+          <li>Todos os transportes realizados pela INOVA Mudancas sao assegurados e rastreados do local de saida ate o destino.</li>
+          <li>Nao estamos considerando desmontagem de moveis. Caso seja necessaria, podemos incluir ao orcamento.</li>
+          <li>Nao estamos considerando o fornecimento de embalagem. Caso seja necessaria, podemos incluir ao orcamento.</li>
+          <li>Nao estamos considerando mao de obra para carga e descarga. Caso seja necessaria, podemos incluir ao orcamento.</li>
+          <li>Nao desmontamos armarios embutidos em paredes.</li>
+          <li>Nao transportamos animais de estimacao.</li>
+        </ol>
 
-        <div class="proposal-block-title">Observacoes:</div>
-        <ul class="proposal-notes">
-          <li>O aceite desta proposta deve ser confirmado via e-mail para o remetente.</li>
-          <li>Custos com escolta, taxas e despesas extras nao descritas serao cobrados a parte.</li>
-          <li>Programar coleta (carregamento) com 48h de antecedencia.</li>
-          <li>Em caso de desistencia apos o aceite, sera cobrado 55% do valor do frete.</li>
-        </ul>
+        <div class="proposal-block-title">Formas de pagamento e condicoes:</div>
+        <p class="proposal-paragraph"><strong>Condicoes de pagamento:</strong> adiantamento de 70% na retirada da mudanca + 30% quando o caminhao chegar ao destino.</p>
+        <p class="proposal-paragraph"><strong>Forma de pagamento:</strong> transferencia via pix, transferencia bancaria (TED) ou parcelado em 3x no cartao de credito + taxa da operadora.</p>
+        <p class="proposal-paragraph"><strong>Dados para pagamento:</strong> mediante ao contrato de prestacao de servicos.</p>
+        <p class="proposal-paragraph"><strong>Orcamento:</strong> valido por 10 dias uteis.</p>
 
         <div class="proposal-sign">
           <div>
@@ -1214,7 +1333,7 @@
 
           <div class="field w4">
             <label for="clienteTelefone">Telefone</label>
-            <input id="clienteTelefone" name="clienteTelefone" maxlength="20" required placeholder="(00) 00000-0000">
+            <input id="clienteTelefone" name="clienteTelefone" maxlength="11" inputmode="numeric" required placeholder="Somente numeros">
           </div>
 
           <div class="field w4">
@@ -1224,7 +1343,7 @@
 
           <div class="field w4">
             <label for="clienteCep">CEP</label>
-            <input id="clienteCep" name="clienteCep" maxlength="9" required placeholder="00000-000">
+            <input id="clienteCep" name="clienteCep" maxlength="8" inputmode="numeric" required placeholder="Somente numeros">
           </div>
 
           <div class="field w8">
@@ -1247,6 +1366,12 @@
 
       <section class="card" aria-labelledby="titulo-clientes-listagem">
         <h2 id="titulo-clientes-listagem">Clientes cadastrados</h2>
+        <div class="filtros">
+          <div class="filtro-grupo">
+            <label for="filtro-cliente-cadastro">Buscar cliente</label>
+            <input id="filtro-cliente-cadastro" type="text" placeholder="Digite o nome do cliente">
+          </div>
+        </div>
         <div class="table-wrap">
           <table>
             <thead>
@@ -1293,6 +1418,11 @@
           <div class="field w2">
             <label for="responsavelTelefone">Telefone</label>
             <input id="responsavelTelefone" name="responsavelTelefone" maxlength="20" required placeholder="(00) 00000-0000">
+          </div>
+
+          <div class="field w3">
+            <label for="responsavelSenha">Senha de acesso</label>
+            <input id="responsavelSenha" name="responsavelSenha" type="password" minlength="6" placeholder="Crie a senha do responsavel">
           </div>
 
           <div class="actions">
@@ -1358,6 +1488,7 @@
     })();
     const AUTH_TOKEN_KEY = "inova_auth_token";
     const AUTH_USER_KEY = "inova_usuario_logado";
+    const MODO_LOCAL_ARQUIVO = window.location.protocol === "file:";
 
     const tabOrcamentos = document.getElementById("tab-orcamentos");
     const tabClientes = document.getElementById("tab-clientes");
@@ -1385,11 +1516,14 @@
     const imprimirPropostaButton = document.getElementById("imprimir-proposta");
     const ocultarPropostaButton = document.getElementById("ocultar-proposta");
     const blocoProposta = document.getElementById("bloco-proposta");
+    const produtosListaEl = document.getElementById("produtos-lista");
+    const adicionarProdutoButton = document.getElementById("adicionar-produto");
 
     const clienteForm = document.getElementById("cliente-form");
     const clienteMessage = document.getElementById("mensagem-cliente");
     const clientesTbody = document.getElementById("clientes-body");
     const clearClienteButton = document.getElementById("limpar-cliente-formulario");
+    const filtroClienteCadastro = document.getElementById("filtro-cliente-cadastro");
 
     const responsavelForm = document.getElementById("responsavel-form");
     const responsavelMessage = document.getElementById("mensagem-responsavel");
@@ -1430,6 +1564,8 @@
       dataInicio: null,
       dataFim: null
     };
+
+    let filtroClienteCadastroAtivo = "";
 
     function alternarAba(aba) {
       const mostrarOrcamentos = aba === "orcamentos";
@@ -1478,6 +1614,29 @@
         renderizarClientes();
         renderizarResponsaveis();
       }).catch(() => {});
+    }
+
+    function carregarDadosLocais() {
+      try {
+        orcamentosCache = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch (_error) {
+        orcamentosCache = [];
+      }
+
+      try {
+        clientesCache = JSON.parse(localStorage.getItem(CLIENT_STORAGE_KEY) || "[]");
+      } catch (_error) {
+        clientesCache = [];
+      }
+
+      try {
+        const responsaveisSalvos = JSON.parse(localStorage.getItem(RESPONSAVEL_STORAGE_KEY) || "[]");
+        responsaveisCache = Array.isArray(responsaveisSalvos) ? responsaveisSalvos : [];
+      } catch (_error) {
+        responsaveisCache = [];
+      }
+
+      apiDisponivel = false;
     }
 
     function autenticarUsuario() {
@@ -1552,6 +1711,10 @@
       return String(texto || "").replace(/\D/g, "");
     }
 
+    function somenteLetrasEspacos(texto) {
+      return String(texto || "").replace(/[^A-Za-zÀ-ÿ\s]/g, "").replace(/\s{2,}/g, " ").trimStart();
+    }
+
     function formatarTelefoneBR(texto) {
       const digitos = somenteDigitos(texto).slice(0, 11);
       if (!digitos) return "";
@@ -1598,6 +1761,92 @@
       return `${dia}/${mes}/${ano}`;
     }
 
+    function normalizarItensProduto(item = {}) {
+      let itensOrigem = item.itensProduto;
+      if (typeof itensOrigem === "string") {
+        try {
+          const parsed = JSON.parse(itensOrigem);
+          itensOrigem = Array.isArray(parsed) ? parsed : [];
+        } catch (_error) {
+          itensOrigem = [];
+        }
+      }
+
+      if (Array.isArray(itensOrigem)) {
+        const itens = itensOrigem
+          .map((produto) => ({
+            quantidade: String(produto && produto.quantidade != null ? produto.quantidade : "").trim(),
+            descricao: String(produto && produto.descricao != null ? produto.descricao : "").trim()
+          }))
+          .filter((produto) => produto.quantidade || produto.descricao);
+        if (itens.length > 0) {
+          return itens;
+        }
+      }
+
+      const quantidadeLegada = String(item.quantidade != null ? item.quantidade : "").trim();
+      const descricaoLegada = String(item.descricao != null ? item.descricao : "").trim();
+      if (quantidadeLegada || descricaoLegada) {
+        return [{ quantidade: quantidadeLegada, descricao: descricaoLegada }];
+      }
+
+      return [];
+    }
+
+    function criarLinhaProduto(item = { quantidade: "", descricao: "" }) {
+      const linha = document.createElement("div");
+      linha.className = "produto-item";
+      linha.innerHTML = `
+        <div class="produto-campo">
+          <label>Qtde</label>
+          <input type="number" class="produto-quantidade" min="1" step="1" placeholder="Ex.: 10" value="${String(item.quantidade || "").replace(/"/g, "&quot;")}">
+        </div>
+        <div class="produto-campo">
+          <label>Descricao do Produto</label>
+          <input type="text" class="produto-descricao" maxlength="200" placeholder="Ex.: Caixa de documentos" value="${String(item.descricao || "").replace(/"/g, "&quot;")}">
+        </div>
+        <button type="button" class="btn-secondary produto-remover">Remover</button>
+      `;
+      return linha;
+    }
+
+    function renderizarItensProdutoFormulario(itens) {
+      produtosListaEl.innerHTML = "";
+      const lista = Array.isArray(itens) && itens.length > 0 ? itens : [{ quantidade: "", descricao: "" }];
+      lista.forEach((item) => {
+        produtosListaEl.appendChild(criarLinhaProduto(item));
+      });
+      atualizarBotoesRemoverProduto();
+    }
+
+    function atualizarBotoesRemoverProduto() {
+      const linhas = Array.from(produtosListaEl.querySelectorAll(".produto-item"));
+      const desabilitar = linhas.length <= 1;
+      linhas.forEach((linha) => {
+        const botao = linha.querySelector(".produto-remover");
+        if (botao) {
+          botao.disabled = desabilitar;
+        }
+      });
+    }
+
+    function coletarItensProdutoFormulario() {
+      const linhas = Array.from(produtosListaEl.querySelectorAll(".produto-item"));
+      return linhas
+        .map((linha) => {
+          const quantidadeEl = linha.querySelector(".produto-quantidade");
+          const descricaoEl = linha.querySelector(".produto-descricao");
+          const quantidade = String(quantidadeEl && quantidadeEl.value != null ? quantidadeEl.value : "").trim();
+          const descricao = String(descricaoEl && descricaoEl.value != null ? descricaoEl.value : "").trim();
+          return { quantidade, descricao };
+        })
+        .filter((produto) => produto.quantidade || produto.descricao);
+    }
+
+    function resetarItensProdutoFormulario() {
+      renderizarItensProdutoFormulario([{ quantidade: "", descricao: "" }]);
+    }
+
     function converterDataBRparaISO(dataBR) {
       if (!dataBR || dataBR.length !== 10) return null;
       const [dia, mes, ano] = dataBR.split("/");
@@ -1638,6 +1887,11 @@
     }
 
     async function carregarDadosIniciais() {
+      if (MODO_LOCAL_ARQUIVO) {
+        carregarDadosLocais();
+        return;
+      }
+
       if (!authToken) {
         throw new Error("Sem autenticacao");
       }
@@ -1752,16 +2006,16 @@
     }
 
     async function salvarResponsaveis(lista) {
-      responsaveisCache = [...lista];
-      localStorage.setItem(RESPONSAVEL_STORAGE_KEY, JSON.stringify(lista));
-
       if (!apiDisponivel) {
-        return;
+        throw new Error("O cadastro de responsavel com senha exige a API ativa para criar o login.");
       }
+
+      responsaveisCache = lista.map(({ senha, nomeAnterior, ...item }) => ({ ...item }));
+      localStorage.setItem(RESPONSAVEL_STORAGE_KEY, JSON.stringify(responsaveisCache));
 
       await apiRequest("/responsaveis/bulk", {
         method: "PUT",
-        body: JSON.stringify({ items: responsaveisCache })
+        body: JSON.stringify({ items: lista })
       });
     }
 
@@ -1841,12 +2095,19 @@
     }
 
     function renderizarClientes() {
-      const clientes = obterClientes();
+      const termoBusca = filtroClienteCadastroAtivo.trim().toLowerCase();
+      const clientes = obterClientes().filter((cliente) => {
+        if (!termoBusca) {
+          return true;
+        }
+
+        return String(cliente.nome || "").toLowerCase().includes(termoBusca);
+      });
       clientesTbody.innerHTML = "";
       atualizarListaClientesOrcamento();
 
       if (clientes.length === 0) {
-        clientesTbody.innerHTML = "<tr><td colspan='8'>Nenhum cliente cadastrado.</td></tr>";
+        clientesTbody.innerHTML = `<tr><td colspan='8'>${termoBusca ? "Nenhum cliente encontrado para a busca informada." : "Nenhum cliente cadastrado."}</td></tr>`;
         return;
       }
 
@@ -1924,6 +2185,7 @@
       responsavelForm.responsavelNome.value = item.nome || "";
       responsavelForm.responsavelRg.value = item.rg || "";
       responsavelForm.responsavelTelefone.value = item.telefone || "";
+      responsavelForm.responsavelSenha.value = "";
       responsavelForm.responsavelNome.focus();
     }
 
@@ -1931,17 +2193,28 @@
       const nome = responsavelForm.responsavelNome.value.trim().toUpperCase();
       const rg = responsavelForm.responsavelRg.value.trim();
       const telefone = responsavelForm.responsavelTelefone.value.trim();
+      const senha = responsavelForm.responsavelSenha.value.trim();
+      const editando = Boolean(responsavelForm.codigoEdicaoResponsavel.value);
 
       if (!nome || !rg || !telefone) {
         return null;
       }
 
-      return { nome, rg, telefone };
+      if (!editando && !senha) {
+        return { invalido: "Informe uma senha para o novo responsavel." };
+      }
+
+      if (senha && senha.length < 6) {
+        return { invalido: "A senha deve ter pelo menos 6 caracteres." };
+      }
+
+      return { nome, rg, telefone, senha };
     }
 
     function prepararNovoResponsavel() {
       responsavelForm.codigoEdicaoResponsavel.value = "";
       responsavelForm.responsavelId.value = String(proximoIdResponsavel());
+      responsavelForm.responsavelSenha.value = "";
     }
 
     function criarCampoOcultoEdicaoResponsavel() {
@@ -1953,15 +2226,19 @@
     }
 
     function coletarDadosClienteFormulario() {
-      const nome = clienteForm.clienteNome.value.trim();
+      const nome = somenteLetrasEspacos(clienteForm.clienteNome.value).trim();
       const rg = clienteForm.clienteRg.value.trim();
-      const telefone = clienteForm.clienteTelefone.value.trim();
+      const telefone = somenteDigitos(clienteForm.clienteTelefone.value).slice(0, 11);
       const endereco = clienteForm.clienteEndereco.value.trim();
       const estado = clienteForm.clienteEstado.value.trim().toUpperCase();
       const bairro = clienteForm.clienteBairro.value.trim();
-      const cep = clienteForm.clienteCep.value.trim();
+      const cep = somenteDigitos(clienteForm.clienteCep.value).slice(0, 8);
 
       if (!nome || !rg || !telefone || !endereco || !estado || !bairro || !cep) {
+        return null;
+      }
+
+      if (/\d/.test(nome)) {
         return null;
       }
 
@@ -2011,6 +2288,44 @@
       document.getElementById("prop-ac").textContent = dados.aC || "Nao informado";
       document.getElementById("prop-contato").textContent = dados.contato || "-";
       document.getElementById("prop-data").textContent = hoje;
+      const itensProduto = normalizarItensProduto(dados);
+      const produtosPropostaEl = document.getElementById("prop-produtos-lista");
+      if (itensProduto.length === 0) {
+        produtosPropostaEl.innerHTML = "<tr><td colspan='2'>Nenhum produto informado.</td></tr>";
+      } else {
+        produtosPropostaEl.innerHTML = itensProduto
+          .map((item) => `<tr><td>${item.quantidade || "-"}</td><td>${item.descricao || "-"}</td></tr>`)
+          .join("");
+      }
+      
+      const tipoVeiculo = dados.tipoVeiculo;
+      const mapVeiculos = {
+        "001": "Moto",
+        "002": "Utilitario Pequeno",
+        "003": "Fiorino",
+        "004": "Van",
+        "005": "VUC (Veiculo Urbano de Carga)",
+        "006": "3/4",
+        "007": "Toco",
+        "008": "Truck",
+        "009": "Carreta Simples",
+        "010": "Carreta LS",
+        "011": "Bitrem",
+        "012": "Rodotrem",
+        "013": "Bau",
+        "014": "Bau Refrigerado",
+        "015": "Sider",
+        "016": "Graneleiro",
+        "017": "Tanque",
+        "018": "Plataforma",
+        "019": "Prancha",
+        "020": "Munck",
+        "021": "Cegonha",
+        "022": "Container 20 pes",
+        "023": "Container 40 pes"
+      };
+      document.getElementById("prop-tipo-veiculo").textContent = mapVeiculos[tipoVeiculo] || tipoVeiculo || "-";
+      
       document.getElementById("prop-origem").textContent = dados.origem || "-";
       document.getElementById("prop-origem-uf").textContent = dados.origemUF || extrairUF(dados.origem);
       document.getElementById("prop-destino").textContent = dados.destino || "-";
@@ -2022,6 +2337,8 @@
     }
 
     function abrirProposta() {
+      const itensProdutoFormulario = coletarItensProdutoFormulario();
+      const primeiroItem = itensProdutoFormulario[0] || { quantidade: "", descricao: "" };
       const dados = coletarDadosFormulario() || {
         cliente: form.cliente.value.trim(),
         aC: form.aC.value.trim(),
@@ -2030,6 +2347,10 @@
         origemUF: form.origemUF.value.trim().toUpperCase(),
         destino: form.destino.value.trim(),
         destinoUF: form.destinoUF.value.trim().toUpperCase(),
+        quantidade: primeiroItem.quantidade,
+        descricao: primeiroItem.descricao,
+        itensProduto: itensProdutoFormulario,
+        tipoVeiculo: form.tipoVeiculo.value,
         valor: Number(form.valor.value || 0),
         responsavel: form.responsavel.value.trim(),
         statusOrcamento: form.statusOrcamento.value,
@@ -2098,6 +2419,7 @@
     }
 
     function preencherFormulario(item) {
+      const itensProduto = normalizarItensProduto(item);
       form.codigoEdicao.value = item.codigo;
       form.cliente.value = item.cliente || "";
       form.aC.value = item.aC || "";
@@ -2106,6 +2428,8 @@
       form.origemUF.value = (item.origemUF || extrairUF(item.origem) || "").toUpperCase();
       form.destino.value = item.destino || "";
       form.destinoUF.value = (item.destinoUF || extrairUF(item.destino) || "").toUpperCase();
+      renderizarItensProdutoFormulario(itensProduto);
+      form.tipoVeiculo.value = item.tipoVeiculo || "";
       form.tipoCarga.value = item.tipoCarga || "";
       form.peso.value = item.peso || "";
       form.volume.value = item.volume || "";
@@ -2127,8 +2451,11 @@
       const destino = form.destino.value.trim();
       const destinoUF = form.destinoUF.value.trim().toUpperCase();
       const valor = Number(form.valor.value);
+      const itensProduto = coletarItensProdutoFormulario();
+      const possuiItemIncompleto = itensProduto.some((item) => !item.quantidade || !item.descricao);
+      const primeiroItem = itensProduto[0] || { quantidade: "", descricao: "" };
 
-      if (!cliente || !origem || !origemUF || !destino || !destinoUF || !Number.isFinite(valor) || valor <= 0) {
+      if (!cliente || !origem || !origemUF || !destino || !destinoUF || !Number.isFinite(valor) || valor <= 0 || itensProduto.length === 0 || possuiItemIncompleto) {
         return null;
       }
 
@@ -2140,6 +2467,10 @@
         origemUF,
         destino,
         destinoUF,
+        quantidade: primeiroItem.quantidade,
+        descricao: primeiroItem.descricao,
+        itensProduto,
+        tipoVeiculo: form.tipoVeiculo.value,
         tipoCarga: form.tipoCarga.value,
         peso: form.peso.value,
         volume: form.volume.value,
@@ -2165,6 +2496,30 @@
     tabClientes.addEventListener("click", () => alternarAba("clientes"));
     tabCadastro.addEventListener("click", () => alternarAba("cadastro"));
 
+    adicionarProdutoButton.addEventListener("click", () => {
+      produtosListaEl.appendChild(criarLinhaProduto({ quantidade: "", descricao: "" }));
+      atualizarBotoesRemoverProduto();
+    });
+
+    produtosListaEl.addEventListener("click", (event) => {
+      const alvo = event.target;
+      if (!(alvo instanceof HTMLButtonElement)) {
+        return;
+      }
+      if (!alvo.classList.contains("produto-remover")) {
+        return;
+      }
+      const linha = alvo.closest(".produto-item");
+      if (!linha) {
+        return;
+      }
+      if (produtosListaEl.querySelectorAll(".produto-item").length <= 1) {
+        return;
+      }
+      linha.remove();
+      atualizarBotoesRemoverProduto();
+    });
+
     loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       await autenticarUsuario();
@@ -2178,8 +2533,12 @@
       form.contato.value = mascaraTelefoneOuEmail(form.contato.value);
     });
 
+    clienteForm.clienteNome.addEventListener("input", () => {
+      clienteForm.clienteNome.value = somenteLetrasEspacos(clienteForm.clienteNome.value);
+    });
+
     clienteForm.clienteTelefone.addEventListener("input", () => {
-      clienteForm.clienteTelefone.value = formatarTelefoneBR(clienteForm.clienteTelefone.value);
+      clienteForm.clienteTelefone.value = somenteDigitos(clienteForm.clienteTelefone.value).slice(0, 11);
     });
 
     responsavelForm.responsavelTelefone.addEventListener("input", () => {
@@ -2187,7 +2546,12 @@
     });
 
     clienteForm.clienteCep.addEventListener("input", () => {
-      clienteForm.clienteCep.value = formatarCepBR(clienteForm.clienteCep.value);
+      clienteForm.clienteCep.value = somenteDigitos(clienteForm.clienteCep.value).slice(0, 8);
+    });
+
+    filtroClienteCadastro.addEventListener("input", () => {
+      filtroClienteCadastroAtivo = filtroClienteCadastro.value;
+      renderizarClientes();
     });
 
     form.addEventListener("submit", async (event) => {
@@ -2228,6 +2592,7 @@
         mostrarMensagem("Falha ao salvar no Neon. Dados ficaram salvos localmente.", "error");
       }
       form.reset();
+      resetarItensProdutoFormulario();
       form.codigoEdicao.value = "";
       form.statusOrcamento.value = "Solicitado";
       form.statusEntrega.value = "Pedido Recebido";
@@ -2281,6 +2646,7 @@
 
     clearButton.addEventListener("click", () => {
       form.reset();
+      resetarItensProdutoFormulario();
       form.codigoEdicao.value = "";
       form.statusOrcamento.value = "Solicitado";
       form.statusEntrega.value = "Pedido Recebido";
@@ -2382,6 +2748,11 @@
         return;
       }
 
+      if (dados.invalido) {
+        mostrarMensagemResponsavel(dados.invalido, "error");
+        return;
+      }
+
       const lista = obterResponsaveis();
       const codigoEdicao = responsavelForm.codigoEdicaoResponsavel.value;
 
@@ -2389,12 +2760,14 @@
         const idEdicao = Number(codigoEdicao);
         const indice = lista.findIndex((item) => Number(item.id) === idEdicao);
         if (indice >= 0) {
+          const nomeAnterior = lista[indice].nome;
           lista[indice] = {
             ...lista[indice],
             ...dados,
+            nomeAnterior,
             atualizadoEm: new Date().toISOString()
           };
-          mostrarMensagemResponsavel("Responsavel atualizado com sucesso.");
+          mostrarMensagemResponsavel(dados.senha ? "Responsavel e senha atualizados com sucesso." : "Responsavel atualizado com sucesso.");
         }
       } else {
         const novoId = proximoIdResponsavel();
@@ -2403,13 +2776,14 @@
           criadoEm: new Date().toISOString(),
           ...dados
         });
-        mostrarMensagemResponsavel("Responsavel cadastrado com sucesso.");
+        mostrarMensagemResponsavel("Responsavel cadastrado com senha de acesso.");
       }
 
       try {
         await salvarResponsaveis(lista);
-      } catch (_error) {
-        mostrarMensagemResponsavel("Falha ao salvar no Neon. Dados ficaram salvos localmente.", "error");
+      } catch (error) {
+        mostrarMensagemResponsavel(error && error.message ? error.message : "Falha ao salvar o responsavel no Neon.", "error");
+        return;
       }
       responsavelForm.reset();
       prepararNovoResponsavel();
@@ -2446,8 +2820,9 @@
 
         try {
           await salvarResponsaveis(restante);
-        } catch (_error) {
-          mostrarMensagemResponsavel("Falha ao excluir no Neon. Alteracao mantida localmente.", "error");
+        } catch (error) {
+          mostrarMensagemResponsavel(error && error.message ? error.message : "Falha ao excluir no Neon.", "error");
+          return;
         }
         responsavelForm.reset();
         prepararNovoResponsavel();
@@ -2534,12 +2909,24 @@
       criarCampoOcultoEdicao();
       criarCampoOcultoEdicaoCliente();
       criarCampoOcultoEdicaoResponsavel();
+      resetarItensProdutoFormulario();
       carregarResponsaveisIniciais();
       prepararNovoResponsavel();
       renderizarResponsaveis();
       const sessao = sessionStorage.getItem(AUTH_USER_KEY);
       if (sessao) {
         usuarioLogado = sessao;
+      }
+
+      if (MODO_LOCAL_ARQUIVO) {
+        usuarioLogado = "MODO_LOCAL";
+        liberarInterface();
+        await carregarDadosIniciais();
+        renderizarTabela();
+        renderizarClientes();
+        renderizarResponsaveis();
+        alternarAba("orcamentos");
+        return;
       }
 
       if (!authToken || !usuarioLogado) {
