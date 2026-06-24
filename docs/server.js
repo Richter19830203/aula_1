@@ -145,6 +145,14 @@ function parseCredentialsContent(content) {
     .filter(Boolean);
 }
 
+async function writeCredentialsFile(credentials) {
+  const lines = credentials
+    .filter((item) => item && item.username && item.password)
+    .map((item) => `${normalizeUserName(item.username)};${String(item.password).trim()}`);
+  const content = lines.join("\n");
+  await fs.writeFile(credentialsFilePath, content ? `${content}\n` : "", "utf8");
+}
+
 async function syncUsersFromFile() {
   const content = await readCredentialsFile();
   const credentials = parseCredentialsContent(content);
@@ -431,6 +439,11 @@ app.put("/api/responsaveis/bulk", async (req, res) => {
   try {
     await ensureUsersTable(client);
 
+    const credentialsFromFile = parseCredentialsContent(await readCredentialsFile());
+    const credentialsMap = new Map(
+      credentialsFromFile.map((item) => [normalizeUserName(item.username), String(item.password).trim()])
+    );
+
     const normalizedItems = items.map((item) => ({
       id: Number(item.id),
       nome: normalizeUserName(item.nome),
@@ -441,6 +454,8 @@ app.put("/api/responsaveis/bulk", async (req, res) => {
       criadoEm: item.criadoEm || new Date().toISOString(),
       atualizadoEm: item.atualizadoEm || null
     }));
+
+    const credentialsToPersist = [];
 
     const usernames = Array.from(new Set(normalizedItems.flatMap((item) => [item.nome, item.nomeAnterior]).filter(Boolean)));
     await client.query("BEGIN");
@@ -465,6 +480,21 @@ app.put("/api/responsaveis/bulk", async (req, res) => {
       if (!Number.isFinite(item.id) || item.id <= 0 || !item.nome) {
         throw new Error("Responsavel invalido no payload.");
       }
+
+      const senhaPlana = item.senha
+        || credentialsMap.get(item.nome)
+        || credentialsMap.get(item.nomeAnterior)
+        || "";
+
+      if (!senhaPlana) {
+        throw new Error(`O responsavel ${item.nome} precisa de senha para atualizar credenciais.`);
+      }
+
+      credentialsMap.set(item.nome, senhaPlana);
+      if (item.nomeAnterior && item.nomeAnterior !== item.nome) {
+        credentialsMap.delete(item.nomeAnterior);
+      }
+      credentialsToPersist.push({ username: item.nome, password: senhaPlana });
 
       await client.query(
         `
@@ -496,17 +526,19 @@ app.put("/api/responsaveis/bulk", async (req, res) => {
         throw new Error(`O responsavel ${item.nome} precisa de uma senha para acessar.`);
       }
 
+      const roleName = item.nome === "INOVA" ? "ADMIN" : "RESPONSAVEL";
+
       await client.query(
         `
         INSERT INTO usuarios (username, password_salt, password_hash, role_name, atualizado_em)
-        VALUES ($1, $2, $3, 'RESPONSAVEL', NOW())
+        VALUES ($1, $2, $3, $4, NOW())
         ON CONFLICT (username) DO UPDATE SET
           password_salt = EXCLUDED.password_salt,
           password_hash = EXCLUDED.password_hash,
           role_name = EXCLUDED.role_name,
           atualizado_em = NOW();
         `,
-        [item.nome, passwordSalt, passwordHash]
+        [item.nome, passwordSalt, passwordHash, roleName]
       );
 
       if (item.nomeAnterior && item.nomeAnterior !== item.nome) {
@@ -528,6 +560,7 @@ app.put("/api/responsaveis/bulk", async (req, res) => {
     );
 
     await client.query("COMMIT");
+    await writeCredentialsFile(credentialsToPersist);
     res.json({ ok: true, count: items.length });
   } catch (error) {
     await client.query("ROLLBACK");
