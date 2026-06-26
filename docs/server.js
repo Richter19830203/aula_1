@@ -575,12 +575,26 @@ app.put("/api/responsaveis/bulk", async (req, res) => {
     await client.query("COMMIT");
     await writeCredentialsFile(credentialsToPersist);
     res.json({ ok: true, count: items.length });
-  } catch (error) {
-    await client.query("ROLLBACK");
-    res.status(500).json({ error: error.message });
-  } finally {
-    client.release();
-  }
+} catch (error) {
+  await client.query("ROLLBACK");
+
+  console.error("======================================");
+  console.error("ERRO NA ROTA /api/responsaveis/bulk");
+  console.error("Mensagem:", error.message);
+  console.error("Stack:");
+  console.error(error.stack);
+  console.error("Payload recebido:");
+  console.error(JSON.stringify(req.body, null, 2));
+  console.error("======================================");
+
+  res.status(500).json({
+    ok: false,
+    error: error.message
+  });
+
+} finally {
+  client.release();
+}
 });
 
 app.get("/api/orcamentos", async (_req, res) => {
