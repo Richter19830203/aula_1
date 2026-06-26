@@ -407,7 +407,20 @@ app.put("/api/clientes/bulk", async (req, res) => {
     res.json({ ok: true, count: items.length });
   } catch (error) {
     await client.query("ROLLBACK");
-    res.status(500).json({ error: error.message });
+
+    console.error("========================================");
+    console.error("ERRO NA ROTA /api/responsaveis/bulk");
+    console.error("Mensagem:", error.message);
+    console.error("Stack:");
+    console.error(error.stack);
+    console.error("Payload recebido:");
+    console.error(JSON.stringify(req.body, null, 2));
+    console.error("========================================");
+
+    res.status(500).json({
+      ok: false,
+      error: error.message
+    });
   } finally {
     client.release();
   }
