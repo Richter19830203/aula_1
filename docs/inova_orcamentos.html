@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro de Orcamentos - INOVA</title>
+  <title>Registro de Orçamentos - INOVA</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232f8acb' width='100' height='100'/><text x='50' y='65' font-size='60' font-weight='bold' fill='%23fff' text-anchor='middle' font-family='sans-serif'>I</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -667,6 +667,7 @@
       .tabs,
       #painel-clientes,
       #painel-cadastro,
+      #painel-financeiro,
       #titulo-formulario,
       #orcamento-form,
       #mensagem,
@@ -874,15 +875,15 @@
           <label for="loginResponsavel">Responsavel</label>
           <select id="loginResponsavel" name="loginResponsavel" required>
             <option value="">Selecione</option>
-            <option value="PEDRO">PEDRO</option>
-            <option value="ANDERSON">ANDERSON</option>
-            <option value="MARIA">MARIA</option>
-            <option value="BIANCA">BIANCA</option>
-            <option value="GIOVANNA">GIOVANNA</option>
-            <option value="FABIOLA">FABIOLA</option>
-            <option value="ALLANA">ALLANA</option>
             <option value="ALLAN">ALLAN</option>
+            <option value="ALLANA">ALLANA</option>
+            <option value="ANDERSON">ANDERSON</option>
+            <option value="BIANCA">BIANCA</option>
+            <option value="FABIOLA">FABIOLA</option>
+            <option value="GIOVANNA">GIOVANNA</option>
             <option value="INOVA">INOVA (ADMIN)</option>
+            <option value="MARIA">MARIA</option>
+            <option value="PEDRO">PEDRO</option>
           </select>
         </div>
 
@@ -908,11 +909,11 @@
     </header>
 
     <section class="hero" aria-labelledby="titulo-principal">
-      <h1 id="titulo-principal">Registro de Orcamentos - Transportadora INOVA</h1>
-      <p>Use esta pagina da INOVA para cadastrar, acompanhar e atualizar os orcamentos enviados aos clientes.</p>
+      <h1 id="titulo-principal">Registro de Orçamentos - Transportadora INOVA</h1>
+      <p>Use esta página da INOVA para cadastrar, acompanhar e atualizar os orçamentos enviados aos clientes.</p>
       <div class="metrics">
         <div class="metric">
-          <small>Total de orcamentos</small>
+          <small>Total de orçamentos</small>
           <strong id="total-orcamentos">0</strong>
         </div>
         <div class="metric">
@@ -920,22 +921,22 @@
           <strong id="valor-total">R$ 0,00</strong>
         </div>
         <div class="metric">
-          <small>Ticket medio</small>
+          <small>Ticket médio</small>
           <strong id="ticket-medio">R$ 0,00</strong>
         </div>
       </div>
     </section>
 
     <nav class="tabs" aria-label="Navegacao principal">
-      <button class="tab-btn active" type="button" id="tab-orcamentos" aria-selected="true">Orcamentos</button>
-      <button class="tab-btn" type="button" id="tab-clientes" aria-selected="false">Clientes</button>
+      <button class="tab-btn active" type="button" id="tab-orcamentos" aria-selected="true">Orçamentos</button>
       <button class="tab-btn" type="button" id="tab-cadastro" aria-selected="false">Cadastro</button>
+      <button class="tab-btn" type="button" id="tab-financeiro" aria-selected="false">Financeiro</button>
     </nav>
 
     <div class="tab-panel active" id="painel-orcamentos">
 
     <section class="card" aria-labelledby="titulo-formulario">
-      <h2 id="titulo-formulario">Novo Orcamento</h2>
+      <h2 id="titulo-formulario">Novo Orçamento</h2>
       <form id="orcamento-form" novalidate>
         <div class="field w6">
           <label for="cliente">Cliente</label>
@@ -1017,30 +1018,30 @@
         <div class="field w4">
           <label for="tipoVeiculo">Tipo de Veiculo</label>
           <select id="tipoVeiculo" name="tipoVeiculo">
-            <option value="">Selecione</option>
-            <option value="001">Moto</option>
-            <option value="002">Utilitario Pequeno</option>
-            <option value="003">Fiorino</option>
-            <option value="004">Van</option>
-            <option value="005">VUC (Veiculo Urbano de Carga)</option>
+           <option value="">Selecione</option>
             <option value="006">3/4</option>
-            <option value="007">Toco</option>
-            <option value="008">Truck</option>
-            <option value="009">Carreta Simples</option>
-            <option value="010">Carreta LS</option>
-            <option value="011">Bitrem</option>
-            <option value="012">Rodotrem</option>
             <option value="013">Bau</option>
             <option value="014">Bau Refrigerado</option>
-            <option value="015">Sider</option>
-            <option value="016">Graneleiro</option>
-            <option value="017">Tanque</option>
-            <option value="018">Plataforma</option>
-            <option value="019">Prancha</option>
-            <option value="020">Munck</option>
+            <option value="011">Bitrem</option>
+            <option value="010">Carreta LS</option>
+            <option value="009">Carreta Simples</option>
             <option value="021">Cegonha</option>
             <option value="022">Container 20 pes</option>
             <option value="023">Container 40 pes</option>
+            <option value="003">Fiorino</option>
+            <option value="016">Graneleiro</option>
+            <option value="001">Moto</option>
+            <option value="020">Munck</option>
+            <option value="018">Plataforma</option>
+            <option value="019">Prancha</option>
+            <option value="012">Rodotrem</option>
+            <option value="015">Sider</option>
+            <option value="017">Tanque</option>
+            <option value="007">Toco</option>
+            <option value="008">Truck</option>
+            <option value="002">Utilitario Pequeno</option>
+            <option value="004">Van</option>
+            <option value="005">VUC (Veiculo Urbano de Carga)</option>
           </select>
         </div>
 
@@ -1081,33 +1082,34 @@
           <input id="validade" name="validade" type="date">
         </div>
 
-        <div class="field w3">
+  <div class="field w3">
           <label for="statusOrcamento">Status Orcamento</label>
           <select id="statusOrcamento" name="statusOrcamento" required>
-            <option value="Solicitado" selected>Solicitado</option>
-            <option value="Em Elaboracao">Em Elaboracao</option>
-            <option value="Enviado">Enviado</option>
-            <option value="Em Negociacao">Em Negociacao</option>
             <option value="Aguardando Retorno">Aguardando Retorno</option>
             <option value="Aprovado">Aprovado</option>
-            <option value="Contratado">Contratado</option>
-            <option value="Reprovado">Reprovado</option>
             <option value="Cancelado">Cancelado</option>
+            <option value="Contratado">Contratado</option>
+            <option value="Em Elaboracao">Em Elaboracao</option>
+            <option value="Em Negociacao">Em Negociacao</option>
+            <option value="Enviado">Enviado</option>
+            <option value="Reprovado">Reprovado</option>
+            <option value="Solicitado" selected>Solicitado</option>
           </select>
         </div>
 
-        <div class="field w3">
+ <div class="field w3">
           <label for="statusEntrega">Status de Entrega</label>
           <select id="statusEntrega" name="statusEntrega" required>
+            <option value="Aguardando">Aguardando</option>
+            <option value="Cancelado">Cancelado</option>
+            <option value="Coletado">Coletado</option>
+            <option value="Em Rota">Em Rota</option>
+            <option value="Em Transporte">Em Transporte</option>
+            <option value="Entregue">Entregue</option>
+            <option value="Ocorrencia">Ocorrencia</option>
             <option value="Pedido Recebido" selected>Pedido Recebido</option>
             <option value="Programado">Programado</option>
-            <option value="Coletado">Coletado</option>
-            <option value="Em Transporte">Em Transporte</option>
-            <option value="Em Rota">Em Rota</option>
-            <option value="Entregue">Entregue</option>
             <option value="Reagendado">Reagendado</option>
-            <option value="Ocorrencia">Ocorrencia</option>
-            <option value="Cancelado">Cancelado</option>
           </select>
         </div>
 
@@ -1115,15 +1117,15 @@
           <label for="responsavel">Responsavel</label>
           <select id="responsavel" name="responsavel">
             <option value="">Selecione</option>
-            <option value="PEDRO">PEDRO</option>
-            <option value="ANDERSON">ANDERSON</option>
-            <option value="MARIA">MARIA</option>
-            <option value="BIANCA">BIANCA</option>
-            <option value="GIOVANNA">GIOVANNA</option>
-            <option value="FABIOLA">FABIOLA</option>
-            <option value="ALLANA">ALLANA</option>
             <option value="ALLAN">ALLAN</option>
+            <option value="ALLANA">ALLANA</option>
+            <option value="ANDERSON">ANDERSON</option>
+            <option value="BIANCA">BIANCA</option>
+            <option value="FABIOLA">FABIOLA</option>
+            <option value="GIOVANNA">GIOVANNA</option>
             <option value="INOVA">INOVA</option>
+            <option value="MARIA">MARIA</option>
+            <option value="PEDRO">PEDRO</option>
           </select>
         </div>
 
@@ -1143,7 +1145,7 @@
     </section>
 
     <section class="card" aria-labelledby="titulo-listagem">
-      <h2 id="titulo-listagem">Orcamentos cadastrados</h2>
+      <h2 id="titulo-listagem">Orçamentos cadastrados</h2>
       
       <div class="filtros">
         <div class="filtro-grupo">
@@ -1152,13 +1154,13 @@
         </div>
 
         <div class="filtro-grupo">
-          <label for="filtro-status-orcamento">Status Orcamento</label>
+          <label for="filtro-status-orcamento">Status Orçamento</label>
           <select id="filtro-status-orcamento">
             <option value="">Todos</option>
             <option value="Solicitado">Solicitado</option>
-            <option value="Em Elaboracao">Em Elaboracao</option>
+            <option value="Em Elaboracao">Em Elaboração</option>
             <option value="Enviado">Enviado</option>
-            <option value="Em Negociacao">Em Negociacao</option>
+            <option value="Em Negociacao">Em Negociação</option>
             <option value="Aguardando Retorno">Aguardando Retorno</option>
             <option value="Aprovado">Aprovado</option>
             <option value="Contratado">Contratado</option>
@@ -1171,15 +1173,16 @@
           <label for="filtro-status-entrega">Status de Entrega</label>
           <select id="filtro-status-entrega">
             <option value="">Todos</option>
+            <option value="Aguardando">Aguardando</option>
+            <option value="Cancelado">Cancelado</option>
+            <option value="Coletado">Coletado</option>
+            <option value="Em Rota">Em Rota</option>
+            <option value="Em Transporte">Em Transporte</option>
+            <option value="Entregue">Entregue</option>
+            <option value="Ocorrencia">Ocorrencia</option>
             <option value="Pedido Recebido">Pedido Recebido</option>
             <option value="Programado">Programado</option>
-            <option value="Coletado">Coletado</option>
-            <option value="Em Transporte">Em Transporte</option>
-            <option value="Em Rota">Em Rota</option>
-            <option value="Entregue">Entregue</option>
             <option value="Reagendado">Reagendado</option>
-            <option value="Ocorrencia">Ocorrencia</option>
-            <option value="Cancelado">Cancelado</option>
           </select>
         </div>
 
@@ -1209,15 +1212,15 @@
               <th>Rota</th>
               <th>Tipo</th>
               <th>Valor</th>
-              <th>Status Orcamento</th>
+              <th>Status Orçamento</th>
               <th>Status Entrega</th>
-              <th>Responsavel</th>
-              <th>Acoes</th>
+              <th>Responsável</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody id="orcamentos-body">
             <tr>
-              <td colspan="10">Nenhum orcamento registrado.</td>
+              <td colspan="10">Nenhum orçamento registrado.</td>
             </tr>
           </tbody>
         </table>
@@ -1225,23 +1228,23 @@
     </section>
 
     <section class="card proposal-wrap" id="bloco-proposta" aria-labelledby="titulo-proposta-preview">
-      <h2 id="titulo-proposta-preview">Pre-visualizacao da Proposta Comercial</h2>
+      <h2 id="titulo-proposta-preview">Pré-visualização da Proposta Comercial</h2>
       <div class="proposal-actions">
         <button class="btn-primary" type="button" id="imprimir-proposta">Imprimir proposta</button>
-        <button class="btn-secondary" type="button" id="ocultar-proposta">Ocultar pre-visualizacao</button>
+        <button class="btn-secondary" type="button" id="ocultar-proposta">Ocultar pré-visualização</button>
       </div>
       <article class="proposal-sheet" id="proposta-comercial">
         <div class="proposal-logo">
-          <img src="inovalogo2.png" alt="INOVA Mudancas">
+          <img src="inovalogo2.png" alt="INOVA Mudanças">
         </div>
 
         <div class="proposal-head">
           <span>À</span>
           <span>PROPOSTA COMERCIAL - <span id="prop-codigo">ORC-000000-000</span></span>
         </div>
-        <div class="proposal-sub"><strong id="prop-cliente">Cliente nao informado</strong></div>
+        <div class="proposal-sub"><strong id="prop-cliente">Cliente não informado</strong></div>
         <div class="proposal-sub">
-          A/C: <strong id="prop-ac">Nao informado</strong><br>
+          A/C: <strong id="prop-ac">não informado</strong><br>
           Tel.: <strong id="prop-contato">-</strong><br>
           Data: <strong id="prop-data">-</strong>
         </div>
@@ -1287,19 +1290,19 @@
 
         <div class="proposal-block-title">Notas gerais:</div>
         <ol class="proposal-notes">
-          <li>Todos os transportes realizados pela INOVA Mudancas sao assegurados e rastreados do local de saida ate o destino.</li>
-          <li>Nao estamos considerando desmontagem de moveis. Caso seja necessaria, podemos incluir ao orcamento.</li>
-          <li>Nao estamos considerando o fornecimento de embalagem. Caso seja necessaria, podemos incluir ao orcamento.</li>
-          <li>Nao estamos considerando mao de obra para carga e descarga. Caso seja necessaria, podemos incluir ao orcamento.</li>
-          <li>Nao desmontamos armarios embutidos em paredes.</li>
-          <li>Nao transportamos animais de estimacao.</li>
+          <li>Todos os transportes realizados pela INOVA Mudanças são assegurados e rastreados do local de saída até o destino.</li>
+          <li>Não estamos considerando desmontagem de móveis. Caso seja necessária, podemos incluir ao orçamento.</li>
+          <li>Não estamos considerando o fornecimento de embalagem. Caso seja necessária, podemos incluir ao orçamento.</li>
+          <li>Não estamos considerando mão de obra para carga e descarga. Caso seja necessária, podemos incluir ao orçamento.</li>
+          <li>Não desmontamos armários embutidos em paredes.</li>
+          <li>Não transportamos animais de estimação.</li>
         </ol>
 
-        <div class="proposal-block-title">Formas de pagamento e condicoes:</div>
-        <p class="proposal-paragraph"><strong>Condicoes de pagamento:</strong> adiantamento de 70% na retirada da mudanca + 30% quando o caminhao chegar ao destino.</p>
-        <p class="proposal-paragraph"><strong>Forma de pagamento:</strong> transferencia via pix, transferencia bancaria (TED) ou parcelado em 3x no cartao de credito + taxa da operadora.</p>
-        <p class="proposal-paragraph"><strong>Dados para pagamento:</strong> mediante ao contrato de prestacao de servicos.</p>
-        <p class="proposal-paragraph"><strong>Orcamento:</strong> valido por 10 dias uteis.</p>
+        <div class="proposal-block-title">Formas de pagamento e condições:</div>
+        <p class="proposal-paragraph" style="margin: 0;">- <u>Condições de pagamento</u>: Adiantamento de 70% na retirada da mudança + 30% quando o caminhão chegar ao destino.</p>
+        <p class="proposal-paragraph" style="margin: 0;">- <u>Forma de pagamento</u>: Transferência via pix, transferência bancária (TED) ou parcelado em 3x no cartão de crédito + taxa da operadora.</p>
+        <p class="proposal-paragraph" style="margin: 0;">- <u>Dados para pagamento</u>: Mediante ao contrato de prestação de serviços.</p>
+        <p class="proposal-paragraph" style="margin: 0;">- <u>Orçamento</u>: Válido por 10 dias úteis.</p>
 
         <div class="proposal-sign">
           <div>
@@ -1308,8 +1311,8 @@
             E-mail: comercial@inova.local
           </div>
           <div>
-            <strong>Responsavel:</strong> <span id="prop-responsavel">-</span><br>
-            <strong>Status Orcamento:</strong> <span id="prop-status-orc">-</span><br>
+            <strong>Responsável:</strong> <span id="prop-responsavel">-</span><br>
+            <strong>Status Orçamento:</strong> <span id="prop-status-orc">-</span><br>
             <strong>Status Entrega:</strong> <span id="prop-status-ent">-</span>
           </div>
         </div>
@@ -1317,7 +1320,21 @@
     </section>
     </div>
 
-    <div class="tab-panel" id="painel-clientes">
+    <div class="tab-panel" id="painel-cadastro">
+      <section class="card" aria-labelledby="titulo-seletor-cadastro">
+        <h2 id="titulo-seletor-cadastro">Central de Cadastros</h2>
+        <div class="field w6" style="max-width: 520px;">
+          <label for="cadastroTipoSeletor">Escolha o tipo de cadastro</label>
+          <select id="cadastroTipoSeletor" name="cadastroTipoSeletor">
+            <option value="clientes">Cadastro de Clientes</option>
+            <option value="motoristas">Cadastro de Motoristas</option>
+            <option value="responsaveis" selected>Cadastro de Responsaveis</option>
+            <option value="veiculos">Cadastro de Veiculos</option>
+          </select>
+        </div>
+      </section>
+
+      <div id="cadastro-conteudo-clientes" hidden>
       <section class="card" aria-labelledby="titulo-cliente-formulario">
         <h2 id="titulo-cliente-formulario">Cadastro de Cliente</h2>
         <form id="cliente-form" novalidate>
@@ -1394,66 +1411,551 @@
           </table>
         </div>
       </section>
+      </div>
+
+      <div id="cadastro-conteudo-responsaveis" hidden>
+        <section class="card" aria-labelledby="titulo-responsavel-formulario">
+          <h2 id="titulo-responsavel-formulario">Cadastro de Responsaveis</h2>
+          <form id="responsavel-form" novalidate>
+            <div class="field w3">
+              <label for="responsavelId">ID</label>
+              <input id="responsavelId" name="responsavelId" type="number" readonly>
+            </div>
+
+            <div class="field w4">
+              <label for="responsavelNome">Nome</label>
+              <input id="responsavelNome" name="responsavelNome" maxlength="100" required placeholder="Nome do responsavel">
+            </div>
+
+            <div class="field w3">
+              <label for="responsavelRg">RG</label>
+              <input id="responsavelRg" name="responsavelRg" maxlength="20" required placeholder="RG">
+            </div>
+
+            <div class="field w2">
+              <label for="responsavelTelefone">Telefone</label>
+              <input id="responsavelTelefone" name="responsavelTelefone" maxlength="20" required placeholder="(00) 00000-0000">
+            </div>
+
+            <div class="field w3">
+              <label for="responsavelSenha">Senha de acesso</label>
+              <input id="responsavelSenha" name="responsavelSenha" type="password" minlength="6" placeholder="Crie a senha do responsavel">
+            </div>
+
+            <div class="actions">
+              <button class="btn-primary" type="submit">Salvar responsavel</button>
+              <button class="btn-secondary" type="button" id="limpar-responsavel-formulario">Limpar formulario</button>
+            </div>
+          </form>
+          <p id="mensagem-responsavel" class="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="card" aria-labelledby="titulo-responsaveis-listagem">
+          <h2 id="titulo-responsaveis-listagem">Responsaveis cadastrados</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>RG</th>
+                  <th>Telefone</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody id="responsaveis-body">
+                <tr>
+                  <td colspan="5">Nenhum responsavel cadastrado.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div id="cadastro-conteudo-motoristas" hidden>
+        <section class="card" aria-labelledby="titulo-motorista-formulario">
+          <h2 id="titulo-motorista-formulario">Cadastro de Motoristas</h2>
+          <form id="motorista-form" novalidate>
+            <div class="field w4">
+              <label for="motoristaNome">Nome</label>
+              <input id="motoristaNome" name="motoristaNome" maxlength="120" required placeholder="Nome do motorista">
+            </div>
+            <div class="field w2">
+              <label for="motoristaCpf">CPF</label>
+              <input id="motoristaCpf" name="motoristaCpf" maxlength="14" required placeholder="000.000.000-00">
+            </div>
+            <div class="field w2">
+              <label for="motoristaRg">RG</label>
+              <input id="motoristaRg" name="motoristaRg" maxlength="20" required placeholder="RG">
+            </div>
+            <div class="field w2">
+              <label for="motoristaCnh">CNH</label>
+              <input id="motoristaCnh" name="motoristaCnh" maxlength="20" required placeholder="Numero CNH">
+            </div>
+            <div class="field w2">
+              <label for="motoristaCategoriaCnh">Categoria CNH</label>
+              <input id="motoristaCategoriaCnh" name="motoristaCategoriaCnh" maxlength="2" required placeholder="A, B, C...">
+            </div>
+            <div class="field w2">
+              <label for="motoristaValidadeCnh">Validade</label>
+              <input id="motoristaValidadeCnh" name="motoristaValidadeCnh" type="date" required>
+            </div>
+            <div class="field w2">
+              <label for="motoristaTelefone">Telefone</label>
+              <input id="motoristaTelefone" name="motoristaTelefone" maxlength="20" required placeholder="(00) 00000-0000">
+            </div>
+            <div class="field w3">
+              <label for="motoristaEmail">E-mail</label>
+              <input id="motoristaEmail" name="motoristaEmail" type="email" maxlength="120" required placeholder="email@dominio.com">
+            </div>
+            <div class="field w5">
+              <label for="motoristaEndereco">Endereco</label>
+              <input id="motoristaEndereco" name="motoristaEndereco" maxlength="180" required placeholder="Rua, numero e complemento">
+            </div>
+            <div class="field w3">
+              <label for="motoristaCidade">Cidade</label>
+              <input id="motoristaCidade" name="motoristaCidade" maxlength="80" required placeholder="Cidade">
+            </div>
+            <div class="field w2">
+              <label for="motoristaEstado">Estado</label>
+              <input id="motoristaEstado" name="motoristaEstado" maxlength="2" list="lista-estados-br" required placeholder="UF">
+            </div>
+            <div class="actions">
+              <button class="btn-primary" type="submit">Salvar motorista</button>
+              <button class="btn-secondary" type="button" id="limpar-motorista-formulario">Limpar formulario</button>
+            </div>
+          </form>
+          <p id="mensagem-motorista" class="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="card" aria-labelledby="titulo-motoristas-listagem">
+          <h2 id="titulo-motoristas-listagem">Motoristas cadastrados</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>CPF</th>
+                  <th>CNH</th>
+                  <th>Telefone</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody id="motoristas-body">
+                <tr>
+                  <td colspan="5">Nenhum motorista cadastrado.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div id="cadastro-conteudo-veiculos" hidden>
+        <section class="card" aria-labelledby="titulo-veiculo-formulario">
+          <h2 id="titulo-veiculo-formulario">Cadastro de Veiculos</h2>
+          <form id="veiculo-form" novalidate>
+            <div class="field w2">
+              <label for="veiculoPlaca">Placa</label>
+              <input id="veiculoPlaca" name="veiculoPlaca" maxlength="8" required placeholder="ABC1D23">
+            </div>
+            <div class="field w3">
+              <label for="veiculoModelo">Modelo</label>
+              <input id="veiculoModelo" name="veiculoModelo" maxlength="80" required placeholder="Modelo do veiculo">
+            </div>
+            <div class="field w3">
+              <label for="veiculoMarca">Marca</label>
+              <input id="veiculoMarca" name="veiculoMarca" maxlength="80" required placeholder="Marca">
+            </div>
+            <div class="field w2">
+              <label for="veiculoAno">Ano</label>
+              <input id="veiculoAno" name="veiculoAno" type="number" min="1970" max="2100" required placeholder="2026">
+            </div>
+                    <div class="field w4">
+          <label for="tipoVeiculo">Tipo de Veiculo</label>
+          <select id="tipoVeiculo" name="tipoVeiculo">
+            <option value="">Selecione</option>
+            <option value="006">3/4</option>
+            <option value="013">Bau</option>
+            <option value="014">Bau Refrigerado</option>
+            <option value="011">Bitrem</option>
+            <option value="010">Carreta LS</option>
+            <option value="009">Carreta Simples</option>
+            <option value="021">Cegonha</option>
+            <option value="022">Container 20 pes</option>
+            <option value="023">Container 40 pes</option>
+            <option value="003">Fiorino</option>
+            <option value="016">Graneleiro</option>
+            <option value="001">Moto</option>
+            <option value="020">Munck</option>
+            <option value="018">Plataforma</option>
+            <option value="019">Prancha</option>
+            <option value="012">Rodotrem</option>
+            <option value="015">Sider</option>
+            <option value="017">Tanque</option>
+            <option value="007">Toco</option>
+            <option value="008">Truck</option>
+            <option value="002">Utilitario Pequeno</option>
+            <option value="004">Van</option>
+            <option value="005">VUC (Veiculo Urbano de Carga)</option>
+          </select>
+        </div>
+            <div class="field w3">
+              <label for="veiculoCapacidade">Capacidade</label>
+              <input id="veiculoCapacidade" name="veiculoCapacidade" maxlength="60" required placeholder="Ex.: 10 toneladas">
+            </div>
+            <div class="field w4">
+              <label for="veiculoMotoristaResponsavel">Motorista Responsavel</label>
+              <select id="veiculoMotoristaResponsavel" name="veiculoMotoristaResponsavel" required>
+                <option value="">Selecione</option>
+              </select>
+            </div>
+            <div class="field w5">
+              <label for="veiculoObservacoes">Observacoes</label>
+              <input id="veiculoObservacoes" name="veiculoObservacoes" maxlength="180" placeholder="Observacoes gerais">
+            </div>
+            <div class="actions">
+              <button class="btn-primary" type="submit">Salvar veiculo</button>
+              <button class="btn-secondary" type="button" id="limpar-veiculo-formulario">Limpar formulario</button>
+            </div>
+          </form>
+          <p id="mensagem-veiculo" class="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="card" aria-labelledby="titulo-veiculos-listagem">
+          <h2 id="titulo-veiculos-listagem">Veiculos cadastrados</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Placa</th>
+                  <th>Modelo</th>
+                  <th>Tipo</th>
+                  <th>Motorista</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody id="veiculos-body">
+                <tr>
+                  <td colspan="5">Nenhum veiculo cadastrado.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
     </div>
 
-    <div class="tab-panel" id="painel-cadastro">
-      <section class="card" aria-labelledby="titulo-responsavel-formulario">
-        <h2 id="titulo-responsavel-formulario">Cadastro de Responsaveis</h2>
-        <form id="responsavel-form" novalidate>
-          <div class="field w3">
-            <label for="responsavelId">ID</label>
-            <input id="responsavelId" name="responsavelId" type="number" readonly>
-          </div>
-
-          <div class="field w4">
-            <label for="responsavelNome">Nome</label>
-            <input id="responsavelNome" name="responsavelNome" maxlength="100" required placeholder="Nome do responsavel">
-          </div>
-
-          <div class="field w3">
-            <label for="responsavelRg">RG</label>
-            <input id="responsavelRg" name="responsavelRg" maxlength="20" required placeholder="RG">
-          </div>
-
-          <div class="field w2">
-            <label for="responsavelTelefone">Telefone</label>
-            <input id="responsavelTelefone" name="responsavelTelefone" maxlength="20" required placeholder="(00) 00000-0000">
-          </div>
-
-          <div class="field w3">
-            <label for="responsavelSenha">Senha de acesso</label>
-            <input id="responsavelSenha" name="responsavelSenha" type="password" minlength="6" placeholder="Crie a senha do responsavel">
-          </div>
-
-          <div class="actions">
-            <button class="btn-primary" type="submit">Salvar responsavel</button>
-            <button class="btn-secondary" type="button" id="limpar-responsavel-formulario">Limpar formulario</button>
-          </div>
-        </form>
-        <p id="mensagem-responsavel" class="message" role="status" aria-live="polite"></p>
-      </section>
-
-      <section class="card" aria-labelledby="titulo-responsaveis-listagem">
-        <h2 id="titulo-responsaveis-listagem">Responsaveis cadastrados</h2>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>RG</th>
-                <th>Telefone</th>
-                <th>Acoes</th>
-              </tr>
-            </thead>
-            <tbody id="responsaveis-body">
-              <tr>
-                <td colspan="5">Nenhum responsavel cadastrado.</td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="tab-panel" id="painel-financeiro">
+      <section class="card" aria-labelledby="titulo-financeiro">
+        <h2 id="titulo-financeiro">Financeiro</h2>
+        <div class="field w6" style="max-width: 520px;">
+          <label for="financeiroModuloSeletor">Modulo Financeiro</label>
+          <select id="financeiroModuloSeletor" name="financeiroModuloSeletor">
+            <option value="categorias-despesas">Categorias de Despesas</option>
+            <option value="centros-custo">Centros de Custo</option>
+            <option value="formas-pagamento">Formas de Pagamento</option>
+            <option value="lancamento-despesas" selected>Lancamento de Despesas</option>
+          </select>
         </div>
       </section>
+
+      <div id="financeiro-conteudo-lancamento" style="display: grid; gap: 18px;">
+        <section class="card" aria-labelledby="titulo-despesa-formulario">
+          <h2 id="titulo-despesa-formulario">Lancamento de Despesas</h2>
+          <form id="despesa-form" novalidate>
+            <div class="field w3">
+              <label for="despesaCodigo">Codigo</label>
+              <input id="despesaCodigo" name="despesaCodigo" type="text" readonly>
+            </div>
+            <div class="field w3">
+              <label for="despesaData">Data da Despesa</label>
+              <input id="despesaData" name="despesaData" type="date" required>
+            </div>
+            <div class="field w3">
+              <label for="despesaCompetencia">Competencia</label>
+              <select id="despesaCompetencia" name="despesaCompetencia" required>
+                <option value="">Selecione</option>
+                <option>Janeiro</option><option>Fevereiro</option><option>Marco</option><option>Abril</option>
+                <option>Maio</option><option>Junho</option><option>Julho</option><option>Agosto</option>
+                <option>Setembro</option><option>Outubro</option><option>Novembro</option><option>Dezembro</option>
+              </select>
+            </div>
+            <div class="field w3">
+              <label for="despesaTipo">Tipo da Despesa</label>
+              <select id="despesaTipo" name="despesaTipo" required>
+                <option value="">Selecione</option>
+                <option>Fixa</option>
+                <option>Variavel</option>
+              </select>
+            </div>
+            <div class="field w4">
+              <label for="despesaCategoria">Categoria</label>
+              <select id="despesaCategoria" name="despesaCategoria" required></select>
+            </div>
+            <div class="field w4">
+              <label for="despesaCentroCusto">Centro de Custo</label>
+              <select id="despesaCentroCusto" name="despesaCentroCusto" required></select>
+            </div>
+            <div class="field w4">
+              <label for="despesaFornecedor">Fornecedor</label>
+              <input id="despesaFornecedor" name="despesaFornecedor" maxlength="120" placeholder="Fornecedor">
+            </div>
+            <div class="field w6">
+              <label for="despesaDescricao">Descricao</label>
+              <input id="despesaDescricao" name="despesaDescricao" maxlength="180" required>
+            </div>
+            <div class="field w3">
+              <label for="despesaValor">Valor</label>
+              <input id="despesaValor" name="despesaValor" type="number" min="0" step="0.01" required>
+            </div>
+            <div class="field w3">
+              <label for="despesaFormaPagamento">Forma de Pagamento</label>
+              <select id="despesaFormaPagamento" name="despesaFormaPagamento" required></select>
+            </div>
+            <div class="field w3">
+              <label for="despesaSituacao">Situacao</label>
+              <select id="despesaSituacao" name="despesaSituacao" required>
+                <option value="">Selecione</option>
+                <option>Pago</option>
+                <option>Pendente</option>
+                <option>Parcialmente Pago</option>
+              </select>
+            </div>
+            <div class="field w3">
+              <label for="despesaCliente">Cliente</label>
+              <select id="despesaCliente" name="despesaCliente"></select>
+            </div>
+            <div class="field w3">
+              <label for="despesaOrcamento">N do Orçamento</label>
+              <select id="despesaOrcamento" name="despesaOrcamento"></select>
+            </div>
+            <div class="field w3">
+              <label for="despesaVeiculo">Veículo</label>
+              <select id="despesaVeiculo" name="despesaVeiculo"></select>
+            </div>
+            <div class="field w3">
+              <label for="despesaMotorista">Motorista</label>
+              <select id="despesaMotorista" name="despesaMotorista"></select>
+            </div>
+            <div class="field w3">
+              <label for="despesaResponsavel">Responsável</label>
+              <select id="despesaResponsavel" name="despesaResponsavel"></select>
+            </div>
+            <div class="field w6">
+              <label for="despesaObservacoes">Observações</label>
+              <textarea id="despesaObservacoes" name="despesaObservacoes" maxlength="400"></textarea>
+            </div>
+            <div class="actions">
+              <button class="btn-primary" type="submit">Salvar despesa</button>
+              <button class="btn-secondary" type="button" id="limpar-despesa-formulario">Limpar formulário</button>
+            </div>
+          </form>
+          <p id="mensagem-despesa" class="message" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+
+      <div id="financeiro-conteudo-categorias" hidden>
+        <section class="card" aria-labelledby="titulo-categoria-formulario">
+          <h2 id="titulo-categoria-formulario">Categorias de Despesas</h2>
+          <form id="categoria-despesa-form" novalidate>
+            <div class="field w2">
+              <label for="categoriaCodigo">Codigo</label>
+              <input id="categoriaCodigo" name="categoriaCodigo" type="number" readonly>
+            </div>
+            <div class="field w5">
+              <label for="categoriaNome">Nome da Categoria</label>
+              <select id="categoriaNome" name="categoriaNome" required>
+                <option value="">Selecione</option>
+                <option>Agua</option>
+                <option>Alimentacao</option>
+                <option>Aluguel</option>
+                <option>Borracharia</option>
+                <option>Combustivel</option>
+                <option>Contabilidade</option>
+                <option>Energia</option>
+                <option>Estacionamento</option>
+                <option>Hospedagem</option>
+                <option>Impostos</option>
+                <option>Internet</option>
+                <option>IPVA</option>
+                <option>Lavagem</option>
+                <option>Licenciamento</option>
+                <option>Manutencao</option>
+                <option>Marketing</option>
+                <option>Material de Escritorio</option>
+                <option>Pedagio</option>
+                <option>Pneus</option>
+                <option>Salario</option>
+                <option>Seguro</option>
+                <option>Sistema</option>
+                <option>Telefone</option>
+                <option>Vale Alimentacao</option>
+                <option>Vale Refeicao</option>
+                <option>Outros</option>
+              </select>
+            </div>
+            <div class="field w3">
+              <label for="categoriaTipo">Tipo</label>
+              <select id="categoriaTipo" name="categoriaTipo" required>
+                <option value="">Selecione</option>
+                <option>Fixa</option>
+                <option>Variavel</option>
+                <option>Ambas</option>
+              </select>
+            </div>
+            <div class="field w2">
+              <label for="categoriaStatus">Status</label>
+              <select id="categoriaStatus" name="categoriaStatus" required>
+                <option value="Ativo">Ativo</option>
+                <option value="Inativo">Inativo</option>
+              </select>
+            </div>
+            <div class="actions">
+              <button class="btn-primary" type="submit">Salvar categoria</button>
+              <button class="btn-secondary" type="button" id="limpar-categoria-formulario">Limpar formulário</button>
+            </div>
+          </form>
+          <p id="mensagem-categoria" class="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="card" aria-labelledby="titulo-categoria-listagem">
+          <h2 id="titulo-categoria-listagem">Categorias cadastradas</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Codigo</th>
+                  <th>Nome</th>
+                  <th>Tipo</th>
+                  <th>Status</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody id="categorias-despesas-body">
+                <tr><td colspan="5">Nenhuma categoria cadastrada.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div id="financeiro-conteudo-formas" hidden>
+        <section class="card" aria-labelledby="titulo-forma-formulario">
+          <h2 id="titulo-forma-formulario">Formas de Pagamento</h2>
+          <form id="forma-pagamento-form" novalidate>
+            <div class="field w2">
+              <label for="formaCodigo">Codigo</label>
+              <input id="formaCodigo" name="formaCodigo" type="number" readonly>
+            </div>
+            <div class="field w6">
+              <label for="formaNome">Nome</label>
+              <select id="formaNome" name="formaNome" required>
+                <option value="">Selecione</option>
+                <option>Boleto Bancario</option>
+                <option>Cartao de Credito</option>
+                <option>Cartao de Debito</option>
+                <option>Dinheiro</option>
+                <option>DOC</option>
+                <option>PIX</option>
+                <option>TED</option>
+                <option>Transferencia Bancaria</option>
+                <option>Outros</option>
+              </select>
+            </div>
+            <div class="field w2">
+              <label for="formaStatus">Status</label>
+              <select id="formaStatus" name="formaStatus" required>
+                <option value="Ativo">Ativo</option>
+                <option value="Inativo">Inativo</option>
+              </select>
+            </div>
+            <div class="actions">
+              <button class="btn-primary" type="submit">Salvar forma</button>
+              <button class="btn-secondary" type="button" id="limpar-forma-formulario">Limpar formulário</button>
+            </div>
+          </form>
+          <p id="mensagem-forma" class="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="card" aria-labelledby="titulo-forma-listagem">
+          <h2 id="titulo-forma-listagem">Formas cadastradas</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Codigo</th>
+                  <th>Nome</th>
+                  <th>Status</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody id="formas-pagamento-body">
+                <tr><td colspan="4">Nenhuma forma cadastrada.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div id="financeiro-conteudo-centros" hidden>
+        <section class="card" aria-labelledby="titulo-centro-formulario">
+          <h2 id="titulo-centro-formulario">Centros de Custo</h2>
+          <form id="centro-custo-form" novalidate>
+            <div class="field w2">
+              <label for="centroCodigo">Codigo</label>
+              <input id="centroCodigo" name="centroCodigo" type="number" readonly>
+            </div>
+            <div class="field w6">
+              <label for="centroNome">Nome</label>
+              <select id="centroNome" name="centroNome" required>
+                <option value="">Selecione</option>
+                <option>Administrativo</option>
+                <option>Comercial</option>
+                <option>Diretoria</option>
+                <option>Financeiro</option>
+                <option>Frota</option>
+                <option>Logistica</option>
+                <option>Operacional</option>
+                <option>Recursos Humanos</option>
+                <option>Tecnologia</option>
+              </select>
+            </div>
+            <div class="field w2">
+              <label for="centroStatus">Status</label>
+              <select id="centroStatus" name="centroStatus" required>
+                <option value="Ativo">Ativo</option>
+                <option value="Inativo">Inativo</option>
+              </select>
+            </div>
+            <div class="actions">
+              <button class="btn-primary" type="submit">Salvar centro</button>
+              <button class="btn-secondary" type="button" id="limpar-centro-formulario">Limpar formulário</button>
+            </div>
+          </form>
+          <p id="mensagem-centro" class="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="card" aria-labelledby="titulo-centro-listagem">
+          <h2 id="titulo-centro-listagem">Centros de custo cadastrados</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nome</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="centros-custo-body">
+                <tr><td colspan="4">Nenhum centro de custo cadastrado.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
     </div>
   </main>
 
@@ -1461,6 +1963,12 @@
     const STORAGE_KEY = "inova_orcamentos_transportadora";
     const CLIENT_STORAGE_KEY = "inova_clientes_transportadora";
     const RESPONSAVEL_STORAGE_KEY = "inova_responsaveis_transportadora";
+    const MOTORISTA_STORAGE_KEY = "inova_motoristas_transportadora";
+    const VEICULO_STORAGE_KEY = "inova_veiculos_transportadora";
+    const CATEGORIA_DESPESA_STORAGE_KEY = "inova_categorias_despesas_transportadora";
+    const FORMA_PAGAMENTO_STORAGE_KEY = "inova_formas_pagamento_transportadora";
+    const CENTRO_CUSTO_STORAGE_KEY = "inova_centros_custo_transportadora";
+    const DESPESA_STORAGE_KEY = "inova_despesas_transportadora";
     const API_BASE_URL = (() => {
       const normalizar = (url) => String(url || "").trim().replace(/\/+$/, "");
 
@@ -1491,11 +1999,16 @@
     const MODO_LOCAL_ARQUIVO = window.location.protocol === "file:";
 
     const tabOrcamentos = document.getElementById("tab-orcamentos");
-    const tabClientes = document.getElementById("tab-clientes");
     const tabCadastro = document.getElementById("tab-cadastro");
+    const tabFinanceiro = document.getElementById("tab-financeiro");
     const painelOrcamentos = document.getElementById("painel-orcamentos");
-    const painelClientes = document.getElementById("painel-clientes");
     const painelCadastro = document.getElementById("painel-cadastro");
+    const painelFinanceiro = document.getElementById("painel-financeiro");
+    const cadastroTipoSeletor = document.getElementById("cadastroTipoSeletor");
+    const cadastroConteudoClientes = document.getElementById("cadastro-conteudo-clientes");
+    const cadastroConteudoResponsaveis = document.getElementById("cadastro-conteudo-responsaveis");
+    const cadastroConteudoMotoristas = document.getElementById("cadastro-conteudo-motoristas");
+    const cadastroConteudoVeiculos = document.getElementById("cadastro-conteudo-veiculos");
     const loginOverlay = document.getElementById("login-overlay");
     const loginForm = document.getElementById("login-form");
     const loginResponsavel = document.getElementById("loginResponsavel");
@@ -1529,6 +2042,16 @@
     const responsavelMessage = document.getElementById("mensagem-responsavel");
     const responsaveisTbody = document.getElementById("responsaveis-body");
     const clearResponsavelButton = document.getElementById("limpar-responsavel-formulario");
+
+    const motoristaForm = document.getElementById("motorista-form");
+    const motoristaMessage = document.getElementById("mensagem-motorista");
+    const motoristasTbody = document.getElementById("motoristas-body");
+    const clearMotoristaButton = document.getElementById("limpar-motorista-formulario");
+
+    const veiculoForm = document.getElementById("veiculo-form");
+    const veiculoMessage = document.getElementById("mensagem-veiculo");
+    const veiculosTbody = document.getElementById("veiculos-body");
+    const clearVeiculoButton = document.getElementById("limpar-veiculo-formulario");
     
     const filtroCliente = document.getElementById("filtro-cliente");
     const filtroStatusOrcamento = document.getElementById("filtro-status-orcamento");
@@ -1538,9 +2061,40 @@
     const aplicarFiltrosButton = document.getElementById("aplicar-filtros");
     const limparFiltrosButton = document.getElementById("limpar-filtros");
 
+    const financeiroModuloSeletor = document.getElementById("financeiroModuloSeletor");
+    const financeiroConteudoLancamento = document.getElementById("financeiro-conteudo-lancamento");
+    const financeiroConteudoCategorias = document.getElementById("financeiro-conteudo-categorias");
+    const financeiroConteudoFormas = document.getElementById("financeiro-conteudo-formas");
+    const financeiroConteudoCentros = document.getElementById("financeiro-conteudo-centros");
+
+    const despesaForm = document.getElementById("despesa-form");
+    const despesaMessage = document.getElementById("mensagem-despesa");
+    const clearDespesaButton = document.getElementById("limpar-despesa-formulario");
+
+    const categoriaDespesaForm = document.getElementById("categoria-despesa-form");
+    const categoriaMessage = document.getElementById("mensagem-categoria");
+    const categoriasDespesasTbody = document.getElementById("categorias-despesas-body");
+    const clearCategoriaButton = document.getElementById("limpar-categoria-formulario");
+
+    const formaPagamentoForm = document.getElementById("forma-pagamento-form");
+    const formaMessage = document.getElementById("mensagem-forma");
+    const formasPagamentoTbody = document.getElementById("formas-pagamento-body");
+    const clearFormaButton = document.getElementById("limpar-forma-formulario");
+
+    const centroCustoForm = document.getElementById("centro-custo-form");
+    const centroMessage = document.getElementById("mensagem-centro");
+    const centrosCustoTbody = document.getElementById("centros-custo-body");
+    const clearCentroButton = document.getElementById("limpar-centro-formulario");
+
     let orcamentosCache = [];
     let clientesCache = [];
     let responsaveisCache = [];
+    let motoristasCache = [];
+    let veiculosCache = [];
+    let categoriasDespesasCache = [];
+    let formasPagamentoCache = [];
+    let centrosCustoCache = [];
+    let despesasCache = [];
     let apiDisponivel = false;
     let usuarioLogado = null;
     let authToken = sessionStorage.getItem(AUTH_TOKEN_KEY) || "";
@@ -1567,19 +2121,52 @@
 
     let filtroClienteCadastroAtivo = "";
 
+    const MODULOS_CADASTRO = ["clientes", "responsaveis", "motoristas", "veiculos"];
+
     function alternarAba(aba) {
       const mostrarOrcamentos = aba === "orcamentos";
-      const mostrarClientes = aba === "clientes";
       const mostrarCadastro = aba === "cadastro";
+      const mostrarFinanceiro = aba === "financeiro";
       painelOrcamentos.classList.toggle("active", mostrarOrcamentos);
-      painelClientes.classList.toggle("active", mostrarClientes);
       painelCadastro.classList.toggle("active", mostrarCadastro);
+      painelFinanceiro.classList.toggle("active", mostrarFinanceiro);
       tabOrcamentos.classList.toggle("active", mostrarOrcamentos);
-      tabClientes.classList.toggle("active", mostrarClientes);
       tabCadastro.classList.toggle("active", mostrarCadastro);
+      tabFinanceiro.classList.toggle("active", mostrarFinanceiro);
       tabOrcamentos.setAttribute("aria-selected", String(mostrarOrcamentos));
-      tabClientes.setAttribute("aria-selected", String(mostrarClientes));
       tabCadastro.setAttribute("aria-selected", String(mostrarCadastro));
+      tabFinanceiro.setAttribute("aria-selected", String(mostrarFinanceiro));
+    }
+
+    function alternarModuloFinanceiro(modulo) {
+      const atual = ["lancamento-despesas", "categorias-despesas", "formas-pagamento", "centros-custo"].includes(modulo)
+        ? modulo
+        : "lancamento-despesas";
+      financeiroModuloSeletor.value = atual;
+      const blocos = [
+        { el: financeiroConteudoLancamento, chave: "lancamento-despesas", display: "grid" },
+        { el: financeiroConteudoCategorias, chave: "categorias-despesas", display: "block" },
+        { el: financeiroConteudoFormas, chave: "formas-pagamento", display: "block" },
+        { el: financeiroConteudoCentros, chave: "centros-custo", display: "block" }
+      ];
+
+      blocos.forEach(({ el, chave, display }) => {
+        const visivel = chave === atual;
+        el.hidden = !visivel;
+        el.style.display = visivel ? display : "none";
+      });
+    }
+
+    function alternarModuloCadastro(tipoSelecionado) {
+      const tipo = MODULOS_CADASTRO.includes(tipoSelecionado) ? tipoSelecionado : "responsaveis";
+
+      alternarAba("cadastro");
+      cadastroTipoSeletor.value = tipo;
+
+      cadastroConteudoClientes.hidden = tipo !== "clientes";
+      cadastroConteudoResponsaveis.hidden = tipo !== "responsaveis";
+      cadastroConteudoMotoristas.hidden = tipo !== "motoristas";
+      cadastroConteudoVeiculos.hidden = tipo !== "veiculos";
     }
 
     function mostrarLoginMensagem(texto, tipo = "error") {
@@ -1689,6 +2276,86 @@
     function limparMensagemResponsavel() {
       responsavelMessage.textContent = "";
       responsavelMessage.className = "message";
+    }
+
+    function mostrarMensagemMotorista(texto, tipo = "ok") {
+      motoristaMessage.textContent = texto;
+      motoristaMessage.className = `message ${tipo}`;
+    }
+
+    function limparMensagemMotorista() {
+      motoristaMessage.textContent = "";
+      motoristaMessage.className = "message";
+    }
+
+    function mostrarMensagemVeiculo(texto, tipo = "ok") {
+      veiculoMessage.textContent = texto;
+      veiculoMessage.className = `message ${tipo}`;
+    }
+
+    function limparMensagemVeiculo() {
+      veiculoMessage.textContent = "";
+      veiculoMessage.className = "message";
+    }
+
+    function mostrarMensagemDespesa(texto, tipo = "ok") {
+      despesaMessage.textContent = texto;
+      despesaMessage.className = `message ${tipo}`;
+    }
+
+    function limparMensagemDespesa() {
+      despesaMessage.textContent = "";
+      despesaMessage.className = "message";
+    }
+
+    function mostrarMensagemCategoria(texto, tipo = "ok") {
+      categoriaMessage.textContent = texto;
+      categoriaMessage.className = `message ${tipo}`;
+    }
+
+    function limparMensagemCategoria() {
+      categoriaMessage.textContent = "";
+      categoriaMessage.className = "message";
+    }
+
+    function mostrarMensagemForma(texto, tipo = "ok") {
+      formaMessage.textContent = texto;
+      formaMessage.className = `message ${tipo}`;
+    }
+
+    function limparMensagemForma() {
+      formaMessage.textContent = "";
+      formaMessage.className = "message";
+    }
+
+    function mostrarMensagemCentro(texto, tipo = "ok") {
+      centroMessage.textContent = texto;
+      centroMessage.className = `message ${tipo}`;
+    }
+
+    function limparMensagemCentro() {
+      centroMessage.textContent = "";
+      centroMessage.className = "message";
+    }
+
+    function proximoCodigo(lista) {
+      if (!Array.isArray(lista) || lista.length === 0) {
+        return 1;
+      }
+      return Math.max(...lista.map((item) => Number(item.codigo) || 0)) + 1;
+    }
+
+    function proximoCodigoDespesa() {
+      if (!Array.isArray(despesasCache) || despesasCache.length === 0) {
+        return "DESP-00001";
+      }
+      const max = Math.max(
+        ...despesasCache.map((item) => {
+          const numero = String(item.codigo || "").replace(/\D/g, "");
+          return Number(numero) || 0;
+        })
+      ) + 1;
+      return `DESP-${String(max).padStart(5, "0")}`;
     }
 
     function gerarCodigo() {
@@ -1991,6 +2658,14 @@
       return Array.isArray(responsaveisCache) ? [...responsaveisCache] : [];
     }
 
+    function obterMotoristas() {
+      return Array.isArray(motoristasCache) ? [...motoristasCache] : [];
+    }
+
+    function obterVeiculos() {
+      return Array.isArray(veiculosCache) ? [...veiculosCache] : [];
+    }
+
     async function salvarClientes(lista) {
       clientesCache = [...lista];
       localStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(lista));
@@ -2044,6 +2719,180 @@
       localStorage.setItem(RESPONSAVEL_STORAGE_KEY, JSON.stringify(responsaveisCache));
     }
 
+    function carregarMotoristasIniciais() {
+      try {
+        const dados = JSON.parse(localStorage.getItem(MOTORISTA_STORAGE_KEY) || "[]");
+        motoristasCache = Array.isArray(dados) ? dados : [];
+      } catch (_error) {
+        motoristasCache = [];
+      }
+    }
+
+    function carregarVeiculosIniciais() {
+      try {
+        const dados = JSON.parse(localStorage.getItem(VEICULO_STORAGE_KEY) || "[]");
+        veiculosCache = Array.isArray(dados) ? dados : [];
+      } catch (_error) {
+        veiculosCache = [];
+      }
+    }
+
+    function salvarMotoristas(lista) {
+      motoristasCache = [...lista];
+      localStorage.setItem(MOTORISTA_STORAGE_KEY, JSON.stringify(motoristasCache));
+    }
+
+    function salvarVeiculos(lista) {
+      veiculosCache = [...lista];
+      localStorage.setItem(VEICULO_STORAGE_KEY, JSON.stringify(veiculosCache));
+    }
+
+    function carregarCategoriasDespesasIniciais() {
+      try {
+        const dados = JSON.parse(localStorage.getItem(CATEGORIA_DESPESA_STORAGE_KEY) || "[]");
+        categoriasDespesasCache = Array.isArray(dados) ? dados : [];
+      } catch (_error) {
+        categoriasDespesasCache = [];
+      }
+    }
+
+    function carregarFormasPagamentoIniciais() {
+      try {
+        const dados = JSON.parse(localStorage.getItem(FORMA_PAGAMENTO_STORAGE_KEY) || "[]");
+        formasPagamentoCache = Array.isArray(dados) ? dados : [];
+      } catch (_error) {
+        formasPagamentoCache = [];
+      }
+    }
+
+    function carregarCentrosCustoIniciais() {
+      try {
+        const dados = JSON.parse(localStorage.getItem(CENTRO_CUSTO_STORAGE_KEY) || "[]");
+        centrosCustoCache = Array.isArray(dados) ? dados : [];
+      } catch (_error) {
+        centrosCustoCache = [];
+      }
+    }
+
+    function carregarDespesasIniciais() {
+      try {
+        const dados = JSON.parse(localStorage.getItem(DESPESA_STORAGE_KEY) || "[]");
+        despesasCache = Array.isArray(dados) ? dados : [];
+      } catch (_error) {
+        despesasCache = [];
+      }
+    }
+
+    function salvarCategoriasDespesas(lista) {
+      categoriasDespesasCache = [...lista];
+      localStorage.setItem(CATEGORIA_DESPESA_STORAGE_KEY, JSON.stringify(categoriasDespesasCache));
+      atualizarSelectsFinanceiro();
+    }
+
+    function salvarFormasPagamento(lista) {
+      formasPagamentoCache = [...lista];
+      localStorage.setItem(FORMA_PAGAMENTO_STORAGE_KEY, JSON.stringify(formasPagamentoCache));
+      atualizarSelectsFinanceiro();
+    }
+
+    function salvarCentrosCusto(lista) {
+      centrosCustoCache = [...lista];
+      localStorage.setItem(CENTRO_CUSTO_STORAGE_KEY, JSON.stringify(centrosCustoCache));
+      atualizarSelectsFinanceiro();
+    }
+
+    function salvarDespesas(lista) {
+      despesasCache = [...lista];
+      localStorage.setItem(DESPESA_STORAGE_KEY, JSON.stringify(despesasCache));
+    }
+
+    function atualizarSelectsFinanceiro() {
+      const categoriasAtivas = categoriasDespesasCache.filter((item) => item.status === "Ativo");
+      const formasAtivas = formasPagamentoCache.filter((item) => item.status === "Ativo");
+      const centrosAtivos = centrosCustoCache.filter((item) => item.status === "Ativo");
+
+      despesaForm.despesaCategoria.innerHTML = `<option value="">Selecione</option>${categoriasAtivas.map((item) => `<option value="${item.nome}">${item.nome}</option>`).join("")}`;
+      despesaForm.despesaFormaPagamento.innerHTML = `<option value="">Selecione</option>${formasAtivas.map((item) => `<option value="${item.nome}">${item.nome}</option>`).join("")}`;
+      despesaForm.despesaCentroCusto.innerHTML = `<option value="">Selecione</option>${centrosAtivos.map((item) => `<option value="${item.nome}">${item.nome}</option>`).join("")}`;
+
+      despesaForm.despesaCliente.innerHTML = `<option value="">Selecione</option>${obterClientes().map((item) => `<option value="${item.nome}">${item.nome}</option>`).join("")}`;
+      despesaForm.despesaOrcamento.innerHTML = `<option value="">Selecione</option>${obterOrcamentos().map((item) => `<option value="${item.codigo}">${item.codigo}</option>`).join("")}`;
+      despesaForm.despesaVeiculo.innerHTML = `<option value="">Selecione</option>${obterVeiculos().map((item) => `<option value="${item.placa}">${item.placa}</option>`).join("")}`;
+      despesaForm.despesaMotorista.innerHTML = `<option value="">Selecione</option>${obterMotoristas().map((item) => `<option value="${item.nome}">${item.nome}</option>`).join("")}`;
+      despesaForm.despesaResponsavel.innerHTML = `<option value="">Selecione</option>${obterResponsaveis()
+        .sort((a, b) => String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR"))
+        .map((item) => `<option value="${item.nome}">${item.nome}</option>`)
+        .join("")}`;
+    }
+
+    function renderizarCategoriasDespesas() {
+      if (categoriasDespesasCache.length === 0) {
+        categoriasDespesasTbody.innerHTML = "<tr><td colspan='5'>Nenhuma categoria cadastrada.</td></tr>";
+        return;
+      }
+      categoriasDespesasTbody.innerHTML = categoriasDespesasCache
+        .sort((a, b) => Number(a.codigo) - Number(b.codigo))
+        .map((item) => `
+          <tr>
+            <td>${item.codigo}</td>
+            <td>${item.nome}</td>
+            <td>${item.tipo}</td>
+            <td>${item.status}</td>
+            <td><div class="table-actions"><button type="button" class="btn-secondary" data-edit-categoria="${item.codigo}">Editar</button><button type="button" class="btn-secondary" data-delete-categoria="${item.codigo}">Excluir</button></div></td>
+          </tr>
+        `)
+        .join("");
+    }
+
+    function renderizarFormasPagamento() {
+      if (formasPagamentoCache.length === 0) {
+        formasPagamentoTbody.innerHTML = "<tr><td colspan='4'>Nenhuma forma cadastrada.</td></tr>";
+        return;
+      }
+      formasPagamentoTbody.innerHTML = formasPagamentoCache
+        .sort((a, b) => Number(a.codigo) - Number(b.codigo))
+        .map((item) => `
+          <tr>
+            <td>${item.codigo}</td>
+            <td>${item.nome}</td>
+            <td>${item.status}</td>
+            <td><div class="table-actions"><button type="button" class="btn-secondary" data-edit-forma="${item.codigo}">Editar</button><button type="button" class="btn-secondary" data-delete-forma="${item.codigo}">Excluir</button></div></td>
+          </tr>
+        `)
+        .join("");
+    }
+
+    function renderizarCentrosCusto() {
+      if (centrosCustoCache.length === 0) {
+        centrosCustoTbody.innerHTML = "<tr><td colspan='4'>Nenhum centro de custo cadastrado.</td></tr>";
+        return;
+      }
+      centrosCustoTbody.innerHTML = centrosCustoCache
+        .sort((a, b) => Number(a.codigo) - Number(b.codigo))
+        .map((item) => `
+          <tr>
+            <td>${item.codigo}</td>
+            <td>${item.nome}</td>
+            <td>${item.status}</td>
+            <td><div class="table-actions"><button type="button" class="btn-secondary" data-edit-centro="${item.codigo}">Editar</button><button type="button" class="btn-secondary" data-delete-centro="${item.codigo}">Excluir</button></div></td>
+          </tr>
+        `)
+        .join("");
+    }
+
+    function atualizarSelectMotoristaVeiculo() {
+      const atual = veiculoForm.veiculoMotoristaResponsavel.value;
+      const opcoes = obterMotoristas()
+        .sort((a, b) => String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR"))
+        .map((item) => `<option value="${item.nome}">${item.nome}</option>`)
+        .join("");
+      veiculoForm.veiculoMotoristaResponsavel.innerHTML = `<option value="">Selecione</option>${opcoes}`;
+
+      if (atual && obterMotoristas().some((item) => item.nome === atual)) {
+        veiculoForm.veiculoMotoristaResponsavel.value = atual;
+      }
+    }
+
     function proximoIdResponsavel() {
       const lista = obterResponsaveis();
       if (lista.length === 0) return 1;
@@ -2063,6 +2912,26 @@
         form.responsavel.value = atual;
       } else {
         form.responsavel.value = "";
+      }
+    }
+
+    function atualizarSelectLoginResponsaveis() {
+      const atual = loginResponsavel.value;
+      const opcoes = obterResponsaveis()
+        .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"))
+        .map((item) => {
+          const nome = String(item.nome || "").trim().toUpperCase();
+          const label = nome === "INOVA" ? "INOVA (ADMIN)" : nome;
+          return `<option value="${nome}">${label}</option>`;
+        })
+        .join("");
+
+      loginResponsavel.innerHTML = `<option value="">Selecione</option>${opcoes}`;
+
+      if (atual && obterResponsaveis().some((item) => item.nome === atual)) {
+        loginResponsavel.value = atual;
+      } else {
+        loginResponsavel.value = "";
       }
     }
 
@@ -2108,6 +2977,7 @@
 
       if (clientes.length === 0) {
         clientesTbody.innerHTML = `<tr><td colspan='8'>${termoBusca ? "Nenhum cliente encontrado para a busca informada." : "Nenhum cliente cadastrado."}</td></tr>`;
+        atualizarSelectsFinanceiro();
         return;
       }
 
@@ -2133,6 +3003,7 @@
         .join("");
 
       clientesTbody.innerHTML = html;
+      atualizarSelectsFinanceiro();
     }
 
     function preencherFormularioCliente(item) {
@@ -2154,6 +3025,8 @@
       if (lista.length === 0) {
         responsaveisTbody.innerHTML = "<tr><td colspan='5'>Nenhum responsavel cadastrado.</td></tr>";
         atualizarSelectResponsaveis();
+        atualizarSelectLoginResponsaveis();
+        atualizarSelectsFinanceiro();
         return;
       }
 
@@ -2177,6 +3050,108 @@
 
       responsaveisTbody.innerHTML = html;
       atualizarSelectResponsaveis();
+      atualizarSelectLoginResponsaveis();
+      atualizarSelectsFinanceiro();
+    }
+
+    function renderizarMotoristas() {
+      const lista = obterMotoristas();
+      motoristasTbody.innerHTML = "";
+
+      if (lista.length === 0) {
+        motoristasTbody.innerHTML = "<tr><td colspan='5'>Nenhum motorista cadastrado.</td></tr>";
+        atualizarSelectMotoristaVeiculo();
+        atualizarSelectsFinanceiro();
+        return;
+      }
+
+      motoristasTbody.innerHTML = lista
+        .sort((a, b) => String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR"))
+        .map((item) => `
+          <tr>
+            <td data-label="Nome">${item.nome}</td>
+            <td data-label="CPF">${item.cpf}</td>
+            <td data-label="CNH">${item.cnh}</td>
+            <td data-label="Telefone">${item.telefone}</td>
+            <td data-label="Acoes">
+              <div class="table-actions">
+                <button type="button" class="btn-secondary" data-edit-motorista="${item.id}">Editar</button>
+                <button type="button" class="btn-secondary" data-delete-motorista="${item.id}">Excluir</button>
+              </div>
+            </td>
+          </tr>
+        `)
+        .join("");
+
+      atualizarSelectMotoristaVeiculo();
+      atualizarSelectsFinanceiro();
+    }
+
+    function renderizarVeiculos() {
+      const lista = obterVeiculos();
+      veiculosTbody.innerHTML = "";
+
+      if (lista.length === 0) {
+        veiculosTbody.innerHTML = "<tr><td colspan='5'>Nenhum veiculo cadastrado.</td></tr>";
+        atualizarSelectsFinanceiro();
+        return;
+      }
+
+      veiculosTbody.innerHTML = lista
+        .sort((a, b) => String(a.placa || "").localeCompare(String(b.placa || ""), "pt-BR"))
+        .map((item) => `
+          <tr>
+            <td data-label="Placa">${item.placa}</td>
+            <td data-label="Modelo">${item.modelo}</td>
+            <td data-label="Tipo">${item.tipo}</td>
+            <td data-label="Motorista">${item.motoristaResponsavel || "-"}</td>
+            <td data-label="Acoes">
+              <div class="table-actions">
+                <button type="button" class="btn-secondary" data-edit-veiculo="${item.id}">Editar</button>
+                <button type="button" class="btn-secondary" data-delete-veiculo="${item.id}">Excluir</button>
+              </div>
+            </td>
+          </tr>
+        `)
+        .join("");
+      atualizarSelectsFinanceiro();
+    }
+
+    function coletarDadosMotoristaFormulario() {
+      const nome = motoristaForm.motoristaNome.value.trim();
+      const cpf = motoristaForm.motoristaCpf.value.trim();
+      const rg = motoristaForm.motoristaRg.value.trim();
+      const cnh = motoristaForm.motoristaCnh.value.trim();
+      const categoriaCnh = motoristaForm.motoristaCategoriaCnh.value.trim().toUpperCase();
+      const validadeCnh = motoristaForm.motoristaValidadeCnh.value;
+      const telefone = motoristaForm.motoristaTelefone.value.trim();
+      const email = motoristaForm.motoristaEmail.value.trim();
+      const endereco = motoristaForm.motoristaEndereco.value.trim();
+      const cidade = motoristaForm.motoristaCidade.value.trim();
+      const estado = motoristaForm.motoristaEstado.value.trim().toUpperCase();
+
+      if (!nome || !cpf || !rg || !cnh || !categoriaCnh || !validadeCnh || !telefone || !email || !endereco || !cidade || !estado) {
+        return null;
+      }
+
+      return { nome, cpf, rg, cnh, categoriaCnh, validadeCnh, telefone, email, endereco, cidade, estado };
+    }
+
+    function coletarDadosVeiculoFormulario() {
+      const placa = veiculoForm.veiculoPlaca.value.trim().toUpperCase();
+      const modelo = veiculoForm.veiculoModelo.value.trim();
+      const marca = veiculoForm.veiculoMarca.value.trim();
+      const ano = Number(veiculoForm.veiculoAno.value);
+      const tipo = veiculoForm.veiculoTipo.value.trim();
+      const capacidade = veiculoForm.veiculoCapacidade.value.trim();
+      const motoristaResponsavel = veiculoForm.veiculoMotoristaResponsavel.value.trim();
+      const observacoes = veiculoForm.veiculoObservacoes.value.trim();
+
+      if (!placa || !modelo || !marca || !Number.isFinite(ano) || !tipo || !capacidade || !motoristaResponsavel) {
+        return null;
+      }
+
+      return { placa, modelo, marca, ano, tipo, capacidade, motoristaResponsavel, observacoes };
     }
 
     function preencherFormularioResponsavel(item) {
@@ -2217,12 +3192,195 @@
       responsavelForm.responsavelSenha.value = "";
     }
 
+    function preencherFormularioMotorista(item) {
+      motoristaForm.codigoEdicaoMotorista.value = item.id;
+      motoristaForm.motoristaNome.value = item.nome || "";
+      motoristaForm.motoristaCpf.value = item.cpf || "";
+      motoristaForm.motoristaRg.value = item.rg || "";
+      motoristaForm.motoristaCnh.value = item.cnh || "";
+      motoristaForm.motoristaCategoriaCnh.value = item.categoriaCnh || "";
+      motoristaForm.motoristaValidadeCnh.value = item.validadeCnh || "";
+      motoristaForm.motoristaTelefone.value = item.telefone || "";
+      motoristaForm.motoristaEmail.value = item.email || "";
+      motoristaForm.motoristaEndereco.value = item.endereco || "";
+      motoristaForm.motoristaCidade.value = item.cidade || "";
+      motoristaForm.motoristaEstado.value = item.estado || "";
+      motoristaForm.motoristaNome.focus();
+    }
+
+    function preencherFormularioVeiculo(item) {
+      veiculoForm.codigoEdicaoVeiculo.value = item.id;
+      veiculoForm.veiculoPlaca.value = item.placa || "";
+      veiculoForm.veiculoModelo.value = item.modelo || "";
+      veiculoForm.veiculoMarca.value = item.marca || "";
+      veiculoForm.veiculoAno.value = item.ano || "";
+      veiculoForm.veiculoTipo.value = item.tipo || "";
+      veiculoForm.veiculoCapacidade.value = item.capacidade || "";
+      atualizarSelectMotoristaVeiculo();
+      veiculoForm.veiculoMotoristaResponsavel.value = item.motoristaResponsavel || "";
+      veiculoForm.veiculoObservacoes.value = item.observacoes || "";
+      veiculoForm.veiculoPlaca.focus();
+    }
+
     function criarCampoOcultoEdicaoResponsavel() {
       const hidden = document.createElement("input");
       hidden.type = "hidden";
       hidden.name = "codigoEdicaoResponsavel";
       hidden.value = "";
       responsavelForm.appendChild(hidden);
+    }
+
+    function criarCampoOcultoEdicaoMotorista() {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "codigoEdicaoMotorista";
+      hidden.value = "";
+      motoristaForm.appendChild(hidden);
+    }
+
+    function criarCampoOcultoEdicaoVeiculo() {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "codigoEdicaoVeiculo";
+      hidden.value = "";
+      veiculoForm.appendChild(hidden);
+    }
+
+    function criarCampoOcultoEdicaoCategoria() {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "codigoEdicaoCategoria";
+      hidden.value = "";
+      categoriaDespesaForm.appendChild(hidden);
+    }
+
+    function criarCampoOcultoEdicaoForma() {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "codigoEdicaoForma";
+      hidden.value = "";
+      formaPagamentoForm.appendChild(hidden);
+    }
+
+    function criarCampoOcultoEdicaoCentro() {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "codigoEdicaoCentro";
+      hidden.value = "";
+      centroCustoForm.appendChild(hidden);
+    }
+
+    function criarCampoOcultoEdicaoDespesa() {
+      const hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "codigoEdicaoDespesa";
+      hidden.value = "";
+      despesaForm.appendChild(hidden);
+    }
+
+    function prepararNovaCategoria() {
+      categoriaDespesaForm.codigoEdicaoCategoria.value = "";
+      categoriaDespesaForm.categoriaCodigo.value = String(proximoCodigo(categoriasDespesasCache));
+    }
+
+    function prepararNovaForma() {
+      formaPagamentoForm.codigoEdicaoForma.value = "";
+      formaPagamentoForm.formaCodigo.value = String(proximoCodigo(formasPagamentoCache));
+    }
+
+    function prepararNovoCentro() {
+      centroCustoForm.codigoEdicaoCentro.value = "";
+      centroCustoForm.centroCodigo.value = String(proximoCodigo(centrosCustoCache));
+    }
+
+    function prepararNovaDespesa() {
+      despesaForm.codigoEdicaoDespesa.value = "";
+      despesaForm.despesaCodigo.value = proximoCodigoDespesa();
+    }
+
+    function coletarDadosCategoriaFormulario() {
+      const nome = categoriaDespesaForm.categoriaNome.value.trim();
+      const tipo = categoriaDespesaForm.categoriaTipo.value.trim();
+      const status = categoriaDespesaForm.categoriaStatus.value.trim();
+      if (!nome || !tipo || !status) {
+        return null;
+      }
+      return { nome, tipo, status };
+    }
+
+    function coletarDadosFormaFormulario() {
+      const nome = formaPagamentoForm.formaNome.value.trim();
+      const status = formaPagamentoForm.formaStatus.value.trim();
+      if (!nome || !status) {
+        return null;
+      }
+      return { nome, status };
+    }
+
+    function coletarDadosCentroFormulario() {
+      const nome = centroCustoForm.centroNome.value.trim();
+      const status = centroCustoForm.centroStatus.value.trim();
+      if (!nome || !status) {
+        return null;
+      }
+      return { nome, status };
+    }
+
+    function coletarDadosDespesaFormulario() {
+      const dataDespesa = despesaForm.despesaData.value;
+      const competencia = despesaForm.despesaCompetencia.value;
+      const tipoDespesa = despesaForm.despesaTipo.value;
+      const categoria = despesaForm.despesaCategoria.value;
+      const centroCusto = despesaForm.despesaCentroCusto.value;
+      const descricao = despesaForm.despesaDescricao.value.trim();
+      const valor = Number(despesaForm.despesaValor.value);
+      const formaPagamento = despesaForm.despesaFormaPagamento.value;
+      const situacao = despesaForm.despesaSituacao.value;
+      if (!dataDespesa || !competencia || !tipoDespesa || !categoria || !centroCusto || !descricao || !Number.isFinite(valor) || valor <= 0 || !formaPagamento || !situacao) {
+        return null;
+      }
+
+      return {
+        dataDespesa,
+        competencia,
+        tipoDespesa,
+        categoria,
+        centroCusto,
+        fornecedor: despesaForm.despesaFornecedor.value.trim(),
+        descricao,
+        valor,
+        formaPagamento,
+        situacao,
+        cliente: despesaForm.despesaCliente.value,
+        orcamento: despesaForm.despesaOrcamento.value,
+        veiculo: despesaForm.despesaVeiculo.value,
+        motorista: despesaForm.despesaMotorista.value,
+        responsavel: despesaForm.despesaResponsavel.value,
+        anexoNome: despesaForm.despesaAnexo.files && despesaForm.despesaAnexo.files[0] ? despesaForm.despesaAnexo.files[0].name : "",
+        observacoes: despesaForm.despesaObservacoes.value.trim()
+      };
+    }
+
+    function preencherFormularioCategoria(item) {
+      categoriaDespesaForm.codigoEdicaoCategoria.value = String(item.codigo);
+      categoriaDespesaForm.categoriaCodigo.value = String(item.codigo);
+      categoriaDespesaForm.categoriaNome.value = item.nome;
+      categoriaDespesaForm.categoriaTipo.value = item.tipo;
+      categoriaDespesaForm.categoriaStatus.value = item.status;
+    }
+
+    function preencherFormularioForma(item) {
+      formaPagamentoForm.codigoEdicaoForma.value = String(item.codigo);
+      formaPagamentoForm.formaCodigo.value = String(item.codigo);
+      formaPagamentoForm.formaNome.value = item.nome;
+      formaPagamentoForm.formaStatus.value = item.status;
+    }
+
+    function preencherFormularioCentro(item) {
+      centroCustoForm.codigoEdicaoCentro.value = String(item.codigo);
+      centroCustoForm.centroCodigo.value = String(item.codigo);
+      centroCustoForm.centroNome.value = item.nome;
+      centroCustoForm.centroStatus.value = item.status;
     }
 
     function coletarDadosClienteFormulario() {
@@ -2406,6 +3564,7 @@
       }
 
       atualizarMetricas(orcamentos);
+      atualizarSelectsFinanceiro();
     }
 
     function atualizarMetricas(orcamentos) {
@@ -2493,8 +3652,21 @@
     }
 
     tabOrcamentos.addEventListener("click", () => alternarAba("orcamentos"));
-    tabClientes.addEventListener("click", () => alternarAba("clientes"));
-    tabCadastro.addEventListener("click", () => alternarAba("cadastro"));
+    tabCadastro.addEventListener("click", () => {
+      alternarModuloCadastro(cadastroTipoSeletor.value);
+    });
+    tabFinanceiro.addEventListener("click", () => {
+      alternarAba("financeiro");
+      alternarModuloFinanceiro(financeiroModuloSeletor.value);
+    });
+
+    cadastroTipoSeletor.addEventListener("change", () => {
+      alternarModuloCadastro(cadastroTipoSeletor.value);
+    });
+
+    financeiroModuloSeletor.addEventListener("change", () => {
+      alternarModuloFinanceiro(financeiroModuloSeletor.value);
+    });
 
     adicionarProdutoButton.addEventListener("click", () => {
       produtosListaEl.appendChild(criarLinhaProduto({ quantidade: "", descricao: "" }));
@@ -2575,7 +3747,7 @@
             ...dados,
             atualizadoEm: new Date().toISOString()
           };
-          mostrarMensagem("Orcamento atualizado com sucesso.");
+          mostrarMensagem("Orçamento atualizado com sucesso.");
         }
       } else {
         lista.push({
@@ -2583,7 +3755,7 @@
           criadoEm: new Date().toISOString(),
           ...dados
         });
-        mostrarMensagem("Orcamento salvo com sucesso.");
+        mostrarMensagem("Orçamento salvo com sucesso.");
       }
 
       try {
@@ -2620,27 +3792,27 @@
       if (codigoEditar) {
         const item = lista.find((orcamento) => orcamento.codigo === codigoEditar);
         if (!item) {
-          mostrarMensagem("Orcamento nao encontrado para edicao.", "error");
+          mostrarMensagem("Orçamento não encontrado para edição.", "error");
           return;
         }
         preencherFormulario(item);
-        mostrarMensagem(`Editando o orcamento ${item.codigo}.`);
+        mostrarMensagem(`Editando o orçamento ${item.codigo}.`);
         return;
       }
 
       if (codigoExcluir) {
         const restante = lista.filter((orcamento) => orcamento.codigo !== codigoExcluir);
         if (restante.length === lista.length) {
-          mostrarMensagem("Orcamento nao encontrado para exclusao.", "error");
+          mostrarMensagem("Orçamento não encontrado para exclusão.", "error");
           return;
         }
         try {
           await salvarOrcamentos(restante);
         } catch (_error) {
-          mostrarMensagem("Falha ao excluir no Neon. Alteracao mantida localmente.", "error");
+          mostrarMensagem("Falha ao excluir no Neon. Alteração mantida localmente.", "error");
         }
         renderizarTabela();
-        mostrarMensagem("Orcamento excluido com sucesso.");
+        mostrarMensagem("Orçamento excluído com sucesso.");
       }
     });
 
@@ -2659,7 +3831,7 @@
 
       const dados = coletarDadosClienteFormulario();
       if (!dados) {
-        mostrarMensagemCliente("Preencha todos os campos obrigatorios do cliente.", "error");
+        mostrarMensagemCliente("Preencha todos os campos obrigatórios do cliente.", "error");
         return;
       }
 
@@ -2674,7 +3846,7 @@
             ...dados,
             atualizadoEm: new Date().toISOString()
           };
-          mostrarMensagemCliente("Cliente atualizado com sucesso.");
+          mostrarMensagemCliente("Cliente atualizado com sucesso!!!!");
         }
       } else {
         lista.push({
@@ -2682,7 +3854,7 @@
           criadoEm: new Date().toISOString(),
           ...dados
         });
-        mostrarMensagemCliente("Cliente cadastrado com sucesso.");
+        mostrarMensagemCliente("Cliente cadastrado com sucesso!!!!");
       }
 
       try {
@@ -2708,7 +3880,7 @@
       if (idEditar) {
         const item = lista.find((cliente) => cliente.id === idEditar);
         if (!item) {
-          mostrarMensagemCliente("Cliente nao encontrado para edicao.", "error");
+          mostrarMensagemCliente("Cliente não encontrado para edição.", "error");
           return;
         }
         preencherFormularioCliente(item);
@@ -2719,16 +3891,16 @@
       if (idExcluir) {
         const restante = lista.filter((cliente) => cliente.id !== idExcluir);
         if (restante.length === lista.length) {
-          mostrarMensagemCliente("Cliente nao encontrado para exclusao.", "error");
+          mostrarMensagemCliente("Cliente não encontrado para exclusão.", "error");
           return;
         }
         try {
           await salvarClientes(restante);
         } catch (_error) {
-          mostrarMensagemCliente("Falha ao excluir no Neon. Alteracao mantida localmente.", "error");
+          mostrarMensagemCliente("Falha ao excluir no Neon. Alteração mantida localmente.", "error");
         }
         renderizarClientes();
-        mostrarMensagemCliente("Cliente excluido com sucesso.");
+        mostrarMensagemCliente("Cliente excluído com sucesso.");
       }
     });
 
@@ -2744,7 +3916,7 @@
 
       const dados = coletarDadosResponsavelFormulario();
       if (!dados) {
-        mostrarMensagemResponsavel("Preencha todos os campos obrigatorios do responsavel.", "error");
+        mostrarMensagemResponsavel("Preencha todos os campos obrigatórios do responsável.", "error");
         return;
       }
 
@@ -2767,7 +3939,7 @@
             nomeAnterior,
             atualizadoEm: new Date().toISOString()
           };
-          mostrarMensagemResponsavel(dados.senha ? "Responsavel e senha atualizados com sucesso." : "Responsavel atualizado com sucesso.");
+          mostrarMensagemResponsavel(dados.senha ? "Responsável e senha atualizados com sucesso." : "Responsável atualizado com sucesso.");
         }
       } else {
         const novoId = proximoIdResponsavel();
@@ -2776,13 +3948,13 @@
           criadoEm: new Date().toISOString(),
           ...dados
         });
-        mostrarMensagemResponsavel("Responsavel cadastrado com senha de acesso.");
+        mostrarMensagemResponsavel("Responsável cadastrado com senha de acesso.");
       }
 
       try {
         await salvarResponsaveis(lista);
       } catch (error) {
-        mostrarMensagemResponsavel(error && error.message ? error.message : "Falha ao salvar o responsavel no Neon.", "error");
+        mostrarMensagemResponsavel(error && error.message ? error.message : "Falha ao salvar o responsável no Neon.", "error");
         return;
       }
       responsavelForm.reset();
@@ -2803,18 +3975,18 @@
       if (idEditar) {
         const item = lista.find((responsavel) => Number(responsavel.id) === idEditar);
         if (!item) {
-          mostrarMensagemResponsavel("Responsavel nao encontrado para edicao.", "error");
+          mostrarMensagemResponsavel("Responsável não encontrado para edição.", "error");
           return;
         }
         preencherFormularioResponsavel(item);
-        mostrarMensagemResponsavel(`Editando responsavel ID ${item.id}.`);
+        mostrarMensagemResponsavel(`Editando responsável ID ${item.id}.`);
         return;
       }
 
       if (idExcluir) {
         const restante = lista.filter((responsavel) => Number(responsavel.id) !== idExcluir);
         if (restante.length === lista.length) {
-          mostrarMensagemResponsavel("Responsavel nao encontrado para exclusao.", "error");
+          mostrarMensagemResponsavel("Responsável não encontrado para exclusão.", "error");
           return;
         }
 
@@ -2827,7 +3999,7 @@
         responsavelForm.reset();
         prepararNovoResponsavel();
         renderizarResponsaveis();
-        mostrarMensagemResponsavel("Responsavel excluido com sucesso.");
+        mostrarMensagemResponsavel("Responsável excluído com sucesso.");
       }
     });
 
@@ -2835,6 +4007,356 @@
       responsavelForm.reset();
       prepararNovoResponsavel();
       limparMensagemResponsavel();
+    });
+
+    motoristaForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      limparMensagemMotorista();
+
+      const dados = coletarDadosMotoristaFormulario();
+      if (!dados) {
+        mostrarMensagemMotorista("Preencha todos os campos obrigatórios do motorista.", "error");
+        return;
+      }
+
+      const lista = obterMotoristas();
+      const codigoEdicao = motoristaForm.codigoEdicaoMotorista.value;
+
+      if (codigoEdicao) {
+        const indice = lista.findIndex((item) => item.id === codigoEdicao);
+        if (indice >= 0) {
+          lista[indice] = { ...lista[indice], ...dados };
+          mostrarMensagemMotorista("Motorista atualizado com sucesso.");
+        }
+      } else {
+        lista.push({ id: crypto.randomUUID(), ...dados });
+        mostrarMensagemMotorista("Motorista cadastrado com sucesso.");
+      }
+
+      salvarMotoristas(lista);
+      motoristaForm.reset();
+      motoristaForm.codigoEdicaoMotorista.value = "";
+      renderizarMotoristas();
+      renderizarVeiculos();
+    });
+
+    motoristasTbody.addEventListener("click", (event) => {
+      const botao = event.target;
+      if (!(botao instanceof HTMLButtonElement)) {
+        return;
+      }
+
+      const idEditar = botao.getAttribute("data-edit-motorista");
+      const idExcluir = botao.getAttribute("data-delete-motorista");
+      const lista = obterMotoristas();
+
+      if (idEditar) {
+        const item = lista.find((motorista) => motorista.id === idEditar);
+        if (!item) {
+          mostrarMensagemMotorista("Motorista não encontrado para edição.", "error");
+          return;
+        }
+        preencherFormularioMotorista(item);
+        mostrarMensagemMotorista(`Editando motorista ${item.nome}.`);
+        return;
+      }
+
+      if (idExcluir) {
+        const restante = lista.filter((motorista) => motorista.id !== idExcluir);
+        salvarMotoristas(restante);
+
+        const veiculosAtualizados = obterVeiculos().map((veiculo) => {
+          const motoristaExiste = restante.some((motorista) => motorista.nome === veiculo.motoristaResponsavel);
+          return motoristaExiste ? veiculo : { ...veiculo, motoristaResponsavel: "" };
+        });
+        salvarVeiculos(veiculosAtualizados);
+
+        motoristaForm.reset();
+        motoristaForm.codigoEdicaoMotorista.value = "";
+        renderizarMotoristas();
+        renderizarVeiculos();
+        mostrarMensagemMotorista("Motorista excluído com sucesso.");
+      }
+    });
+
+    clearMotoristaButton.addEventListener("click", () => {
+      motoristaForm.reset();
+      motoristaForm.codigoEdicaoMotorista.value = "";
+      limparMensagemMotorista();
+    });
+
+    veiculoForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      limparMensagemVeiculo();
+
+      const dados = coletarDadosVeiculoFormulario();
+      if (!dados) {
+        mostrarMensagemVeiculo("Preencha os campos obrigatórios do veículo.", "error");
+        return;
+      }
+
+      const lista = obterVeiculos();
+      const codigoEdicao = veiculoForm.codigoEdicaoVeiculo.value;
+
+      if (codigoEdicao) {
+        const indice = lista.findIndex((item) => item.id === codigoEdicao);
+        if (indice >= 0) {
+          lista[indice] = { ...lista[indice], ...dados };
+          mostrarMensagemVeiculo("Veículo atualizado com sucesso.");
+        }
+      } else {
+        lista.push({ id: crypto.randomUUID(), ...dados });
+        mostrarMensagemVeiculo("Veículo cadastrado com sucesso.");
+      }
+
+      salvarVeiculos(lista);
+      veiculoForm.reset();
+      veiculoForm.codigoEdicaoVeiculo.value = "";
+      renderizarVeiculos();
+    });
+
+    veiculosTbody.addEventListener("click", (event) => {
+      const botao = event.target;
+      if (!(botao instanceof HTMLButtonElement)) {
+        return;
+      }
+
+      const idEditar = botao.getAttribute("data-edit-veiculo");
+      const idExcluir = botao.getAttribute("data-delete-veiculo");
+      const lista = obterVeiculos();
+
+      if (idEditar) {
+        const item = lista.find((veiculo) => veiculo.id === idEditar);
+        if (!item) {
+          mostrarMensagemVeiculo("Veículo não encontrado para edição.", "error");
+          return;
+        }
+        preencherFormularioVeiculo(item);
+        mostrarMensagemVeiculo(`Editando veículo ${item.placa}.`);
+        return;
+      }
+
+      if (idExcluir) {
+        const restante = lista.filter((veiculo) => veiculo.id !== idExcluir);
+        salvarVeiculos(restante);
+        veiculoForm.reset();
+        veiculoForm.codigoEdicaoVeiculo.value = "";
+        renderizarVeiculos();
+        mostrarMensagemVeiculo("Veículo excluído com sucesso.");
+      }
+    });
+
+    clearVeiculoButton.addEventListener("click", () => {
+      veiculoForm.reset();
+      veiculoForm.codigoEdicaoVeiculo.value = "";
+      limparMensagemVeiculo();
+    });
+
+    categoriaDespesaForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      limparMensagemCategoria();
+      const dados = coletarDadosCategoriaFormulario();
+      if (!dados) {
+        mostrarMensagemCategoria("Preencha os campos obrigatórios da categoria.", "error");
+        return;
+      }
+
+      const lista = [...categoriasDespesasCache];
+      const codigoEdicao = categoriaDespesaForm.codigoEdicaoCategoria.value;
+      if (codigoEdicao) {
+        const indice = lista.findIndex((item) => Number(item.codigo) === Number(codigoEdicao));
+        if (indice >= 0) {
+          lista[indice] = { ...lista[indice], ...dados };
+          mostrarMensagemCategoria("Categoria atualizada com sucesso.");
+        }
+      } else {
+        lista.push({ codigo: proximoCodigo(lista), ...dados });
+        mostrarMensagemCategoria("Categoria cadastrada com sucesso.");
+      }
+
+      salvarCategoriasDespesas(lista);
+      renderizarCategoriasDespesas();
+      categoriaDespesaForm.reset();
+      prepararNovaCategoria();
+    });
+
+    categoriasDespesasTbody.addEventListener("click", (event) => {
+      const botao = event.target;
+      if (!(botao instanceof HTMLButtonElement)) {
+        return;
+      }
+      const codEditar = botao.getAttribute("data-edit-categoria");
+      const codExcluir = botao.getAttribute("data-delete-categoria");
+      if (codEditar) {
+        const item = categoriasDespesasCache.find((it) => Number(it.codigo) === Number(codEditar));
+        if (item) {
+          preencherFormularioCategoria(item);
+          mostrarMensagemCategoria(`Editando categoria ${item.nome}.`);
+        }
+        return;
+      }
+      if (codExcluir) {
+        salvarCategoriasDespesas(categoriasDespesasCache.filter((it) => Number(it.codigo) !== Number(codExcluir)));
+        renderizarCategoriasDespesas();
+        categoriaDespesaForm.reset();
+        prepararNovaCategoria();
+        mostrarMensagemCategoria("Categoria excluída com sucesso.");
+      }
+    });
+
+    clearCategoriaButton.addEventListener("click", () => {
+      categoriaDespesaForm.reset();
+      prepararNovaCategoria();
+      limparMensagemCategoria();
+    });
+
+    formaPagamentoForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      limparMensagemForma();
+      const dados = coletarDadosFormaFormulario();
+      if (!dados) {
+        mostrarMensagemForma("Preencha os campos obrigatórios da forma de pagamento.", "error");
+        return;
+      }
+
+      const lista = [...formasPagamentoCache];
+      const codigoEdicao = formaPagamentoForm.codigoEdicaoForma.value;
+      if (codigoEdicao) {
+        const indice = lista.findIndex((item) => Number(item.codigo) === Number(codigoEdicao));
+        if (indice >= 0) {
+          lista[indice] = { ...lista[indice], ...dados };
+          mostrarMensagemForma("Forma de pagamento atualizada com sucesso.");
+        }
+      } else {
+        lista.push({ codigo: proximoCodigo(lista), ...dados });
+        mostrarMensagemForma("Forma de pagamento cadastrada com sucesso.");
+      }
+
+      salvarFormasPagamento(lista);
+      renderizarFormasPagamento();
+      formaPagamentoForm.reset();
+      prepararNovaForma();
+    });
+
+    formasPagamentoTbody.addEventListener("click", (event) => {
+      const botao = event.target;
+      if (!(botao instanceof HTMLButtonElement)) {
+        return;
+      }
+      const codEditar = botao.getAttribute("data-edit-forma");
+      const codExcluir = botao.getAttribute("data-delete-forma");
+      if (codEditar) {
+        const item = formasPagamentoCache.find((it) => Number(it.codigo) === Number(codEditar));
+        if (item) {
+          preencherFormularioForma(item);
+          mostrarMensagemForma(`Editando forma ${item.nome}.`);
+        }
+        return;
+      }
+      if (codExcluir) {
+        salvarFormasPagamento(formasPagamentoCache.filter((it) => Number(it.codigo) !== Number(codExcluir)));
+        renderizarFormasPagamento();
+        formaPagamentoForm.reset();
+        prepararNovaForma();
+        mostrarMensagemForma("Forma de pagamento excluída com sucesso.");
+      }
+    });
+
+    clearFormaButton.addEventListener("click", () => {
+      formaPagamentoForm.reset();
+      prepararNovaForma();
+      limparMensagemForma();
+    });
+
+    centroCustoForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      limparMensagemCentro();
+      const dados = coletarDadosCentroFormulario();
+      if (!dados) {
+        mostrarMensagemCentro("Preencha os campos obrigatórios do centro de custo.", "error");
+        return;
+      }
+
+      const lista = [...centrosCustoCache];
+      const codigoEdicao = centroCustoForm.codigoEdicaoCentro.value;
+      if (codigoEdicao) {
+        const indice = lista.findIndex((item) => Number(item.codigo) === Number(codigoEdicao));
+        if (indice >= 0) {
+          lista[indice] = { ...lista[indice], ...dados };
+          mostrarMensagemCentro("Centro de custo atualizado com sucesso.");
+        }
+      } else {
+        lista.push({ codigo: proximoCodigo(lista), ...dados });
+        mostrarMensagemCentro("Centro de custo cadastrado com sucesso.");
+      }
+
+      salvarCentrosCusto(lista);
+      renderizarCentrosCusto();
+      centroCustoForm.reset();
+      prepararNovoCentro();
+    });
+
+    centrosCustoTbody.addEventListener("click", (event) => {
+      const botao = event.target;
+      if (!(botao instanceof HTMLButtonElement)) {
+        return;
+      }
+      const codEditar = botao.getAttribute("data-edit-centro");
+      const codExcluir = botao.getAttribute("data-delete-centro");
+      if (codEditar) {
+        const item = centrosCustoCache.find((it) => Number(it.codigo) === Number(codEditar));
+        if (item) {
+          preencherFormularioCentro(item);
+          mostrarMensagemCentro(`Editando centro ${item.nome}.`);
+        }
+        return;
+      }
+      if (codExcluir) {
+        salvarCentrosCusto(centrosCustoCache.filter((it) => Number(it.codigo) !== Number(codExcluir)));
+        renderizarCentrosCusto();
+        centroCustoForm.reset();
+        prepararNovoCentro();
+        mostrarMensagemCentro("Centro de custo excluído com sucesso.");
+      }
+    });
+
+    clearCentroButton.addEventListener("click", () => {
+      centroCustoForm.reset();
+      prepararNovoCentro();
+      limparMensagemCentro();
+    });
+
+    despesaForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      limparMensagemDespesa();
+      const dados = coletarDadosDespesaFormulario();
+      if (!dados) {
+        mostrarMensagemDespesa("Preencha os campos obrigatórios da despesa.", "error");
+        return;
+      }
+
+      const lista = [...despesasCache];
+      const codigoEdicao = despesaForm.codigoEdicaoDespesa.value;
+      if (codigoEdicao) {
+        const indice = lista.findIndex((item) => item.codigo === codigoEdicao);
+        if (indice >= 0) {
+          lista[indice] = { ...lista[indice], ...dados };
+          mostrarMensagemDespesa("Despesa atualizada com sucesso.");
+        }
+      } else {
+        lista.push({ codigo: despesaForm.despesaCodigo.value || proximoCodigoDespesa(), ...dados });
+        mostrarMensagemDespesa("Despesa cadastrada com sucesso.");
+      }
+      salvarDespesas(lista);
+      despesaForm.reset();
+      prepararNovaDespesa();
+      atualizarSelectsFinanceiro();
+    });
+
+    clearDespesaButton.addEventListener("click", () => {
+      despesaForm.reset();
+      prepararNovaDespesa();
+      limparMensagemDespesa();
     });
 
     visualizarPropostaButton.addEventListener("click", () => {
@@ -2852,7 +4374,7 @@
     exportButton.addEventListener("click", () => {
       const lista = obterOrcamentos();
       if (lista.length === 0) {
-        mostrarMensagem("Nao ha orcamentos para exportar.", "error");
+        mostrarMensagem("Não há orçamentos para exportar.", "error");
         return;
       }
 
@@ -2909,10 +4431,34 @@
       criarCampoOcultoEdicao();
       criarCampoOcultoEdicaoCliente();
       criarCampoOcultoEdicaoResponsavel();
+      criarCampoOcultoEdicaoMotorista();
+      criarCampoOcultoEdicaoVeiculo();
+      criarCampoOcultoEdicaoCategoria();
+      criarCampoOcultoEdicaoForma();
+      criarCampoOcultoEdicaoCentro();
+      criarCampoOcultoEdicaoDespesa();
       resetarItensProdutoFormulario();
       carregarResponsaveisIniciais();
+      carregarMotoristasIniciais();
+      carregarVeiculosIniciais();
+      carregarCategoriasDespesasIniciais();
+      carregarFormasPagamentoIniciais();
+      carregarCentrosCustoIniciais();
+      carregarDespesasIniciais();
       prepararNovoResponsavel();
+      prepararNovaCategoria();
+      prepararNovaForma();
+      prepararNovoCentro();
+      prepararNovaDespesa();
       renderizarResponsaveis();
+      renderizarMotoristas();
+      renderizarVeiculos();
+      renderizarCategoriasDespesas();
+      renderizarFormasPagamento();
+      renderizarCentrosCusto();
+      atualizarSelectsFinanceiro();
+      alternarModuloCadastro(cadastroTipoSeletor.value || "responsaveis");
+      alternarModuloFinanceiro(financeiroModuloSeletor.value || "lancamento-despesas");
       const sessao = sessionStorage.getItem(AUTH_USER_KEY);
       if (sessao) {
         usuarioLogado = sessao;
@@ -2925,6 +4471,8 @@
         renderizarTabela();
         renderizarClientes();
         renderizarResponsaveis();
+        renderizarMotoristas();
+        renderizarVeiculos();
         alternarAba("orcamentos");
         return;
       }
@@ -2939,6 +4487,8 @@
         renderizarTabela();
         renderizarClientes();
         renderizarResponsaveis();
+        renderizarMotoristas();
+        renderizarVeiculos();
         liberarInterface();
         alternarAba("orcamentos");
       } catch (_error) {
