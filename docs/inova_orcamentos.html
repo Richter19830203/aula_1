@@ -1046,6 +1046,13 @@
         </div>
 
         <div class="field w4">
+          <label for="tipoServico">Tipo de Serviço</label>
+          <select id="tipoServico" name="tipoServico" required>
+            <option value="">Selecione</option>
+          </select>
+        </div>
+
+        <div class="field w4">
           <label for="tipoCarga">Tipo de carga</label>
           <select id="tipoCarga" name="tipoCarga" required>
             <option value="">Selecione</option>
@@ -1252,6 +1259,7 @@
 
                <div class="proposal-product-box">
           <div><strong>Tipo de Veiculo:</strong> <span id="prop-tipo-veiculo">-</span></div>
+            <div><strong>Tipo de Serviço:</strong> <span id="prop-tipo-servico">-</span></div>
           <table class="proposal-table">
             <thead>
               <tr>
@@ -1329,6 +1337,7 @@
             <option value="clientes">Cadastro de Clientes</option>
             <option value="motoristas">Cadastro de Motoristas</option>
             <option value="responsaveis" selected>Cadastro de Responsaveis</option>
+            <option value="tipos-servico">Cadastro de Tipos de Serviço</option>
             <option value="veiculos">Cadastro de Veiculos</option>
           </select>
         </div>
@@ -1573,8 +1582,8 @@
               <input id="veiculoAno" name="veiculoAno" type="number" min="1970" max="2100" required placeholder="2026">
             </div>
                     <div class="field w4">
-          <label for="tipoVeiculo">Tipo de Veiculo</label>
-          <select id="tipoVeiculo" name="tipoVeiculo">
+          <label for="veiculoTipo">Tipo de Veiculo</label>
+          <select id="veiculoTipo" name="veiculoTipo">
             <option value="">Selecione</option>
             <option value="006">3/4</option>
             <option value="013">Bau</option>
@@ -1639,6 +1648,105 @@
               <tbody id="veiculos-body">
                 <tr>
                   <td colspan="5">Nenhum veiculo cadastrado.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div id="cadastro-conteudo-tipos-servico" hidden>
+        <section class="card" aria-labelledby="titulo-tipo-servico-formulario">
+          <h2 id="titulo-tipo-servico-formulario">Cadastro de Tipos de Serviço</h2>
+          <form id="tipo-servico-form" novalidate>
+            <div class="field w2">
+              <label for="tipoServicoId">ID</label>
+              <input id="tipoServicoId" name="tipoServicoId" type="number" readonly>
+            </div>
+            <div class="field w2">
+              <label for="tipoServicoCodigo">Código</label>
+              <input id="tipoServicoCodigo" name="tipoServicoCodigo" maxlength="20" required placeholder="Ex.: 001">
+            </div>
+            <div class="field w4">
+              <label for="tipoServicoDescricao">Descrição do Serviço</label>
+              <input id="tipoServicoDescricao" name="tipoServicoDescricao" maxlength="160" required placeholder="Descrição do serviço">
+            </div>
+            <div class="field w2">
+              <label for="tipoServicoCategoria">Categoria</label>
+              <select id="tipoServicoCategoria" name="tipoServicoCategoria" required>
+                <option value="">Selecione</option>
+                <option value="Mudanças">Mudanças</option>
+                <option value="Transportes">Transportes</option>
+                <option value="Armazenagem">Armazenagem</option>
+                <option value="Logística">Logística</option>
+                <option value="Especial">Especial</option>
+              </select>
+            </div>
+            <div class="field w2">
+              <label for="tipoServicoAbrangencia">Abrangência</label>
+              <select id="tipoServicoAbrangencia" name="tipoServicoAbrangencia" required>
+                <option value="">Selecione</option>
+                <option value="Municipal">Municipal</option>
+                <option value="Intermunicipal">Intermunicipal</option>
+                <option value="Interestadual">Interestadual</option>
+                <option value="Internacional">Internacional</option>
+              </select>
+            </div>
+            <div class="field w2">
+              <label for="tipoServicoSeguro">Necessita Seguro</label>
+              <select id="tipoServicoSeguro" name="tipoServicoSeguro" required>
+                <option value="">Selecione</option>
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+              </select>
+            </div>
+            <div class="field w2">
+              <label for="tipoServicoStatus">Status</label>
+              <select id="tipoServicoStatus" name="tipoServicoStatus" required>
+                <option value="Ativo">Ativo</option>
+                <option value="Inativo">Inativo</option>
+              </select>
+            </div>
+            <div class="field w8">
+              <label for="tipoServicoObservacoes">Observações</label>
+              <textarea id="tipoServicoObservacoes" name="tipoServicoObservacoes" maxlength="400" placeholder="Observações gerais"></textarea>
+            </div>
+            <div class="actions">
+              <button class="btn-primary" type="submit">Salvar</button>
+              <button class="btn-secondary" type="button" id="limpar-tipo-servico-formulario">Limpar</button>
+            </div>
+          </form>
+          <p id="mensagem-tipo-servico" class="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="card" aria-labelledby="titulo-tipo-servico-listagem">
+          <h2 id="titulo-tipo-servico-listagem">Tipos de Serviço cadastrados</h2>
+          <div class="filtros">
+            <div class="filtro-grupo">
+              <label for="filtro-tipo-servico">Pesquisar</label>
+              <input id="filtro-tipo-servico" type="text" placeholder="Código ou descrição">
+            </div>
+            <div class="filtro-acoes">
+              <button class="btn-primary" type="button" id="pesquisar-tipo-servico">Pesquisar</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Código</th>
+                  <th>Descrição</th>
+                  <th>Categoria</th>
+                  <th>Abrangência</th>
+                  <th>Seguro</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tipos-servico-body">
+                <tr>
+                  <td colspan="8">Nenhum tipo de serviço cadastrado.</td>
                 </tr>
               </tbody>
             </table>
@@ -1969,6 +2077,7 @@
     const FORMA_PAGAMENTO_STORAGE_KEY = "inova_formas_pagamento_transportadora";
     const CENTRO_CUSTO_STORAGE_KEY = "inova_centros_custo_transportadora";
     const DESPESA_STORAGE_KEY = "inova_despesas_transportadora";
+    const TIPO_SERVICO_STORAGE_KEY = "inova_tipos_servico_transportadora";
     const API_BASE_URL = (() => {
       const normalizar = (url) => String(url || "").trim().replace(/\/+$/, "");
 
@@ -2009,6 +2118,7 @@
     const cadastroConteudoResponsaveis = document.getElementById("cadastro-conteudo-responsaveis");
     const cadastroConteudoMotoristas = document.getElementById("cadastro-conteudo-motoristas");
     const cadastroConteudoVeiculos = document.getElementById("cadastro-conteudo-veiculos");
+    const cadastroConteudoTiposServico = document.getElementById("cadastro-conteudo-tipos-servico");
     const loginOverlay = document.getElementById("login-overlay");
     const loginForm = document.getElementById("login-form");
     const loginResponsavel = document.getElementById("loginResponsavel");
@@ -2052,6 +2162,13 @@
     const veiculoMessage = document.getElementById("mensagem-veiculo");
     const veiculosTbody = document.getElementById("veiculos-body");
     const clearVeiculoButton = document.getElementById("limpar-veiculo-formulario");
+
+    const tipoServicoForm = document.getElementById("tipo-servico-form");
+    const tipoServicoMessage = document.getElementById("mensagem-tipo-servico");
+    const tiposServicoTbody = document.getElementById("tipos-servico-body");
+    const clearTipoServicoButton = document.getElementById("limpar-tipo-servico-formulario");
+    const filtroTipoServico = document.getElementById("filtro-tipo-servico");
+    const pesquisarTipoServicoButton = document.getElementById("pesquisar-tipo-servico");
     
     const filtroCliente = document.getElementById("filtro-cliente");
     const filtroStatusOrcamento = document.getElementById("filtro-status-orcamento");
@@ -2095,6 +2212,7 @@
     let formasPagamentoCache = [];
     let centrosCustoCache = [];
     let despesasCache = [];
+    let tiposServicoCache = [];
     let apiDisponivel = false;
     let usuarioLogado = null;
     let authToken = sessionStorage.getItem(AUTH_TOKEN_KEY) || "";
@@ -2120,8 +2238,9 @@
     };
 
     let filtroClienteCadastroAtivo = "";
+    let filtroTipoServicoAtivo = "";
 
-    const MODULOS_CADASTRO = ["clientes", "responsaveis", "motoristas", "veiculos"];
+    const MODULOS_CADASTRO = ["clientes", "responsaveis", "motoristas", "veiculos", "tipos-servico"];
 
     function alternarAba(aba) {
       const mostrarOrcamentos = aba === "orcamentos";
@@ -2167,6 +2286,7 @@
       cadastroConteudoResponsaveis.hidden = tipo !== "responsaveis";
       cadastroConteudoMotoristas.hidden = tipo !== "motoristas";
       cadastroConteudoVeiculos.hidden = tipo !== "veiculos";
+      cadastroConteudoTiposServico.hidden = tipo !== "tipos-servico";
     }
 
     function mostrarLoginMensagem(texto, tipo = "error") {
@@ -2200,6 +2320,13 @@
         renderizarTabela();
         renderizarClientes();
         renderizarResponsaveis();
+        renderizarMotoristas();
+        renderizarVeiculos();
+        renderizarCategoriasDespesas();
+        renderizarFormasPagamento();
+        renderizarCentrosCusto();
+        renderizarTiposServico();
+        atualizarSelectTipoServicoOrcamento();
       }).catch(() => {});
     }
 
@@ -2336,6 +2463,16 @@
     function limparMensagemCentro() {
       centroMessage.textContent = "";
       centroMessage.className = "message";
+    }
+
+    function mostrarMensagemTipoServico(texto, tipo = "ok") {
+      tipoServicoMessage.textContent = texto;
+      tipoServicoMessage.className = `message ${tipo}`;
+    }
+
+    function limparMensagemTipoServico() {
+      tipoServicoMessage.textContent = "";
+      tipoServicoMessage.className = "message";
     }
 
     function proximoCodigo(lista) {
@@ -2554,26 +2691,46 @@
     }
 
     async function carregarDadosIniciais() {
-      if (MODO_LOCAL_ARQUIVO) {
-        carregarDadosLocais();
-        return;
-      }
-
       if (!authToken) {
         throw new Error("Sem autenticacao");
       }
 
       try {
         await apiRequest("/auth/me");
-        const [orcamentos, clientes, responsaveis] = await Promise.all([
+        const [orcamentos, clientes, responsaveis, motoristas, veiculos, categorias, formas, centros, despesas, tiposServico] = await Promise.all([
           apiRequest("/orcamentos"),
           apiRequest("/clientes"),
-          apiRequest("/responsaveis")
+          apiRequest("/responsaveis"),
+          carregarMotoristasIniciais(),
+          carregarVeiculosIniciais(),
+          carregarCategoriasDespesasIniciais(),
+          carregarFormasPagamentoIniciais(),
+          carregarCentrosCustoIniciais(),
+          carregarDespesasIniciais(),
+          carregarTiposServicoIniciais()
         ]);
 
         orcamentosCache = Array.isArray(orcamentos) ? orcamentos : [];
         clientesCache = Array.isArray(clientes) ? clientes : [];
         responsaveisCache = Array.isArray(responsaveis) ? responsaveis : [];
+        motoristasCache = Array.isArray(motoristas) ? motoristas : motoristasCache;
+        veiculosCache = Array.isArray(veiculos) ? veiculos : veiculosCache;
+        categoriasDespesasCache = Array.isArray(categorias) ? categorias : categoriasDespesasCache;
+        formasPagamentoCache = Array.isArray(formas) ? formas : formasPagamentoCache;
+        centrosCustoCache = Array.isArray(centros) ? centros : centrosCustoCache;
+        despesasCache = Array.isArray(despesas) ? despesas : despesasCache;
+        tiposServicoCache = Array.isArray(tiposServico) ? tiposServico : tiposServicoCache;
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(orcamentosCache));
+        localStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(clientesCache));
+        localStorage.setItem(RESPONSAVEL_STORAGE_KEY, JSON.stringify(responsaveisCache));
+        localStorage.setItem(MOTORISTA_STORAGE_KEY, JSON.stringify(motoristasCache));
+        localStorage.setItem(VEICULO_STORAGE_KEY, JSON.stringify(veiculosCache));
+        localStorage.setItem(CATEGORIA_DESPESA_STORAGE_KEY, JSON.stringify(categoriasDespesasCache));
+        localStorage.setItem(FORMA_PAGAMENTO_STORAGE_KEY, JSON.stringify(formasPagamentoCache));
+        localStorage.setItem(CENTRO_CUSTO_STORAGE_KEY, JSON.stringify(centrosCustoCache));
+        localStorage.setItem(DESPESA_STORAGE_KEY, JSON.stringify(despesasCache));
+        localStorage.setItem(TIPO_SERVICO_STORAGE_KEY, JSON.stringify(tiposServicoCache));
         apiDisponivel = true;
       } catch (_error) {
         apiDisponivel = false;
@@ -2637,17 +2794,13 @@
     }
 
     async function salvarOrcamentos(lista) {
-      orcamentosCache = [...lista];
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
-
-      if (!apiDisponivel) {
-        return;
-      }
-
       await apiRequest("/orcamentos/bulk", {
         method: "PUT",
-        body: JSON.stringify({ items: orcamentosCache })
+        body: JSON.stringify({ items: lista })
       });
+
+      orcamentosCache = [...lista];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(orcamentosCache));
     }
 
     function obterClientes() {
@@ -2666,18 +2819,34 @@
       return Array.isArray(veiculosCache) ? [...veiculosCache] : [];
     }
 
+    function obterCategoriasDespesas() {
+      return Array.isArray(categoriasDespesasCache) ? [...categoriasDespesasCache] : [];
+    }
+
+    function obterFormasPagamento() {
+      return Array.isArray(formasPagamentoCache) ? [...formasPagamentoCache] : [];
+    }
+
+    function obterCentrosCusto() {
+      return Array.isArray(centrosCustoCache) ? [...centrosCustoCache] : [];
+    }
+
+    function obterDespesas() {
+      return Array.isArray(despesasCache) ? [...despesasCache] : [];
+    }
+
+    function obterTiposServico() {
+      return Array.isArray(tiposServicoCache) ? [...tiposServicoCache] : [];
+    }
+
     async function salvarClientes(lista) {
-      clientesCache = [...lista];
-      localStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(lista));
-
-      if (!apiDisponivel) {
-        return;
-      }
-
       await apiRequest("/clientes/bulk", {
         method: "PUT",
-        body: JSON.stringify({ items: clientesCache })
+        body: JSON.stringify({ items: lista })
       });
+
+      clientesCache = [...lista];
+      localStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(clientesCache));
     }
 
     async function salvarResponsaveis(lista) {
@@ -2685,13 +2854,13 @@
         throw new Error("O cadastro de responsavel com senha exige a API ativa para criar o login.");
       }
 
-      responsaveisCache = lista.map(({ senha, nomeAnterior, ...item }) => ({ ...item }));
-      localStorage.setItem(RESPONSAVEL_STORAGE_KEY, JSON.stringify(responsaveisCache));
-
       await apiRequest("/responsaveis/bulk", {
         method: "PUT",
         body: JSON.stringify({ items: lista })
       });
+
+      responsaveisCache = lista.map(({ senha, nomeAnterior, ...item }) => ({ ...item }));
+      localStorage.setItem(RESPONSAVEL_STORAGE_KEY, JSON.stringify(responsaveisCache));
     }
 
     function carregarResponsaveisIniciais() {
@@ -2719,89 +2888,114 @@
       localStorage.setItem(RESPONSAVEL_STORAGE_KEY, JSON.stringify(responsaveisCache));
     }
 
-    function carregarMotoristasIniciais() {
-      try {
-        const dados = JSON.parse(localStorage.getItem(MOTORISTA_STORAGE_KEY) || "[]");
-        motoristasCache = Array.isArray(dados) ? dados : [];
-      } catch (_error) {
-        motoristasCache = [];
-      }
+    async function carregarMotoristasIniciais() {
+      const dados = await apiRequest("/motoristas");
+      motoristasCache = Array.isArray(dados) ? dados : [];
+      localStorage.setItem(MOTORISTA_STORAGE_KEY, JSON.stringify(motoristasCache));
+      return motoristasCache;
     }
 
-    function carregarVeiculosIniciais() {
-      try {
-        const dados = JSON.parse(localStorage.getItem(VEICULO_STORAGE_KEY) || "[]");
-        veiculosCache = Array.isArray(dados) ? dados : [];
-      } catch (_error) {
-        veiculosCache = [];
-      }
+    async function carregarVeiculosIniciais() {
+      const dados = await apiRequest("/veiculos");
+      veiculosCache = Array.isArray(dados) ? dados : [];
+      localStorage.setItem(VEICULO_STORAGE_KEY, JSON.stringify(veiculosCache));
+      return veiculosCache;
     }
 
-    function salvarMotoristas(lista) {
+    async function salvarMotoristas(lista) {
+      await apiRequest("/motoristas/bulk", {
+        method: "PUT",
+        body: JSON.stringify({ items: lista })
+      });
+
       motoristasCache = [...lista];
       localStorage.setItem(MOTORISTA_STORAGE_KEY, JSON.stringify(motoristasCache));
     }
 
-    function salvarVeiculos(lista) {
+    async function salvarVeiculos(lista) {
+      await apiRequest("/veiculos/bulk", {
+        method: "PUT",
+        body: JSON.stringify({ items: lista })
+      });
+
       veiculosCache = [...lista];
       localStorage.setItem(VEICULO_STORAGE_KEY, JSON.stringify(veiculosCache));
     }
 
-    function carregarCategoriasDespesasIniciais() {
-      try {
-        const dados = JSON.parse(localStorage.getItem(CATEGORIA_DESPESA_STORAGE_KEY) || "[]");
-        categoriasDespesasCache = Array.isArray(dados) ? dados : [];
-      } catch (_error) {
-        categoriasDespesasCache = [];
-      }
+    async function carregarCategoriasDespesasIniciais() {
+      const dados = await apiRequest("/categorias-despesas");
+      categoriasDespesasCache = Array.isArray(dados) ? dados : [];
+      localStorage.setItem(CATEGORIA_DESPESA_STORAGE_KEY, JSON.stringify(categoriasDespesasCache));
+      return categoriasDespesasCache;
     }
 
-    function carregarFormasPagamentoIniciais() {
-      try {
-        const dados = JSON.parse(localStorage.getItem(FORMA_PAGAMENTO_STORAGE_KEY) || "[]");
-        formasPagamentoCache = Array.isArray(dados) ? dados : [];
-      } catch (_error) {
-        formasPagamentoCache = [];
-      }
+    async function carregarFormasPagamentoIniciais() {
+      const dados = await apiRequest("/formas-pagamento");
+      formasPagamentoCache = Array.isArray(dados) ? dados : [];
+      localStorage.setItem(FORMA_PAGAMENTO_STORAGE_KEY, JSON.stringify(formasPagamentoCache));
+      return formasPagamentoCache;
     }
 
-    function carregarCentrosCustoIniciais() {
-      try {
-        const dados = JSON.parse(localStorage.getItem(CENTRO_CUSTO_STORAGE_KEY) || "[]");
-        centrosCustoCache = Array.isArray(dados) ? dados : [];
-      } catch (_error) {
-        centrosCustoCache = [];
-      }
+    async function carregarCentrosCustoIniciais() {
+      const dados = await apiRequest("/centros-custo");
+      centrosCustoCache = Array.isArray(dados) ? dados : [];
+      localStorage.setItem(CENTRO_CUSTO_STORAGE_KEY, JSON.stringify(centrosCustoCache));
+      return centrosCustoCache;
     }
 
-    function carregarDespesasIniciais() {
-      try {
-        const dados = JSON.parse(localStorage.getItem(DESPESA_STORAGE_KEY) || "[]");
-        despesasCache = Array.isArray(dados) ? dados : [];
-      } catch (_error) {
-        despesasCache = [];
-      }
+    async function carregarDespesasIniciais() {
+      const dados = await apiRequest("/despesas");
+      despesasCache = Array.isArray(dados) ? dados : [];
+      localStorage.setItem(DESPESA_STORAGE_KEY, JSON.stringify(despesasCache));
+      return despesasCache;
     }
 
-    function salvarCategoriasDespesas(lista) {
+    async function carregarTiposServicoIniciais() {
+      const dados = await apiRequest("/tipos-servico");
+      tiposServicoCache = Array.isArray(dados) ? dados : [];
+      localStorage.setItem(TIPO_SERVICO_STORAGE_KEY, JSON.stringify(tiposServicoCache));
+      return tiposServicoCache;
+    }
+
+    async function salvarCategoriasDespesas(lista) {
+      await apiRequest("/categorias-despesas/bulk", {
+        method: "PUT",
+        body: JSON.stringify({ items: lista })
+      });
+
       categoriasDespesasCache = [...lista];
       localStorage.setItem(CATEGORIA_DESPESA_STORAGE_KEY, JSON.stringify(categoriasDespesasCache));
       atualizarSelectsFinanceiro();
     }
 
-    function salvarFormasPagamento(lista) {
+    async function salvarFormasPagamento(lista) {
+      await apiRequest("/formas-pagamento/bulk", {
+        method: "PUT",
+        body: JSON.stringify({ items: lista })
+      });
+
       formasPagamentoCache = [...lista];
       localStorage.setItem(FORMA_PAGAMENTO_STORAGE_KEY, JSON.stringify(formasPagamentoCache));
       atualizarSelectsFinanceiro();
     }
 
-    function salvarCentrosCusto(lista) {
+    async function salvarCentrosCusto(lista) {
+      await apiRequest("/centros-custo/bulk", {
+        method: "PUT",
+        body: JSON.stringify({ items: lista })
+      });
+
       centrosCustoCache = [...lista];
       localStorage.setItem(CENTRO_CUSTO_STORAGE_KEY, JSON.stringify(centrosCustoCache));
       atualizarSelectsFinanceiro();
     }
 
-    function salvarDespesas(lista) {
+    async function salvarDespesas(lista) {
+      await apiRequest("/despesas/bulk", {
+        method: "PUT",
+        body: JSON.stringify({ items: lista })
+      });
+
       despesasCache = [...lista];
       localStorage.setItem(DESPESA_STORAGE_KEY, JSON.stringify(despesasCache));
     }
@@ -2933,6 +3127,132 @@
       } else {
         loginResponsavel.value = "";
       }
+    }
+
+    function atualizarSelectTipoServicoOrcamento() {
+      const atual = form.tipoServico.value;
+      const ativos = obterTiposServico()
+        .filter((item) => String(item.status || "").toLowerCase() === "ativo")
+        .sort((a, b) => String(a.descricao || "").localeCompare(String(b.descricao || ""), "pt-BR"));
+
+      const opcoes = ativos
+        .map((item) => `<option value="${item.id}">${item.descricao}</option>`)
+        .join("");
+
+      form.tipoServico.innerHTML = `<option value="">Selecione</option>${opcoes}`;
+
+      if (atual && ativos.some((item) => String(item.id) === String(atual))) {
+        form.tipoServico.value = atual;
+      } else {
+        form.tipoServico.value = "";
+      }
+    }
+
+    function prepararNovoTipoServico() {
+      tipoServicoForm.tipoServicoId.value = "";
+      tipoServicoForm.tipoServicoCodigo.value = "";
+      tipoServicoForm.tipoServicoDescricao.value = "";
+      tipoServicoForm.tipoServicoCategoria.value = "";
+      tipoServicoForm.tipoServicoAbrangencia.value = "";
+      tipoServicoForm.tipoServicoSeguro.value = "";
+      tipoServicoForm.tipoServicoStatus.value = "Ativo";
+      tipoServicoForm.tipoServicoObservacoes.value = "";
+    }
+
+    function preencherFormularioTipoServico(item) {
+      tipoServicoForm.tipoServicoId.value = String(item.id || "");
+      tipoServicoForm.tipoServicoCodigo.value = String(item.codigo || "");
+      tipoServicoForm.tipoServicoDescricao.value = String(item.descricao || "");
+      tipoServicoForm.tipoServicoCategoria.value = String(item.categoria || "");
+      tipoServicoForm.tipoServicoAbrangencia.value = String(item.abrangencia || "");
+      tipoServicoForm.tipoServicoSeguro.value = item.necessitaSeguro ? "Sim" : "Não";
+      tipoServicoForm.tipoServicoStatus.value = String(item.status || "Ativo");
+      tipoServicoForm.tipoServicoObservacoes.value = String(item.observacoes || "");
+      tipoServicoForm.tipoServicoCodigo.focus();
+    }
+
+    function coletarDadosTipoServicoFormulario() {
+      const codigo = tipoServicoForm.tipoServicoCodigo.value.trim();
+      const descricao = tipoServicoForm.tipoServicoDescricao.value.trim();
+      const categoria = tipoServicoForm.tipoServicoCategoria.value;
+      const abrangencia = tipoServicoForm.tipoServicoAbrangencia.value;
+      const necessitaSeguroTexto = tipoServicoForm.tipoServicoSeguro.value;
+      const status = tipoServicoForm.tipoServicoStatus.value;
+      const observacoes = tipoServicoForm.tipoServicoObservacoes.value.trim();
+
+      if (!codigo || !descricao || !categoria || !abrangencia || !necessitaSeguroTexto || !status) {
+        return null;
+      }
+
+      return {
+        codigo,
+        descricao,
+        categoria,
+        abrangencia,
+        necessitaSeguro: necessitaSeguroTexto === "Sim",
+        status,
+        observacoes
+      };
+    }
+
+    async function criarTipoServico(dados) {
+      return apiRequest("/tipos-servico", {
+        method: "POST",
+        body: JSON.stringify(dados)
+      });
+    }
+
+    async function atualizarTipoServico(id, dados) {
+      return apiRequest(`/tipos-servico/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(dados)
+      });
+    }
+
+    async function excluirTipoServico(id) {
+      return apiRequest(`/tipos-servico/${id}`, {
+        method: "DELETE"
+      });
+    }
+
+    function renderizarTiposServico() {
+      const termo = filtroTipoServicoAtivo.trim().toLowerCase();
+      const lista = obterTiposServico().filter((item) => {
+        if (!termo) {
+          return true;
+        }
+        return String(item.codigo || "").toLowerCase().includes(termo)
+          || String(item.descricao || "").toLowerCase().includes(termo);
+      });
+
+      if (lista.length === 0) {
+        tiposServicoTbody.innerHTML = "<tr><td colspan='8'>Nenhum tipo de serviço cadastrado.</td></tr>";
+        atualizarSelectTipoServicoOrcamento();
+        return;
+      }
+
+      tiposServicoTbody.innerHTML = lista
+        .sort((a, b) => Number(a.id) - Number(b.id))
+        .map((item) => `
+          <tr>
+            <td>${item.id}</td>
+            <td>${item.codigo}</td>
+            <td>${item.descricao}</td>
+            <td>${item.categoria}</td>
+            <td>${item.abrangencia}</td>
+            <td>${item.necessitaSeguro ? "Sim" : "Não"}</td>
+            <td>${item.status}</td>
+            <td>
+              <div class="table-actions">
+                <button type="button" class="btn-secondary" data-edit-tipo-servico="${item.id}">Editar</button>
+                <button type="button" class="btn-secondary" data-delete-tipo-servico="${item.id}">Excluir</button>
+              </div>
+            </td>
+          </tr>
+        `)
+        .join("");
+
+      atualizarSelectTipoServicoOrcamento();
     }
 
     function atualizarListaClientesOrcamento() {
@@ -3457,6 +3777,7 @@
       }
       
       const tipoVeiculo = dados.tipoVeiculo;
+      const tipoServicoDescricao = dados.tipoServicoDescricao || "-";
       const mapVeiculos = {
         "001": "Moto",
         "002": "Utilitario Pequeno",
@@ -3483,6 +3804,7 @@
         "023": "Container 40 pes"
       };
       document.getElementById("prop-tipo-veiculo").textContent = mapVeiculos[tipoVeiculo] || tipoVeiculo || "-";
+      document.getElementById("prop-tipo-servico").textContent = tipoServicoDescricao;
       
       document.getElementById("prop-origem").textContent = dados.origem || "-";
       document.getElementById("prop-origem-uf").textContent = dados.origemUF || extrairUF(dados.origem);
@@ -3509,6 +3831,10 @@
         descricao: primeiroItem.descricao,
         itensProduto: itensProdutoFormulario,
         tipoVeiculo: form.tipoVeiculo.value,
+        tipoServicoId: form.tipoServico.value,
+        tipoServicoDescricao: form.tipoServico.options[form.tipoServico.selectedIndex]
+          ? form.tipoServico.options[form.tipoServico.selectedIndex].text
+          : "",
         valor: Number(form.valor.value || 0),
         responsavel: form.responsavel.value.trim(),
         statusOrcamento: form.statusOrcamento.value,
@@ -3589,6 +3915,7 @@
       form.destinoUF.value = (item.destinoUF || extrairUF(item.destino) || "").toUpperCase();
       renderizarItensProdutoFormulario(itensProduto);
       form.tipoVeiculo.value = item.tipoVeiculo || "";
+      form.tipoServico.value = item.tipoServicoId != null ? String(item.tipoServicoId) : "";
       form.tipoCarga.value = item.tipoCarga || "";
       form.peso.value = item.peso || "";
       form.volume.value = item.volume || "";
@@ -3610,11 +3937,15 @@
       const destino = form.destino.value.trim();
       const destinoUF = form.destinoUF.value.trim().toUpperCase();
       const valor = Number(form.valor.value);
+      const tipoServicoId = form.tipoServico.value;
+      const tipoServicoDescricao = form.tipoServico.options[form.tipoServico.selectedIndex]
+        ? form.tipoServico.options[form.tipoServico.selectedIndex].text
+        : "";
       const itensProduto = coletarItensProdutoFormulario();
       const possuiItemIncompleto = itensProduto.some((item) => !item.quantidade || !item.descricao);
       const primeiroItem = itensProduto[0] || { quantidade: "", descricao: "" };
 
-      if (!cliente || !origem || !origemUF || !destino || !destinoUF || !Number.isFinite(valor) || valor <= 0 || itensProduto.length === 0 || possuiItemIncompleto) {
+      if (!cliente || !origem || !origemUF || !destino || !destinoUF || !tipoServicoId || !Number.isFinite(valor) || valor <= 0 || itensProduto.length === 0 || possuiItemIncompleto) {
         return null;
       }
 
@@ -3630,6 +3961,8 @@
         descricao: primeiroItem.descricao,
         itensProduto,
         tipoVeiculo: form.tipoVeiculo.value,
+        tipoServicoId: Number(tipoServicoId),
+        tipoServicoDescricao,
         tipoCarga: form.tipoCarga.value,
         peso: form.peso.value,
         volume: form.volume.value,
@@ -3761,7 +4094,7 @@
       try {
         await salvarOrcamentos(lista);
       } catch (_error) {
-        mostrarMensagem("Falha ao salvar no Neon. Dados ficaram salvos localmente.", "error");
+        mostrarMensagem("Falha ao salvar no Neon.", "error");
       }
       form.reset();
       resetarItensProdutoFormulario();
@@ -4009,7 +4342,84 @@
       limparMensagemResponsavel();
     });
 
-    motoristaForm.addEventListener("submit", (event) => {
+    tipoServicoForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      limparMensagemTipoServico();
+
+      const dados = coletarDadosTipoServicoFormulario();
+      if (!dados) {
+        mostrarMensagemTipoServico("Preencha todos os campos obrigatórios do tipo de serviço.", "error");
+        return;
+      }
+
+      const idEdicao = Number(tipoServicoForm.tipoServicoId.value || 0);
+
+      try {
+        if (idEdicao) {
+          await atualizarTipoServico(idEdicao, dados);
+          mostrarMensagemTipoServico("Tipo de serviço atualizado com sucesso.");
+        } else {
+          await criarTipoServico(dados);
+          mostrarMensagemTipoServico("Tipo de serviço cadastrado com sucesso.");
+        }
+
+        await carregarTiposServicoIniciais();
+        prepararNovoTipoServico();
+        renderizarTiposServico();
+      } catch (error) {
+        mostrarMensagemTipoServico(error && error.message ? error.message : "Falha ao salvar tipo de serviço no Neon.", "error");
+      }
+    });
+
+    tiposServicoTbody.addEventListener("click", async (event) => {
+      const botao = event.target;
+      if (!(botao instanceof HTMLButtonElement)) {
+        return;
+      }
+
+      const idEditar = Number(botao.getAttribute("data-edit-tipo-servico") || 0);
+      const idExcluir = Number(botao.getAttribute("data-delete-tipo-servico") || 0);
+
+      if (idEditar) {
+        const item = obterTiposServico().find((tipoServico) => Number(tipoServico.id) === idEditar);
+        if (!item) {
+          mostrarMensagemTipoServico("Tipo de serviço não encontrado para edição.", "error");
+          return;
+        }
+        preencherFormularioTipoServico(item);
+        mostrarMensagemTipoServico(`Editando tipo de serviço ID ${item.id}.`);
+        return;
+      }
+
+      if (idExcluir) {
+        try {
+          await excluirTipoServico(idExcluir);
+          await carregarTiposServicoIniciais();
+          prepararNovoTipoServico();
+          renderizarTiposServico();
+          mostrarMensagemTipoServico("Tipo de serviço excluído com sucesso.");
+        } catch (error) {
+          mostrarMensagemTipoServico(error && error.message ? error.message : "Falha ao excluir tipo de serviço no Neon.", "error");
+        }
+      }
+    });
+
+    clearTipoServicoButton.addEventListener("click", () => {
+      prepararNovoTipoServico();
+      limparMensagemTipoServico();
+    });
+
+    pesquisarTipoServicoButton.addEventListener("click", () => {
+      filtroTipoServicoAtivo = filtroTipoServico.value;
+      renderizarTiposServico();
+    });
+
+    filtroTipoServico.addEventListener("input", () => {
+      filtroTipoServicoAtivo = filtroTipoServico.value;
+      renderizarTiposServico();
+    });
+
+    motoristaForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       limparMensagemMotorista();
 
@@ -4033,14 +4443,18 @@
         mostrarMensagemMotorista("Motorista cadastrado com sucesso.");
       }
 
-      salvarMotoristas(lista);
-      motoristaForm.reset();
-      motoristaForm.codigoEdicaoMotorista.value = "";
-      renderizarMotoristas();
-      renderizarVeiculos();
+      try {
+        await salvarMotoristas(lista);
+        motoristaForm.reset();
+        motoristaForm.codigoEdicaoMotorista.value = "";
+        renderizarMotoristas();
+        renderizarVeiculos();
+      } catch (error) {
+        mostrarMensagemMotorista(error && error.message ? error.message : "Falha ao salvar o motorista no Neon.", "error");
+      }
     });
 
-    motoristasTbody.addEventListener("click", (event) => {
+    motoristasTbody.addEventListener("click", async (event) => {
       const botao = event.target;
       if (!(botao instanceof HTMLButtonElement)) {
         return;
@@ -4063,19 +4477,23 @@
 
       if (idExcluir) {
         const restante = lista.filter((motorista) => motorista.id !== idExcluir);
-        salvarMotoristas(restante);
+        try {
+          await salvarMotoristas(restante);
 
-        const veiculosAtualizados = obterVeiculos().map((veiculo) => {
-          const motoristaExiste = restante.some((motorista) => motorista.nome === veiculo.motoristaResponsavel);
-          return motoristaExiste ? veiculo : { ...veiculo, motoristaResponsavel: "" };
-        });
-        salvarVeiculos(veiculosAtualizados);
+          const veiculosAtualizados = obterVeiculos().map((veiculo) => {
+            const motoristaExiste = restante.some((motorista) => motorista.nome === veiculo.motoristaResponsavel);
+            return motoristaExiste ? veiculo : { ...veiculo, motoristaResponsavel: "" };
+          });
+          await salvarVeiculos(veiculosAtualizados);
 
-        motoristaForm.reset();
-        motoristaForm.codigoEdicaoMotorista.value = "";
-        renderizarMotoristas();
-        renderizarVeiculos();
-        mostrarMensagemMotorista("Motorista excluído com sucesso.");
+          motoristaForm.reset();
+          motoristaForm.codigoEdicaoMotorista.value = "";
+          renderizarMotoristas();
+          renderizarVeiculos();
+          mostrarMensagemMotorista("Motorista excluído com sucesso.");
+        } catch (error) {
+          mostrarMensagemMotorista(error && error.message ? error.message : "Falha ao excluir o motorista no Neon.", "error");
+        }
       }
     });
 
@@ -4085,7 +4503,7 @@
       limparMensagemMotorista();
     });
 
-    veiculoForm.addEventListener("submit", (event) => {
+    veiculoForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       limparMensagemVeiculo();
 
@@ -4109,13 +4527,17 @@
         mostrarMensagemVeiculo("Veículo cadastrado com sucesso.");
       }
 
-      salvarVeiculos(lista);
-      veiculoForm.reset();
-      veiculoForm.codigoEdicaoVeiculo.value = "";
-      renderizarVeiculos();
+      try {
+        await salvarVeiculos(lista);
+        veiculoForm.reset();
+        veiculoForm.codigoEdicaoVeiculo.value = "";
+        renderizarVeiculos();
+      } catch (error) {
+        mostrarMensagemVeiculo(error && error.message ? error.message : "Falha ao salvar o veículo no Neon.", "error");
+      }
     });
 
-    veiculosTbody.addEventListener("click", (event) => {
+    veiculosTbody.addEventListener("click", async (event) => {
       const botao = event.target;
       if (!(botao instanceof HTMLButtonElement)) {
         return;
@@ -4138,11 +4560,15 @@
 
       if (idExcluir) {
         const restante = lista.filter((veiculo) => veiculo.id !== idExcluir);
-        salvarVeiculos(restante);
-        veiculoForm.reset();
-        veiculoForm.codigoEdicaoVeiculo.value = "";
-        renderizarVeiculos();
-        mostrarMensagemVeiculo("Veículo excluído com sucesso.");
+        try {
+          await salvarVeiculos(restante);
+          veiculoForm.reset();
+          veiculoForm.codigoEdicaoVeiculo.value = "";
+          renderizarVeiculos();
+          mostrarMensagemVeiculo("Veículo excluído com sucesso.");
+        } catch (error) {
+          mostrarMensagemVeiculo(error && error.message ? error.message : "Falha ao excluir o veículo no Neon.", "error");
+        }
       }
     });
 
@@ -4152,7 +4578,7 @@
       limparMensagemVeiculo();
     });
 
-    categoriaDespesaForm.addEventListener("submit", (event) => {
+    categoriaDespesaForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       limparMensagemCategoria();
       const dados = coletarDadosCategoriaFormulario();
@@ -4174,13 +4600,17 @@
         mostrarMensagemCategoria("Categoria cadastrada com sucesso.");
       }
 
-      salvarCategoriasDespesas(lista);
-      renderizarCategoriasDespesas();
-      categoriaDespesaForm.reset();
-      prepararNovaCategoria();
+      try {
+        await salvarCategoriasDespesas(lista);
+        renderizarCategoriasDespesas();
+        categoriaDespesaForm.reset();
+        prepararNovaCategoria();
+      } catch (error) {
+        mostrarMensagemCategoria(error && error.message ? error.message : "Falha ao salvar a categoria no Neon.", "error");
+      }
     });
 
-    categoriasDespesasTbody.addEventListener("click", (event) => {
+    categoriasDespesasTbody.addEventListener("click", async (event) => {
       const botao = event.target;
       if (!(botao instanceof HTMLButtonElement)) {
         return;
@@ -4196,11 +4626,15 @@
         return;
       }
       if (codExcluir) {
-        salvarCategoriasDespesas(categoriasDespesasCache.filter((it) => Number(it.codigo) !== Number(codExcluir)));
-        renderizarCategoriasDespesas();
-        categoriaDespesaForm.reset();
-        prepararNovaCategoria();
-        mostrarMensagemCategoria("Categoria excluída com sucesso.");
+        try {
+          await salvarCategoriasDespesas(categoriasDespesasCache.filter((it) => Number(it.codigo) !== Number(codExcluir)));
+          renderizarCategoriasDespesas();
+          categoriaDespesaForm.reset();
+          prepararNovaCategoria();
+          mostrarMensagemCategoria("Categoria excluída com sucesso.");
+        } catch (error) {
+          mostrarMensagemCategoria(error && error.message ? error.message : "Falha ao excluir a categoria no Neon.", "error");
+        }
       }
     });
 
@@ -4210,7 +4644,7 @@
       limparMensagemCategoria();
     });
 
-    formaPagamentoForm.addEventListener("submit", (event) => {
+    formaPagamentoForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       limparMensagemForma();
       const dados = coletarDadosFormaFormulario();
@@ -4232,13 +4666,17 @@
         mostrarMensagemForma("Forma de pagamento cadastrada com sucesso.");
       }
 
-      salvarFormasPagamento(lista);
-      renderizarFormasPagamento();
-      formaPagamentoForm.reset();
-      prepararNovaForma();
+      try {
+        await salvarFormasPagamento(lista);
+        renderizarFormasPagamento();
+        formaPagamentoForm.reset();
+        prepararNovaForma();
+      } catch (error) {
+        mostrarMensagemForma(error && error.message ? error.message : "Falha ao salvar a forma de pagamento no Neon.", "error");
+      }
     });
 
-    formasPagamentoTbody.addEventListener("click", (event) => {
+    formasPagamentoTbody.addEventListener("click", async (event) => {
       const botao = event.target;
       if (!(botao instanceof HTMLButtonElement)) {
         return;
@@ -4254,11 +4692,15 @@
         return;
       }
       if (codExcluir) {
-        salvarFormasPagamento(formasPagamentoCache.filter((it) => Number(it.codigo) !== Number(codExcluir)));
-        renderizarFormasPagamento();
-        formaPagamentoForm.reset();
-        prepararNovaForma();
-        mostrarMensagemForma("Forma de pagamento excluída com sucesso.");
+        try {
+          await salvarFormasPagamento(formasPagamentoCache.filter((it) => Number(it.codigo) !== Number(codExcluir)));
+          renderizarFormasPagamento();
+          formaPagamentoForm.reset();
+          prepararNovaForma();
+          mostrarMensagemForma("Forma de pagamento excluída com sucesso.");
+        } catch (error) {
+          mostrarMensagemForma(error && error.message ? error.message : "Falha ao excluir a forma de pagamento no Neon.", "error");
+        }
       }
     });
 
@@ -4268,7 +4710,7 @@
       limparMensagemForma();
     });
 
-    centroCustoForm.addEventListener("submit", (event) => {
+    centroCustoForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       limparMensagemCentro();
       const dados = coletarDadosCentroFormulario();
@@ -4290,13 +4732,17 @@
         mostrarMensagemCentro("Centro de custo cadastrado com sucesso.");
       }
 
-      salvarCentrosCusto(lista);
-      renderizarCentrosCusto();
-      centroCustoForm.reset();
-      prepararNovoCentro();
+      try {
+        await salvarCentrosCusto(lista);
+        renderizarCentrosCusto();
+        centroCustoForm.reset();
+        prepararNovoCentro();
+      } catch (error) {
+        mostrarMensagemCentro(error && error.message ? error.message : "Falha ao salvar o centro de custo no Neon.", "error");
+      }
     });
 
-    centrosCustoTbody.addEventListener("click", (event) => {
+    centrosCustoTbody.addEventListener("click", async (event) => {
       const botao = event.target;
       if (!(botao instanceof HTMLButtonElement)) {
         return;
@@ -4312,11 +4758,15 @@
         return;
       }
       if (codExcluir) {
-        salvarCentrosCusto(centrosCustoCache.filter((it) => Number(it.codigo) !== Number(codExcluir)));
-        renderizarCentrosCusto();
-        centroCustoForm.reset();
-        prepararNovoCentro();
-        mostrarMensagemCentro("Centro de custo excluído com sucesso.");
+        try {
+          await salvarCentrosCusto(centrosCustoCache.filter((it) => Number(it.codigo) !== Number(codExcluir)));
+          renderizarCentrosCusto();
+          centroCustoForm.reset();
+          prepararNovoCentro();
+          mostrarMensagemCentro("Centro de custo excluído com sucesso.");
+        } catch (error) {
+          mostrarMensagemCentro(error && error.message ? error.message : "Falha ao excluir o centro de custo no Neon.", "error");
+        }
       }
     });
 
@@ -4326,7 +4776,7 @@
       limparMensagemCentro();
     });
 
-    despesaForm.addEventListener("submit", (event) => {
+    despesaForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       limparMensagemDespesa();
       const dados = coletarDadosDespesaFormulario();
@@ -4347,10 +4797,14 @@
         lista.push({ codigo: despesaForm.despesaCodigo.value || proximoCodigoDespesa(), ...dados });
         mostrarMensagemDespesa("Despesa cadastrada com sucesso.");
       }
-      salvarDespesas(lista);
-      despesaForm.reset();
-      prepararNovaDespesa();
-      atualizarSelectsFinanceiro();
+      try {
+        await salvarDespesas(lista);
+        despesaForm.reset();
+        prepararNovaDespesa();
+        atualizarSelectsFinanceiro();
+      } catch (error) {
+        mostrarMensagemDespesa(error && error.message ? error.message : "Falha ao salvar a despesa no Neon.", "error");
+      }
     });
 
     clearDespesaButton.addEventListener("click", () => {
@@ -4439,13 +4893,8 @@
       criarCampoOcultoEdicaoDespesa();
       resetarItensProdutoFormulario();
       carregarResponsaveisIniciais();
-      carregarMotoristasIniciais();
-      carregarVeiculosIniciais();
-      carregarCategoriasDespesasIniciais();
-      carregarFormasPagamentoIniciais();
-      carregarCentrosCustoIniciais();
-      carregarDespesasIniciais();
       prepararNovoResponsavel();
+      prepararNovoTipoServico();
       prepararNovaCategoria();
       prepararNovaForma();
       prepararNovoCentro();
@@ -4453,28 +4902,17 @@
       renderizarResponsaveis();
       renderizarMotoristas();
       renderizarVeiculos();
+      renderizarTiposServico();
       renderizarCategoriasDespesas();
       renderizarFormasPagamento();
       renderizarCentrosCusto();
       atualizarSelectsFinanceiro();
+      atualizarSelectTipoServicoOrcamento();
       alternarModuloCadastro(cadastroTipoSeletor.value || "responsaveis");
       alternarModuloFinanceiro(financeiroModuloSeletor.value || "lancamento-despesas");
       const sessao = sessionStorage.getItem(AUTH_USER_KEY);
       if (sessao) {
         usuarioLogado = sessao;
-      }
-
-      if (MODO_LOCAL_ARQUIVO) {
-        usuarioLogado = "MODO_LOCAL";
-        liberarInterface();
-        await carregarDadosIniciais();
-        renderizarTabela();
-        renderizarClientes();
-        renderizarResponsaveis();
-        renderizarMotoristas();
-        renderizarVeiculos();
-        alternarAba("orcamentos");
-        return;
       }
 
       if (!authToken || !usuarioLogado) {
@@ -4489,6 +4927,8 @@
         renderizarResponsaveis();
         renderizarMotoristas();
         renderizarVeiculos();
+        renderizarTiposServico();
+        atualizarSelectTipoServicoOrcamento();
         liberarInterface();
         alternarAba("orcamentos");
       } catch (_error) {
