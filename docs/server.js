@@ -211,6 +211,52 @@ async function syncResponsaveisSeedFromFile() {
   }
 }
 
+const TIPOS_SERVICO_PADRAO = [
+  { codigo: "001", descricao: "Mudança Residencial", categoria: "Mudanças", abrangencia: "Municipal", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "002", descricao: "Mudança Comercial", categoria: "Mudanças", abrangencia: "Municipal", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "003", descricao: "Transporte de Veículos", categoria: "Transportes", abrangencia: "Interestadual", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "004", descricao: "Transporte de Motocicletas", categoria: "Transportes", abrangencia: "Interestadual", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "005", descricao: "Transporte de Móveis", categoria: "Transportes", abrangencia: "Municipal", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "006", descricao: "Carga Fracionada", categoria: "Transportes", abrangencia: "Interestadual", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "007", descricao: "Carga Fechada", categoria: "Transportes", abrangencia: "Interestadual", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "008", descricao: "Objetos de Valor", categoria: "Especial", abrangencia: "Interestadual", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "009", descricao: "Obras de Arte", categoria: "Especial", abrangencia: "Interestadual", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "010", descricao: "Guarda-Móveis", categoria: "Armazenagem", abrangencia: "Municipal", necessitaSeguro: false, status: "Ativo", observacoes: "" },
+  { codigo: "011", descricao: "Mudança Interestadual", categoria: "Mudanças", abrangencia: "Interestadual", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "012", descricao: "Mudança Intermunicipal", categoria: "Mudanças", abrangencia: "Intermunicipal", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "013", descricao: "Mudança Local", categoria: "Mudanças", abrangencia: "Municipal", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "014", descricao: "Frete Dedicado", categoria: "Logística", abrangencia: "Interestadual", necessitaSeguro: true, status: "Ativo", observacoes: "" },
+  { codigo: "015", descricao: "Coleta e Entrega", categoria: "Logística", abrangencia: "Municipal", necessitaSeguro: false, status: "Ativo", observacoes: "" }
+];
+
+async function syncTiposServicoSeed() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS tipos_servico (
+      id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+      codigo TEXT NOT NULL UNIQUE,
+      descricao TEXT NOT NULL,
+      categoria TEXT NOT NULL,
+      abrangencia TEXT NOT NULL,
+      necessita_seguro BOOLEAN NOT NULL,
+      status TEXT NOT NULL,
+      observacoes TEXT,
+      criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      atualizado_em TIMESTAMPTZ
+    );
+  `);
+
+  for (const item of TIPOS_SERVICO_PADRAO) {
+    await pool.query(
+      `
+      INSERT INTO tipos_servico (codigo, descricao, categoria, abrangencia, necessita_seguro, status, observacoes, atualizado_em)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,NOW())
+      ON CONFLICT (codigo) DO NOTHING;
+      `,
+      [item.codigo, item.descricao, item.categoria, item.abrangencia, item.necessitaSeguro, item.status, item.observacoes]
+    );
+  }
+}
+
 async function initSchema() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS clientes (
@@ -260,6 +306,8 @@ async function initSchema() {
   await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS descricao TEXT");
   await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS tipo_veiculo TEXT");
   await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS itens_produto JSONB");
+  await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS tipo_servico_id INTEGER");
+  await pool.query("ALTER TABLE orcamentos ADD COLUMN IF NOT EXISTS tipo_servico_descricao TEXT");
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS responsaveis (
@@ -267,6 +315,112 @@ async function initSchema() {
       nome TEXT NOT NULL UNIQUE,
       rg TEXT,
       telefone TEXT,
+      criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      atualizado_em TIMESTAMPTZ
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS motoristas (
+      id TEXT PRIMARY KEY,
+      nome TEXT NOT NULL,
+      cpf TEXT NOT NULL,
+      rg TEXT NOT NULL,
+      cnh TEXT NOT NULL,
+      categoria_cnh TEXT NOT NULL,
+      validade_cnh DATE NOT NULL,
+      telefone TEXT NOT NULL,
+      email TEXT NOT NULL,
+      endereco TEXT NOT NULL,
+      cidade TEXT NOT NULL,
+      estado TEXT NOT NULL,
+      criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      atualizado_em TIMESTAMPTZ
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS veiculos (
+      id TEXT PRIMARY KEY,
+      placa TEXT NOT NULL UNIQUE,
+      modelo TEXT NOT NULL,
+      marca TEXT NOT NULL,
+      ano INTEGER NOT NULL,
+      tipo TEXT NOT NULL,
+      capacidade TEXT NOT NULL,
+      motorista_responsavel TEXT NOT NULL,
+      observacoes TEXT,
+      criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      atualizado_em TIMESTAMPTZ
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS categorias_despesas (
+      codigo INTEGER PRIMARY KEY,
+      nome TEXT NOT NULL,
+      tipo TEXT NOT NULL,
+      status TEXT NOT NULL,
+      criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      atualizado_em TIMESTAMPTZ
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS formas_pagamento (
+      codigo INTEGER PRIMARY KEY,
+      nome TEXT NOT NULL,
+      status TEXT NOT NULL,
+      criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      atualizado_em TIMESTAMPTZ
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS centros_custo (
+      codigo INTEGER PRIMARY KEY,
+      nome TEXT NOT NULL,
+      status TEXT NOT NULL,
+      criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      atualizado_em TIMESTAMPTZ
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS despesas (
+      codigo TEXT PRIMARY KEY,
+      data_despesa DATE NOT NULL,
+      competencia TEXT NOT NULL,
+      tipo_despesa TEXT NOT NULL,
+      categoria TEXT NOT NULL,
+      centro_custo TEXT NOT NULL,
+      fornecedor TEXT,
+      descricao TEXT NOT NULL,
+      valor NUMERIC NOT NULL,
+      forma_pagamento TEXT NOT NULL,
+      situacao TEXT NOT NULL,
+      cliente TEXT,
+      orcamento TEXT,
+      veiculo TEXT,
+      motorista TEXT,
+      responsavel TEXT,
+      anexo_nome TEXT,
+      observacoes TEXT,
+      criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      atualizado_em TIMESTAMPTZ
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS tipos_servico (
+      id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+      codigo TEXT NOT NULL UNIQUE,
+      descricao TEXT NOT NULL,
+      categoria TEXT NOT NULL,
+      abrangencia TEXT NOT NULL,
+      necessita_seguro BOOLEAN NOT NULL,
+      status TEXT NOT NULL,
+      observacoes TEXT,
       criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       atualizado_em TIMESTAMPTZ
     );
@@ -575,26 +729,543 @@ app.put("/api/responsaveis/bulk", async (req, res) => {
     await client.query("COMMIT");
     await writeCredentialsFile(credentialsToPersist);
     res.json({ ok: true, count: items.length });
-} catch (error) {
-  await client.query("ROLLBACK");
+  } catch (error) {
+    await client.query("ROLLBACK");
 
-  console.error("======================================");
-  console.error("ERRO NA ROTA /api/responsaveis/bulk");
-  console.error("Mensagem:", error.message);
-  console.error("Stack:");
-  console.error(error.stack);
-  console.error("Payload recebido:");
-  console.error(JSON.stringify(req.body, null, 2));
-  console.error("======================================");
+    console.error("======================================");
+    console.error("ERRO NA ROTA /api/responsaveis/bulk");
+    console.error("Mensagem:", error.message);
+    console.error("Stack:");
+    console.error(error.stack);
+    console.error("Payload recebido:");
+    console.error(JSON.stringify(req.body, null, 2));
+    console.error("======================================");
 
-  res.status(500).json({
-    ok: false,
-    error: error.message
-  });
+    res.status(500).json({
+      ok: false,
+      error: error.message
+    });
+  } finally {
+    client.release();
+  }
+});
 
-} finally {
-  client.release();
-}
+app.get("/api/motoristas", async (_req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        id,
+        nome,
+        cpf,
+        rg,
+        cnh,
+        categoria_cnh AS "categoriaCnh",
+        validade_cnh AS "validadeCnh",
+        telefone,
+        email,
+        endereco,
+        cidade,
+        estado,
+        criado_em AS "criadoEm",
+        atualizado_em AS "atualizadoEm"
+      FROM motoristas
+      ORDER BY nome ASC;
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put("/api/motoristas/bulk", async (req, res) => {
+  const items = ensureArray(req.body && req.body.items);
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    await client.query("DELETE FROM motoristas");
+
+    for (const item of items) {
+      await client.query(
+        `
+        INSERT INTO motoristas (
+          id, nome, cpf, rg, cnh, categoria_cnh, validade_cnh, telefone, email, endereco, cidade, estado, criado_em, atualizado_em
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+        `,
+        [
+          item.id,
+          item.nome,
+          item.cpf,
+          item.rg,
+          item.cnh,
+          item.categoriaCnh,
+          item.validadeCnh,
+          item.telefone,
+          item.email,
+          item.endereco,
+          item.cidade,
+          item.estado,
+          item.criadoEm || new Date().toISOString(),
+          item.atualizadoEm || null
+        ]
+      );
+    }
+
+    await client.query("COMMIT");
+    res.json({ ok: true, count: items.length });
+  } catch (error) {
+    await client.query("ROLLBACK");
+    res.status(500).json({ ok: false, error: error.message });
+  } finally {
+    client.release();
+  }
+});
+
+app.get("/api/veiculos", async (_req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        id,
+        placa,
+        modelo,
+        marca,
+        ano,
+        tipo,
+        capacidade,
+        motorista_responsavel AS "motoristaResponsavel",
+        observacoes,
+        criado_em AS "criadoEm",
+        atualizado_em AS "atualizadoEm"
+      FROM veiculos
+      ORDER BY placa ASC;
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put("/api/veiculos/bulk", async (req, res) => {
+  const items = ensureArray(req.body && req.body.items);
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    await client.query("DELETE FROM veiculos");
+
+    for (const item of items) {
+      await client.query(
+        `
+        INSERT INTO veiculos (
+          id, placa, modelo, marca, ano, tipo, capacidade, motorista_responsavel, observacoes, criado_em, atualizado_em
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+        `,
+        [
+          item.id,
+          item.placa,
+          item.modelo,
+          item.marca,
+          Number(item.ano),
+          item.tipo,
+          item.capacidade,
+          item.motoristaResponsavel,
+          item.observacoes || null,
+          item.criadoEm || new Date().toISOString(),
+          item.atualizadoEm || null
+        ]
+      );
+    }
+
+    await client.query("COMMIT");
+    res.json({ ok: true, count: items.length });
+  } catch (error) {
+    await client.query("ROLLBACK");
+    res.status(500).json({ ok: false, error: error.message });
+  } finally {
+    client.release();
+  }
+});
+
+app.get("/api/categorias-despesas", async (_req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        codigo,
+        nome,
+        tipo,
+        status,
+        criado_em AS "criadoEm",
+        atualizado_em AS "atualizadoEm"
+      FROM categorias_despesas
+      ORDER BY codigo ASC;
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put("/api/categorias-despesas/bulk", async (req, res) => {
+  const items = ensureArray(req.body && req.body.items);
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    await client.query("DELETE FROM categorias_despesas");
+
+    for (const item of items) {
+      await client.query(
+        `
+        INSERT INTO categorias_despesas (
+          codigo, nome, tipo, status, criado_em, atualizado_em
+        ) VALUES ($1,$2,$3,$4,$5,$6)
+        `,
+        [
+          Number(item.codigo),
+          item.nome,
+          item.tipo,
+          item.status,
+          item.criadoEm || new Date().toISOString(),
+          item.atualizadoEm || null
+        ]
+      );
+    }
+
+    await client.query("COMMIT");
+    res.json({ ok: true, count: items.length });
+  } catch (error) {
+    await client.query("ROLLBACK");
+    res.status(500).json({ ok: false, error: error.message });
+  } finally {
+    client.release();
+  }
+});
+
+app.get("/api/formas-pagamento", async (_req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        codigo,
+        nome,
+        status,
+        criado_em AS "criadoEm",
+        atualizado_em AS "atualizadoEm"
+      FROM formas_pagamento
+      ORDER BY codigo ASC;
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put("/api/formas-pagamento/bulk", async (req, res) => {
+  const items = ensureArray(req.body && req.body.items);
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    await client.query("DELETE FROM formas_pagamento");
+
+    for (const item of items) {
+      await client.query(
+        `
+        INSERT INTO formas_pagamento (
+          codigo, nome, status, criado_em, atualizado_em
+        ) VALUES ($1,$2,$3,$4,$5)
+        `,
+        [
+          Number(item.codigo),
+          item.nome,
+          item.status,
+          item.criadoEm || new Date().toISOString(),
+          item.atualizadoEm || null
+        ]
+      );
+    }
+
+    await client.query("COMMIT");
+    res.json({ ok: true, count: items.length });
+  } catch (error) {
+    await client.query("ROLLBACK");
+    res.status(500).json({ ok: false, error: error.message });
+  } finally {
+    client.release();
+  }
+});
+
+app.get("/api/centros-custo", async (_req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        codigo,
+        nome,
+        status,
+        criado_em AS "criadoEm",
+        atualizado_em AS "atualizadoEm"
+      FROM centros_custo
+      ORDER BY codigo ASC;
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put("/api/centros-custo/bulk", async (req, res) => {
+  const items = ensureArray(req.body && req.body.items);
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    await client.query("DELETE FROM centros_custo");
+
+    for (const item of items) {
+      await client.query(
+        `
+        INSERT INTO centros_custo (
+          codigo, nome, status, criado_em, atualizado_em
+        ) VALUES ($1,$2,$3,$4,$5)
+        `,
+        [
+          Number(item.codigo),
+          item.nome,
+          item.status,
+          item.criadoEm || new Date().toISOString(),
+          item.atualizadoEm || null
+        ]
+      );
+    }
+
+    await client.query("COMMIT");
+    res.json({ ok: true, count: items.length });
+  } catch (error) {
+    await client.query("ROLLBACK");
+    res.status(500).json({ ok: false, error: error.message });
+  } finally {
+    client.release();
+  }
+});
+
+app.get("/api/despesas", async (_req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        codigo,
+        data_despesa AS "dataDespesa",
+        competencia,
+        tipo_despesa AS "tipoDespesa",
+        categoria,
+        centro_custo AS "centroCusto",
+        fornecedor,
+        descricao,
+        valor,
+        forma_pagamento AS "formaPagamento",
+        situacao,
+        cliente,
+        orcamento,
+        veiculo,
+        motorista,
+        responsavel,
+        anexo_nome AS "anexoNome",
+        observacoes,
+        criado_em AS "criadoEm",
+        atualizado_em AS "atualizadoEm"
+      FROM despesas
+      ORDER BY criado_em DESC;
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put("/api/despesas/bulk", async (req, res) => {
+  const items = ensureArray(req.body && req.body.items);
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    await client.query("DELETE FROM despesas");
+
+    for (const item of items) {
+      await client.query(
+        `
+        INSERT INTO despesas (
+          codigo, data_despesa, competencia, tipo_despesa, categoria, centro_custo, fornecedor, descricao, valor,
+          forma_pagamento, situacao, cliente, orcamento, veiculo, motorista, responsavel, anexo_nome, observacoes, criado_em, atualizado_em
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)
+        `,
+        [
+          item.codigo,
+          item.dataDespesa,
+          item.competencia,
+          item.tipoDespesa,
+          item.categoria,
+          item.centroCusto,
+          item.fornecedor || null,
+          item.descricao,
+          Number(item.valor),
+          item.formaPagamento,
+          item.situacao,
+          item.cliente || null,
+          item.orcamento || null,
+          item.veiculo || null,
+          item.motorista || null,
+          item.responsavel || null,
+          item.anexoNome || null,
+          item.observacoes || null,
+          item.criadoEm || new Date().toISOString(),
+          item.atualizadoEm || null
+        ]
+      );
+    }
+
+    await client.query("COMMIT");
+    res.json({ ok: true, count: items.length });
+  } catch (error) {
+    await client.query("ROLLBACK");
+    res.status(500).json({ ok: false, error: error.message });
+  } finally {
+    client.release();
+  }
+});
+
+app.get("/api/tipos-servico", async (_req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        id,
+        codigo,
+        descricao,
+        categoria,
+        abrangencia,
+        necessita_seguro AS "necessitaSeguro",
+        status,
+        COALESCE(observacoes, '') AS observacoes,
+        criado_em AS "criadoEm",
+        atualizado_em AS "atualizadoEm"
+      FROM tipos_servico
+      ORDER BY descricao ASC;
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post("/api/tipos-servico", async (req, res) => {
+  try {
+    const codigo = String(req.body && req.body.codigo ? req.body.codigo : "").trim();
+    const descricao = String(req.body && req.body.descricao ? req.body.descricao : "").trim();
+    const categoria = String(req.body && req.body.categoria ? req.body.categoria : "").trim();
+    const abrangencia = String(req.body && req.body.abrangencia ? req.body.abrangencia : "").trim();
+    const necessitaSeguro = Boolean(req.body && req.body.necessitaSeguro);
+    const status = String(req.body && req.body.status ? req.body.status : "").trim();
+    const observacoes = String(req.body && req.body.observacoes ? req.body.observacoes : "").trim();
+
+    if (!codigo || !descricao || !categoria || !abrangencia || !status) {
+      return res.status(400).json({ error: "Campos obrigatorios nao informados" });
+    }
+
+    const result = await pool.query(
+      `
+      INSERT INTO tipos_servico (codigo, descricao, categoria, abrangencia, necessita_seguro, status, observacoes, atualizado_em)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,NOW())
+      RETURNING
+        id,
+        codigo,
+        descricao,
+        categoria,
+        abrangencia,
+        necessita_seguro AS "necessitaSeguro",
+        status,
+        COALESCE(observacoes, '') AS observacoes,
+        criado_em AS "criadoEm",
+        atualizado_em AS "atualizadoEm";
+      `,
+      [codigo, descricao, categoria, abrangencia, necessitaSeguro, status, observacoes || null]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put("/api/tipos-servico/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const codigo = String(req.body && req.body.codigo ? req.body.codigo : "").trim();
+    const descricao = String(req.body && req.body.descricao ? req.body.descricao : "").trim();
+    const categoria = String(req.body && req.body.categoria ? req.body.categoria : "").trim();
+    const abrangencia = String(req.body && req.body.abrangencia ? req.body.abrangencia : "").trim();
+    const necessitaSeguro = Boolean(req.body && req.body.necessitaSeguro);
+    const status = String(req.body && req.body.status ? req.body.status : "").trim();
+    const observacoes = String(req.body && req.body.observacoes ? req.body.observacoes : "").trim();
+
+    if (!Number.isFinite(id) || id <= 0) {
+      return res.status(400).json({ error: "ID invalido" });
+    }
+
+    if (!codigo || !descricao || !categoria || !abrangencia || !status) {
+      return res.status(400).json({ error: "Campos obrigatorios nao informados" });
+    }
+
+    const result = await pool.query(
+      `
+      UPDATE tipos_servico
+      SET
+        codigo = $2,
+        descricao = $3,
+        categoria = $4,
+        abrangencia = $5,
+        necessita_seguro = $6,
+        status = $7,
+        observacoes = $8,
+        atualizado_em = NOW()
+      WHERE id = $1
+      RETURNING
+        id,
+        codigo,
+        descricao,
+        categoria,
+        abrangencia,
+        necessita_seguro AS "necessitaSeguro",
+        status,
+        COALESCE(observacoes, '') AS observacoes,
+        criado_em AS "criadoEm",
+        atualizado_em AS "atualizadoEm";
+      `,
+      [id, codigo, descricao, categoria, abrangencia, necessitaSeguro, status, observacoes || null]
+    );
+
+    if (!result.rows[0]) {
+      return res.status(404).json({ error: "Tipo de servico nao encontrado" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete("/api/tipos-servico/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id) || id <= 0) {
+      return res.status(400).json({ error: "ID invalido" });
+    }
+
+    const result = await pool.query("DELETE FROM tipos_servico WHERE id = $1", [id]);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Tipo de servico nao encontrado" });
+    }
+
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.get("/api/orcamentos", async (_req, res) => {
@@ -615,6 +1286,8 @@ app.get("/api/orcamentos", async (_req, res) => {
         quantidade,
         descricao,
         tipo_veiculo AS "tipoVeiculo",
+        tipo_servico_id AS "tipoServicoId",
+        tipo_servico_descricao AS "tipoServicoDescricao",
         tipo_carga AS "tipoCarga",
         peso,
         volume,
@@ -647,8 +1320,9 @@ app.put("/api/orcamentos/bulk", async (req, res) => {
         `
         INSERT INTO orcamentos (
           codigo, criado_em, atualizado_em, cliente, a_c, contato, origem, origem_uf, destino, destino_uf,
-          itens_produto, quantidade, descricao, tipo_veiculo, tipo_carga, peso, volume, prazo, valor, validade, status_orcamento, status_entrega, responsavel, observacoes
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)
+          itens_produto, quantidade, descricao, tipo_veiculo, tipo_servico_id, tipo_servico_descricao,
+          tipo_carga, peso, volume, prazo, valor, validade, status_orcamento, status_entrega, responsavel, observacoes
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)
         `,
         [
           item.codigo,
@@ -665,6 +1339,8 @@ app.put("/api/orcamentos/bulk", async (req, res) => {
           item.quantidade !== "" && item.quantidade != null ? Number(item.quantidade) : null,
           item.descricao || null,
           item.tipoVeiculo || null,
+          item.tipoServicoId != null ? Number(item.tipoServicoId) : null,
+          item.tipoServicoDescricao || null,
           item.tipoCarga || null,
           item.peso !== "" && item.peso != null ? Number(item.peso) : null,
           item.volume !== "" && item.volume != null ? Number(item.volume) : null,
@@ -699,6 +1375,7 @@ app.get("/", (_req, res) => {
 initSchema()
   .then(syncUsersFromFile)
   .then(syncResponsaveisSeedFromFile)
+  .then(syncTiposServicoSeed)
   .then(() => {
     app.listen(port, () => {
       console.log(`API INOVA/Neon ativa em http://localhost:${port}`);
