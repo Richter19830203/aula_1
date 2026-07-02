@@ -2213,6 +2213,7 @@
     let centrosCustoCache = [];
     let despesasCache = [];
     let tiposServicoCache = [];
+    let opcoesLookupCache = {};
     let apiDisponivel = false;
     let usuarioLogado = null;
     let authToken = sessionStorage.getItem(AUTH_TOKEN_KEY) || "";
@@ -2327,6 +2328,7 @@
         renderizarCentrosCusto();
         renderizarTiposServico();
         atualizarSelectTipoServicoOrcamento();
+        popularTodosDropdownsLookup();
       }).catch(() => {});
     }
 
@@ -2707,7 +2709,8 @@
           carregarFormasPagamentoIniciais(),
           carregarCentrosCustoIniciais(),
           carregarDespesasIniciais(),
-          carregarTiposServicoIniciais()
+          carregarTiposServicoIniciais(),
+          carregarOpcoesLookupIniciais()
         ]);
 
         orcamentosCache = Array.isArray(orcamentos) ? orcamentos : [];
@@ -3253,6 +3256,127 @@
         .join("");
 
       atualizarSelectTipoServicoOrcamento();
+    }
+
+    async function carregarOpcoesLookupIniciais() {
+      const tipos = [
+        "tipo_veiculo", "tipo_carga", "status_orcamento", "status_entrega",
+        "categoria_servico", "abrangencia_servico",
+        "nome_categoria_despesa", "nome_forma_pagamento", "nome_centro_custo"
+      ];
+      const resultado = {};
+      await Promise.all(
+        tipos.map(async (tipo) => {
+          try {
+            const dados = await apiRequest(`/opcoes/${tipo}`);
+            resultado[tipo] = Array.isArray(dados) ? dados : [];
+          } catch (_e) {
+            resultado[tipo] = [];
+          }
+        })
+      );
+      opcoesLookupCache = resultado;
+      return resultado;
+    }
+
+    function _popularSelect(selectEl, opcoes, valorAtual, incluirSelecione) {
+      if (!selectEl || !Array.isArray(opcoes) || opcoes.length === 0) {
+        return;
+      }
+      const prefix = incluirSelecione ? '<option value="">Selecione</option>' : '';
+      selectEl.innerHTML = prefix + opcoes
+        .map((op) => `<option value="${op.codigo}"${op.codigo === valorAtual ? " selected" : ""}>${op.descricao}</option>`)
+        .join("");
+      if (valorAtual) {
+        selectEl.value = valorAtual;
+      }
+    }
+
+    function popularTodosDropdownsLookup() {
+      const op = opcoesLookupCache;
+
+      // Tipo de Veiculo — formulario orcamento
+      if (op.tipo_veiculo && form.tipoVeiculo) {
+        _popularSelect(form.tipoVeiculo, op.tipo_veiculo, form.tipoVeiculo.value, true);
+      }
+
+      // Tipo de Carga — formulario orcamento
+      if (op.tipo_carga && form.tipoCarga) {
+        _popularSelect(form.tipoCarga, op.tipo_carga, form.tipoCarga.value, true);
+      }
+
+      // Status Orcamento — formulario orcamento
+      if (op.status_orcamento && form.statusOrcamento) {
+        const atual = form.statusOrcamento.value;
+        form.statusOrcamento.innerHTML = op.status_orcamento
+          .map((o) => `<option value="${o.codigo}"${o.codigo === atual ? " selected" : ""}>${o.descricao}</option>`)
+          .join("");
+        if (atual) form.statusOrcamento.value = atual;
+      }
+
+      // Status Entrega — formulario orcamento
+      if (op.status_entrega && form.statusEntrega) {
+        const atual = form.statusEntrega.value || "Pedido Recebido";
+        form.statusEntrega.innerHTML = op.status_entrega
+          .map((o) => `<option value="${o.codigo}"${o.codigo === atual ? " selected" : ""}>${o.descricao}</option>`)
+          .join("");
+        form.statusEntrega.value = atual;
+      }
+
+      // Filtro status orcamento
+      const filtroOrcEl = document.getElementById("filtro-status-orcamento");
+      if (filtroOrcEl && op.status_orcamento) {
+        const atual = filtroOrcEl.value;
+        filtroOrcEl.innerHTML = '<option value="">Todos</option>' + op.status_orcamento
+          .map((o) => `<option value="${o.codigo}"${o.codigo === atual ? " selected" : ""}>${o.descricao}</option>`)
+          .join("");
+        if (atual) filtroOrcEl.value = atual;
+      }
+
+      // Filtro status entrega
+      const filtroEntEl = document.getElementById("filtro-status-entrega");
+      if (filtroEntEl && op.status_entrega) {
+        const atual = filtroEntEl.value;
+        filtroEntEl.innerHTML = '<option value="">Todos</option>' + op.status_entrega
+          .map((o) => `<option value="${o.codigo}"${o.codigo === atual ? " selected" : ""}>${o.descricao}</option>`)
+          .join("");
+        if (atual) filtroEntEl.value = atual;
+      }
+
+      // Tipo de Veiculo — cadastro de veiculo
+      if (op.tipo_veiculo && veiculoForm.veiculoTipo) {
+        _popularSelect(veiculoForm.veiculoTipo, op.tipo_veiculo, veiculoForm.veiculoTipo.value, true);
+      }
+
+      // Categoria servico — cadastro tipos servico
+      const catServEl = tipoServicoForm && tipoServicoForm.tipoServicoCategoria;
+      if (catServEl && op.categoria_servico) {
+        _popularSelect(catServEl, op.categoria_servico, catServEl.value, true);
+      }
+
+      // Abrangencia servico — cadastro tipos servico
+      const abrServEl = tipoServicoForm && tipoServicoForm.tipoServicoAbrangencia;
+      if (abrServEl && op.abrangencia_servico) {
+        _popularSelect(abrServEl, op.abrangencia_servico, abrServEl.value, true);
+      }
+
+      // Nome categoria despesa
+      const catNomeEl = categoriaDespesaForm && categoriaDespesaForm.categoriaNome;
+      if (catNomeEl && op.nome_categoria_despesa) {
+        _popularSelect(catNomeEl, op.nome_categoria_despesa, catNomeEl.value, true);
+      }
+
+      // Nome forma pagamento
+      const formaNomeEl = formaPagamentoForm && formaPagamentoForm.formaNome;
+      if (formaNomeEl && op.nome_forma_pagamento) {
+        _popularSelect(formaNomeEl, op.nome_forma_pagamento, formaNomeEl.value, true);
+      }
+
+      // Nome centro custo
+      const centroNomeEl = centroCustoForm && centroCustoForm.centroNome;
+      if (centroNomeEl && op.nome_centro_custo) {
+        _popularSelect(centroNomeEl, op.nome_centro_custo, centroNomeEl.value, true);
+      }
     }
 
     function atualizarListaClientesOrcamento() {
@@ -4929,6 +5053,7 @@
         renderizarVeiculos();
         renderizarTiposServico();
         atualizarSelectTipoServicoOrcamento();
+        popularTodosDropdownsLookup();
         liberarInterface();
         alternarAba("orcamentos");
       } catch (_error) {

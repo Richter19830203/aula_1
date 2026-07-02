@@ -1,8 +1,0 @@
-[variables]
-NIXPACKS_NODE_VERSION = "20"
-
-[phases.install]
-cmds = ["cd docs && npm install --omit=dev"]
-
-[start]
-cmd = "cd docs && npm start"

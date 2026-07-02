@@ -229,6 +229,137 @@ const TIPOS_SERVICO_PADRAO = [
   { codigo: "015", descricao: "Coleta e Entrega", categoria: "Logística", abrangencia: "Municipal", necessitaSeguro: false, status: "Ativo", observacoes: "" }
 ];
 
+const OPCOES_LOOKUP_PADRAO = {
+  tipo_veiculo: [
+    { codigo: "001", descricao: "Moto", ordem: 1 },
+    { codigo: "002", descricao: "Utilitario Pequeno", ordem: 2 },
+    { codigo: "003", descricao: "Fiorino", ordem: 3 },
+    { codigo: "004", descricao: "Van", ordem: 4 },
+    { codigo: "005", descricao: "VUC (Veiculo Urbano de Carga)", ordem: 5 },
+    { codigo: "006", descricao: "3/4", ordem: 6 },
+    { codigo: "007", descricao: "Toco", ordem: 7 },
+    { codigo: "008", descricao: "Truck", ordem: 8 },
+    { codigo: "009", descricao: "Carreta Simples", ordem: 9 },
+    { codigo: "010", descricao: "Carreta LS", ordem: 10 },
+    { codigo: "011", descricao: "Bitrem", ordem: 11 },
+    { codigo: "012", descricao: "Rodotrem", ordem: 12 },
+    { codigo: "013", descricao: "Bau", ordem: 13 },
+    { codigo: "014", descricao: "Bau Refrigerado", ordem: 14 },
+    { codigo: "015", descricao: "Sider", ordem: 15 },
+    { codigo: "016", descricao: "Graneleiro", ordem: 16 },
+    { codigo: "017", descricao: "Tanque", ordem: 17 },
+    { codigo: "018", descricao: "Plataforma", ordem: 18 },
+    { codigo: "019", descricao: "Prancha", ordem: 19 },
+    { codigo: "020", descricao: "Munck", ordem: 20 },
+    { codigo: "021", descricao: "Cegonha", ordem: 21 },
+    { codigo: "022", descricao: "Container 20 pes", ordem: 22 },
+    { codigo: "023", descricao: "Container 40 pes", ordem: 23 }
+  ],
+  tipo_carga: [
+    { codigo: "Carga Geral", descricao: "Carga Geral", ordem: 1 },
+    { codigo: "Carga Fracionada", descricao: "Carga Fracionada", ordem: 2 },
+    { codigo: "Carga Completa (FTL)", descricao: "Carga Completa (FTL)", ordem: 3 },
+    { codigo: "Carga Refrigerada", descricao: "Carga Refrigerada", ordem: 4 },
+    { codigo: "Carga Perigosa", descricao: "Carga Perigosa", ordem: 5 },
+    { codigo: "Moveis", descricao: "Moveis", ordem: 6 },
+    { codigo: "Eletrodomesticos", descricao: "Eletrodomesticos", ordem: 7 },
+    { codigo: "Eletronicos", descricao: "Eletronicos", ordem: 8 },
+    { codigo: "Veiculos", descricao: "Veiculos", ordem: 9 },
+    { codigo: "Documentos", descricao: "Documentos", ordem: 10 },
+    { codigo: "Animais Vivos", descricao: "Animais Vivos", ordem: 11 },
+    { codigo: "Obras de Arte", descricao: "Obras de Arte", ordem: 12 },
+    { codigo: "Alimenticios", descricao: "Alimenticios", ordem: 13 },
+    { codigo: "Texteis", descricao: "Texteis", ordem: 14 },
+    { codigo: "Outros", descricao: "Outros", ordem: 15 }
+  ],
+  status_orcamento: [
+    { codigo: "Solicitado", descricao: "Solicitado", ordem: 1 },
+    { codigo: "Em Elaboracao", descricao: "Em Elaboração", ordem: 2 },
+    { codigo: "Enviado", descricao: "Enviado", ordem: 3 },
+    { codigo: "Em Negociacao", descricao: "Em Negociação", ordem: 4 },
+    { codigo: "Aguardando Retorno", descricao: "Aguardando Retorno", ordem: 5 },
+    { codigo: "Aprovado", descricao: "Aprovado", ordem: 6 },
+    { codigo: "Contratado", descricao: "Contratado", ordem: 7 },
+    { codigo: "Reprovado", descricao: "Reprovado", ordem: 8 },
+    { codigo: "Cancelado", descricao: "Cancelado", ordem: 9 }
+  ],
+  status_entrega: [
+    { codigo: "Aguardando", descricao: "Aguardando", ordem: 1 },
+    { codigo: "Pedido Recebido", descricao: "Pedido Recebido", ordem: 2 },
+    { codigo: "Programado", descricao: "Programado", ordem: 3 },
+    { codigo: "Coletado", descricao: "Coletado", ordem: 4 },
+    { codigo: "Em Rota", descricao: "Em Rota", ordem: 5 },
+    { codigo: "Em Transporte", descricao: "Em Transporte", ordem: 6 },
+    { codigo: "Entregue", descricao: "Entregue", ordem: 7 },
+    { codigo: "Reagendado", descricao: "Reagendado", ordem: 8 },
+    { codigo: "Ocorrencia", descricao: "Ocorrencia", ordem: 9 },
+    { codigo: "Cancelado", descricao: "Cancelado", ordem: 10 }
+  ],
+  categoria_servico: [
+    { codigo: "Mudanças", descricao: "Mudanças", ordem: 1 },
+    { codigo: "Transportes", descricao: "Transportes", ordem: 2 },
+    { codigo: "Armazenagem", descricao: "Armazenagem", ordem: 3 },
+    { codigo: "Logística", descricao: "Logística", ordem: 4 },
+    { codigo: "Especial", descricao: "Especial", ordem: 5 }
+  ],
+  abrangencia_servico: [
+    { codigo: "Municipal", descricao: "Municipal", ordem: 1 },
+    { codigo: "Intermunicipal", descricao: "Intermunicipal", ordem: 2 },
+    { codigo: "Interestadual", descricao: "Interestadual", ordem: 3 },
+    { codigo: "Internacional", descricao: "Internacional", ordem: 4 }
+  ],
+  nome_categoria_despesa: [
+    { codigo: "Agua", descricao: "Agua", ordem: 1 },
+    { codigo: "Alimentacao", descricao: "Alimentacao", ordem: 2 },
+    { codigo: "Aluguel", descricao: "Aluguel", ordem: 3 },
+    { codigo: "Borracharia", descricao: "Borracharia", ordem: 4 },
+    { codigo: "Combustivel", descricao: "Combustivel", ordem: 5 },
+    { codigo: "Contabilidade", descricao: "Contabilidade", ordem: 6 },
+    { codigo: "Energia", descricao: "Energia", ordem: 7 },
+    { codigo: "Estacionamento", descricao: "Estacionamento", ordem: 8 },
+    { codigo: "Hospedagem", descricao: "Hospedagem", ordem: 9 },
+    { codigo: "Impostos", descricao: "Impostos", ordem: 10 },
+    { codigo: "Internet", descricao: "Internet", ordem: 11 },
+    { codigo: "IPVA", descricao: "IPVA", ordem: 12 },
+    { codigo: "Lavagem", descricao: "Lavagem", ordem: 13 },
+    { codigo: "Licenciamento", descricao: "Licenciamento", ordem: 14 },
+    { codigo: "Manutencao", descricao: "Manutencao", ordem: 15 },
+    { codigo: "Marketing", descricao: "Marketing", ordem: 16 },
+    { codigo: "Material de Escritorio", descricao: "Material de Escritorio", ordem: 17 },
+    { codigo: "Pedagio", descricao: "Pedagio", ordem: 18 },
+    { codigo: "Pneus", descricao: "Pneus", ordem: 19 },
+    { codigo: "Salario", descricao: "Salario", ordem: 20 },
+    { codigo: "Seguro", descricao: "Seguro", ordem: 21 },
+    { codigo: "Sistema", descricao: "Sistema", ordem: 22 },
+    { codigo: "Telefone", descricao: "Telefone", ordem: 23 },
+    { codigo: "Vale Alimentacao", descricao: "Vale Alimentacao", ordem: 24 },
+    { codigo: "Vale Refeicao", descricao: "Vale Refeicao", ordem: 25 },
+    { codigo: "Outros", descricao: "Outros", ordem: 26 }
+  ],
+  nome_forma_pagamento: [
+    { codigo: "Boleto Bancario", descricao: "Boleto Bancario", ordem: 1 },
+    { codigo: "Cartao de Credito", descricao: "Cartao de Credito", ordem: 2 },
+    { codigo: "Cartao de Debito", descricao: "Cartao de Debito", ordem: 3 },
+    { codigo: "Dinheiro", descricao: "Dinheiro", ordem: 4 },
+    { codigo: "DOC", descricao: "DOC", ordem: 5 },
+    { codigo: "PIX", descricao: "PIX", ordem: 6 },
+    { codigo: "TED", descricao: "TED", ordem: 7 },
+    { codigo: "Transferencia Bancaria", descricao: "Transferencia Bancaria", ordem: 8 },
+    { codigo: "Outros", descricao: "Outros", ordem: 9 }
+  ],
+  nome_centro_custo: [
+    { codigo: "Administrativo", descricao: "Administrativo", ordem: 1 },
+    { codigo: "Comercial", descricao: "Comercial", ordem: 2 },
+    { codigo: "Diretoria", descricao: "Diretoria", ordem: 3 },
+    { codigo: "Financeiro", descricao: "Financeiro", ordem: 4 },
+    { codigo: "Frota", descricao: "Frota", ordem: 5 },
+    { codigo: "Logistica", descricao: "Logistica", ordem: 6 },
+    { codigo: "Operacional", descricao: "Operacional", ordem: 7 },
+    { codigo: "Recursos Humanos", descricao: "Recursos Humanos", ordem: 8 },
+    { codigo: "Tecnologia", descricao: "Tecnologia", ordem: 9 }
+  ]
+};
+
 async function syncTiposServicoSeed() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS tipos_servico (
@@ -254,6 +385,21 @@ async function syncTiposServicoSeed() {
       `,
       [item.codigo, item.descricao, item.categoria, item.abrangencia, item.necessitaSeguro, item.status, item.observacoes]
     );
+  }
+}
+
+async function syncOpcoesDropdownSeed() {
+  for (const [tipo, opcoes] of Object.entries(OPCOES_LOOKUP_PADRAO)) {
+    for (const op of opcoes) {
+      await pool.query(
+        `
+        INSERT INTO opcoes_lookup (tipo, codigo, descricao, ordem)
+        VALUES ($1,$2,$3,$4)
+        ON CONFLICT (tipo, codigo) DO NOTHING;
+        `,
+        [tipo, op.codigo, op.descricao, op.ordem]
+      );
+    }
   }
 }
 
@@ -423,6 +569,17 @@ async function initSchema() {
       observacoes TEXT,
       criado_em TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       atualizado_em TIMESTAMPTZ
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS opcoes_lookup (
+      id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+      tipo TEXT NOT NULL,
+      codigo TEXT NOT NULL,
+      descricao TEXT NOT NULL,
+      ordem INTEGER NOT NULL DEFAULT 0,
+      UNIQUE(tipo, codigo)
     );
   `);
 }
@@ -1268,6 +1425,38 @@ app.delete("/api/tipos-servico/:id", async (req, res) => {
   }
 });
 
+app.get("/api/opcoes/:tipo", async (req, res) => {
+  try {
+    const { tipo } = req.params;
+    if (!tipo || !/^[a-z_]+$/.test(tipo)) {
+      return res.status(400).json({ error: "Tipo invalido" });
+    }
+    const result = await pool.query(
+      `SELECT codigo, descricao, ordem FROM opcoes_lookup WHERE tipo = $1 ORDER BY ordem ASC`,
+      [tipo]
+    );
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/api/opcoes", async (_req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT tipo, codigo, descricao, ordem FROM opcoes_lookup ORDER BY tipo ASC, ordem ASC`
+    );
+    const agrupado = {};
+    for (const row of result.rows) {
+      if (!agrupado[row.tipo]) agrupado[row.tipo] = [];
+      agrupado[row.tipo].push({ codigo: row.codigo, descricao: row.descricao, ordem: row.ordem });
+    }
+    res.json(agrupado);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.get("/api/orcamentos", async (_req, res) => {
   try {
     const result = await pool.query(`
@@ -1376,6 +1565,7 @@ initSchema()
   .then(syncUsersFromFile)
   .then(syncResponsaveisSeedFromFile)
   .then(syncTiposServicoSeed)
+  .then(syncOpcoesDropdownSeed)
   .then(() => {
     app.listen(port, () => {
       console.log(`API INOVA/Neon ativa em http://localhost:${port}`);
